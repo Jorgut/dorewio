@@ -1,0 +1,54 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {};
+	objectVersion = 56;
+	objects = {
+		B45741BB6832556DA7933BE8 /* PBXFrameworksBuildPhase */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = ();
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4B94A4D314575C37A3F96C69 /* PBXResourcesBuildPhase */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (13B9239210F0578AA0749431 /* Assets.xcassets in Resources */, );
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		05600115A40C57A7A262DF5C /* PBXSourcesBuildPhase */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (B39F75B759EC570B971168FF /* dorewioApp.swift in Sources */, 0E46F19BB9365E56B91FB92B /* ViolinNote.swift in Sources */, B6A2E5F1634E59A3954F58A6 /* TonePlayer.swift in Sources */, 800606F671BF5A4B94CB7429 /* FingerboardView.swift in Sources */, 7F121277135E5F27ADA0CE75 /* PracticeView.swift in Sources */);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B39F75B759EC570B971168FF /* dorewioApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 736052EC316554A4B4C3271A /* dorewioApp.swift */; };
+		736052EC316554A4B4C3271A /* dorewioApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = dorewioApp.swift; sourceTree = "<group>"; };
+		0E46F19BB9365E56B91FB92B /* ViolinNote.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEFC5250EB5A517DBF4C26F7 /* ViolinNote.swift */; };
+		AEFC5250EB5A517DBF4C26F7 /* ViolinNote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViolinNote.swift; sourceTree = "<group>"; };
+		B6A2E5F1634E59A3954F58A6 /* TonePlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F9D14B148658C5B41AF7E5 /* TonePlayer.swift */; };
+		57F9D14B148658C5B41AF7E5 /* TonePlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TonePlayer.swift; sourceTree = "<group>"; };
+		800606F671BF5A4B94CB7429 /* FingerboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80F3AD8F32EF56B1A46BC2ED /* FingerboardView.swift */; };
+		80F3AD8F32EF56B1A46BC2ED /* FingerboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FingerboardView.swift; sourceTree = "<group>"; };
+		7F121277135E5F27ADA0CE75 /* PracticeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6675DAA91BE5C469CE8B8D5 /* PracticeView.swift */; };
+		D6675DAA91BE5C469CE8B8D5 /* PracticeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticeView.swift; sourceTree = "<group>"; };
+		13B9239210F0578AA0749431 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 03DEB38EBE29524799CCB790 /* Assets.xcassets */; };
+		03DEB38EBE29524799CCB790 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		B750D3BE85BB5D37B5B75146 /* dorewio.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = dorewio.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B4ABA46143B55F8A9A4A53C4 /* root */ = {isa = PBXGroup; children = (5BFBE8A2B05B5AB1A2CF9F1D /* sources */, 93D332D30C6A588FB9145DE8 /* products */); name = Root; sourceTree = "<group>"; };
+		5BFBE8A2B05B5AB1A2CF9F1D /* dorewio */ = {isa = PBXGroup; children = (736052EC316554A4B4C3271A /* app */, 1FF0825DF4AD5175BA59052A /* models */, 8D4BF57A142D5ECBACFC0F7F /* services */, 8B7F50AC9C1F56D3AFFD0E35 /* views */, 03DEB38EBE29524799CCB790 /* assets */); name = dorewio; path = dorewio; sourceTree = "<group>"; };
+		1FF0825DF4AD5175BA59052A /* Models */ = {isa = PBXGroup; children = (AEFC5250EB5A517DBF4C26F7 /* model */); name = Models; path = Models; sourceTree = "<group>"; };
+		8D4BF57A142D5ECBACFC0F7F /* Services */ = {isa = PBXGroup; children = (57F9D14B148658C5B41AF7E5 /* tone */); name = Services; path = Services; sourceTree = "<group>"; };
+		8B7F50AC9C1F56D3AFFD0E35 /* Views */ = {isa = PBXGroup; children = (80F3AD8F32EF56B1A46BC2ED /* board */, D6675DAA91BE5C469CE8B8D5 /* practice */); name = Views; path = Views; sourceTree = "<group>"; };
+		93D332D30C6A588FB9145DE8 /* Products */ = {isa = PBXGroup; children = (B750D3BE85BB5D37B5B75146 /* productref */); name = Products; sourceTree = "<group>"; };
+		DCD53269A7415E518F5AE7DC /* dorewio */ = {isa = PBXNativeTarget; buildConfigurationList = 16DDC2169ECF5740883E4D01 /* Build configuration list for PBXNativeTarget "dorewio" */; buildPhases = (05600115A40C57A7A262DF5C, B45741BB6832556DA7933BE8, 4B94A4D314575C37A3F96C69); buildRules = (); dependencies = (); name = dorewio; productName = dorewio; productReference = B750D3BE85BB5D37B5B75146 /* dorewio.app */; productType = "com.apple.product-type.application"; };
+		8FB2C1CD0B56549D929F36F9 /* Project object */ = {isa = PBXProject; attributes = { BuildIndependentTargetsInParallel = 1; LastSwiftUpdateCheck = 1500; LastUpgradeCheck = 1500; TargetAttributes = { DCD53269A7415E518F5AE7DC = { CreatedOnToolsVersion = 15.0; }; }; }; buildConfigurationList = 811D313B6B775DB8806F6B8B; compatibilityVersion = "Xcode 15.0"; developmentRegion = en; hasScannedForEncodings = 0; knownRegions = (en, Base); mainGroup = B4ABA46143B55F8A9A4A53C4; productRefGroup = 93D332D30C6A588FB9145DE8; projectDirPath = ""; projectRoot = ""; targets = (DCD53269A7415E518F5AE7DC); };
+		0682FDEB3A2B5A108880B5AA /* Debug */ = {isa = XCBuildConfiguration; buildSettings = { SDKROOT = "iphoneos"; IPHONEOS_DEPLOYMENT_TARGET = "17.0"; SWIFT_VERSION = "5.0"; CLANG_ENABLE_MODULES = "YES"; SWIFT_OPTIMIZATION_LEVEL = "-Onone"; DEBUG_INFORMATION_FORMAT = "dwarf"; GCC_OPTIMIZATION_LEVEL = 0; }; name = Debug; };
+		C4B098F4A54B5D5F9A05D454 /* Release */ = {isa = XCBuildConfiguration; buildSettings = { SDKROOT = "iphoneos"; IPHONEOS_DEPLOYMENT_TARGET = "17.0"; SWIFT_VERSION = "5.0"; CLANG_ENABLE_MODULES = "YES"; SWIFT_OPTIMIZATION_LEVEL = "-O"; DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym"; GCC_OPTIMIZATION_LEVEL = s; }; name = Release; };
+		811D313B6B775DB8806F6B8B /* Configurations */ = {isa = XCConfigurationList; buildConfigurations = (0682FDEB3A2B5A108880B5AA /* Debug */, C4B098F4A54B5D5F9A05D454 /* Release */); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
+		2DC2827953AC5D6FA048964C /* Debug */ = {isa = XCBuildConfiguration; buildSettings = { ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon; CODE_SIGN_STYLE = Automatic; CURRENT_PROJECT_VERSION = 1; GENERATE_INFOPLIST_FILE = YES; INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES; INFOPLIST_KEY_UILaunchScreen_Generation = YES; IPHONEOS_DEPLOYMENT_TARGET = "17.0"; MARKETING_VERSION = "0.1.0"; PRODUCT_BUNDLE_IDENTIFIER = "com.jorgut.dorewio"; PRODUCT_NAME = "$(TARGET_NAME)"; SUPPORTED_PLATFORMS = "iphoneos iphonesimulator"; SWIFT_VERSION = "5.0"; TARGETED_DEVICE_FAMILY = 1; ENABLE_PREVIEWS = YES; SWIFT_EMIT_LOC_STRINGS = YES; SWIFT_OPTIMIZATION_LEVEL = "-Onone"; }; name = Debug; };
+		411F2755DE7F5CDDB81DDE9D /* Release */ = {isa = XCBuildConfiguration; buildSettings = { ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon; CODE_SIGN_STYLE = Automatic; CURRENT_PROJECT_VERSION = 1; GENERATE_INFOPLIST_FILE = YES; INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES; INFOPLIST_KEY_UILaunchScreen_Generation = YES; IPHONEOS_DEPLOYMENT_TARGET = "17.0"; MARKETING_VERSION = "0.1.0"; PRODUCT_BUNDLE_IDENTIFIER = "com.jorgut.dorewio"; PRODUCT_NAME = "$(TARGET_NAME)"; SUPPORTED_PLATFORMS = "iphoneos iphonesimulator"; SWIFT_VERSION = "5.0"; TARGETED_DEVICE_FAMILY = 1; ENABLE_PREVIEWS = YES; SWIFT_EMIT_LOC_STRINGS = YES; SWIFT_OPTIMIZATION_LEVEL = "-O"; }; name = Release; };
+		16DDC2169ECF5740883E4D01 /* Configurations */ = {isa = XCConfigurationList; buildConfigurations = (2DC2827953AC5D6FA048964C /* Debug */, 411F2755DE7F5CDDB81DDE9D /* Release */); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
+	};
+	rootObject = 8FB2C1CD0B56549D929F36F9 /* Project object */;
+}
