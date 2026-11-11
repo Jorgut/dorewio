@@ -14,7 +14,22 @@ For absolute beginners: connect scientific note names (such as **F5**), fixed-do
 - String and finger selection with immediate feedback
 - Eight beginner note exercises
 - Reference tone playback (synthesized sine wave, not sampled violin)
+- Score workspace: import and play back single-voice MusicXML / MXL with first-position fingering
 - iOS 17+, SwiftUI, AVFoundation, no backend or user accounts
+
+## Score workspace / 乐谱
+
+Beyond the starter lesson, the **乐谱** tab imports single-voice sheet music and plays it back so you can follow the score directly:
+
+- Accepts `.musicxml`, `.xml` and compressed `.mxl` (decompressed in memory, no external unzip)
+- Shows the first-position string and finger for every note and highlights the note being played
+- Play / pause / stop, 0.5×–1.0× tempo, and a measure-range loop
+- Optional metronome and one-measure count-in before playback starts
+- Notes outside first position still sound but are marked without fingering
+
+Try it with the sample scores in [`Examples/`](Examples/). The parsing, fingering and playback engine live in [`Sources/VibratoCore`](Sources/VibratoCore) and are covered by `swift test` (81 tests).
+
+![Score workspace on iPhone simulator](docs/screenshots/score-workspace-empty.png)
 
 ## Opening the project
 
