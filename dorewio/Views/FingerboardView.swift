@@ -17,25 +17,29 @@ struct FingerboardView: View {
             let halfSpacing: CGFloat = min(geometry.size.width * 0.095, 39)
             let xs = [center - 3 * halfSpacing, center - halfSpacing,
                       center + halfSpacing, center + 3 * halfSpacing]
-            let nutY: CGFloat = 66
+            // 指板面板顶部留出空间，让空弦（0）那一排完整落在深色指板内。
+            let panelTop: CGFloat = 46
+            let nutY: CGFloat = 72
             let neckLength: CGFloat = min(geometry.size.height - 120, 300)
+            let panelBottom = nutY + neckLength + 44
+            let panelHeight = panelBottom - panelTop
 
             ZStack(alignment: .top) {
                 RoundedRectangle(cornerRadius: 20)
                     .fill(Color(red: 0.14, green: 0.16, blue: 0.18))
-                    .frame(width: xs[3] - xs[0] + 55, height: neckLength + 52)
-                    .position(x: center, y: nutY + (neckLength + 52) / 2 - 2)
+                    .frame(width: xs[3] - xs[0] + 55, height: panelHeight)
+                    .position(x: center, y: panelTop + panelHeight / 2)
 
                 Text("琴头 · SCROLL ↑")
                     .font(.caption2.weight(.semibold))
                     .foregroundStyle(.secondary)
-                    .position(x: center, y: 19)
+                    .position(x: center, y: 9)
 
                 ForEach(Array(ViolinString.allCases.enumerated()), id: \.element.id) { index, string in
                     Text(string.rawValue)
                         .font(.subheadline.weight(.bold))
-                        .foregroundStyle(.white)
-                        .position(x: xs[index], y: nutY - 25)
+                        .foregroundStyle(.primary)
+                        .position(x: xs[index], y: 30)
 
                     Path { path in
                         path.move(to: CGPoint(x: xs[index], y: nutY))
@@ -45,8 +49,8 @@ struct FingerboardView: View {
                 }
 
                 Path { path in
-                    path.move(to: CGPoint(x: xs[0] - 23, y: nutY))
-                    path.addLine(to: CGPoint(x: xs[3] + 23, y: nutY))
+                    path.move(to: CGPoint(x: xs[0] - 23, y: panelTop + 2))
+                    path.addLine(to: CGPoint(x: xs[3] + 23, y: panelTop + 2))
                 }
                 .stroke(.white, lineWidth: 7)
 
@@ -73,6 +77,8 @@ struct FingerboardView: View {
                         }
                         .buttonStyle(.plain)
                         .accessibilityLabel("\(string.rawValue) 弦，\(finger == 0 ? "空弦" : "第 \(finger) 指")")
+                        .frame(width: 44, height: 44)
+                        .contentShape(Rectangle())
                         .position(x: xs[index], y: y)
                     }
                 }

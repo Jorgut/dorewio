@@ -6,3 +6,5 @@ DerivedData/
 *.xccheckout
 *.xcscmblueprint
 .swiftpm/
+.deriveddata/
+.tmp/

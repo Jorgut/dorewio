@@ -3,8 +3,10 @@
 ## M0 — Native iOS starter
 - [x] Product brand and iOS-first platform confirmed
 - [x] Initial SwiftUI and Xcode project committed
-- [ ] Verify successful build using Xcode on macOS
-- [ ] Run on iPhone simulator and check tap targets
+- [x] Verify successful build using Xcode on macOS
+- [x] Run on iPhone simulator and check tap targets
+
+Simulator check (2026-11-11, Xcode 27.2 / iOS 27.2): build and launch verified. Fixed the open-string row sitting outside the fingerboard panel and raised string/finger hit areas to 44 pt. A real-device pass is still pending.
 
 ## M1 — First-position fundamentals
 - [ ] Verify string/finger layout with a violin specialist
