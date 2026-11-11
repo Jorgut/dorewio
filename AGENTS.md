@@ -6,7 +6,7 @@
 - Open strings are G3, D4, A4, E5. Fixed-do solfège is the default; label it explicitly.
 - Fingerboard: scroll/nut at top, body at bottom. G / D / A / E shown left-to-right in the teaching diagram.
 - Note positions are pedagogical approximations, not calibration markers or frets.
-- Audio currently uses a synthesized sine wave, not sampled violin tone.
+- Audio currently uses synthesized tones only: sine-wave reference tones in the lesson, and a harmonic-violin-style synthesized buffer for score playback. No sampled violin recordings are bundled.
 - Add VoiceOver labels and avoid relying only on color to indicate correct answers.
 - Do not claim Xcode build or simulator success without actually running them.
 - Never commit credentials, provisioning profiles or certificates.

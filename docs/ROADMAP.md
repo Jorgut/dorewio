@@ -21,6 +21,7 @@ Simulator check (2026-11-11, Xcode 27.2 / iOS 27.2): build and launch verified. 
 - [ ] Accessibility review
 
 ## M3 — Learning experience
+- [x] Import single-voice MusicXML / MXL and play it back with first-position fingering, tempo, loop, metronome and count-in (shipped ahead of the rest of M3)
 - [ ] Short lessons and spaced practice
 - [ ] Staff notation, solfège and numbered notation
 - [ ] Local progress persistence
