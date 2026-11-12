@@ -1,71 +1,403 @@
 // !$*UTF8*$!
 {
 	archiveVersion = 1;
-	classes = {};
-	objectVersion = 56;
+	classes = {
+	};
+	objectVersion = 77;
 	objects = {
-		B45741BB6832556DA7933BE8 /* PBXFrameworksBuildPhase */ = {
+
+/* Begin PBXBuildFile section */
+		A10000000000000000000001 /* dorewioApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000001 /* dorewioApp.swift */; };
+		A10000000000000000000002 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000002 /* ContentView.swift */; };
+		A10000000000000000000003 /* TrainingSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000003 /* TrainingSession.swift */; };
+		A10000000000000000000004 /* AudioPitchEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000004 /* AudioPitchEngine.swift */; };
+		A10000000000000000000005 /* PitchTraceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000005 /* PitchTraceView.swift */; };
+		A10000000000000000000006 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000006 /* Assets.xcassets */; };
+		A10000000000000000000008 /* VibratoAnalyzer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000008 /* VibratoAnalyzer.swift */; };
+		A10000000000000000000009 /* PitchDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000009 /* PitchDetector.swift */; };
+		A1000000000000000000000A /* BowPractice.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000000000000000000000A /* BowPractice.swift */; };
+		A1000000000000000000000B /* BowPracticeSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000000000000000000000B /* BowPracticeSession.swift */; };
+		A1000000000000000000000C /* BowPracticeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000000000000000000000C /* BowPracticeView.swift */; };
+		A1000000000000000000000D /* PracticeTools.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000000000000000000000D /* PracticeTools.swift */; };
+		A1000000000000000000000E /* TunerSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000000000000000000000E /* TunerSession.swift */; };
+		A1000000000000000000000F /* TunerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000000000000000000000F /* TunerView.swift */; };
+		A10000000000000000000010 /* RhythmPracticeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000010 /* RhythmPracticeView.swift */; };
+		A10000000000000000000011 /* AudioTranscriptionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000011 /* AudioTranscriptionService.swift */; };
+		A10000000000000000000012 /* PracticeStudioSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000012 /* PracticeStudioSession.swift */; };
+		A10000000000000000000013 /* PracticeStudioView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000013 /* PracticeStudioView.swift */; };
+		A10000000000000000000014 /* PracticeDesign.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000014 /* PracticeDesign.swift */; };
+		A10000000000000000000015 /* AudioWaveformService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000015 /* AudioWaveformService.swift */; };
+		A10000000000000000000016 /* PracticeHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000016 /* PracticeHistory.swift */; };
+		A10000000000000000000017 /* PracticeHistoryStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000017 /* PracticeHistoryStore.swift */; };
+		A10000000000000000000018 /* TodayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000018 /* TodayView.swift */; };
+		A10000000000000000000019 /* PracticeLibraryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000019 /* PracticeLibraryView.swift */; };
+		A1000000000000000000001A /* ProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000000000000000000001A /* ProgressView.swift */; };
+		A1000000000000000000001B /* LearningPractice.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000000000000000000001B /* LearningPractice.swift */; };
+		A1000000000000000000001C /* TonePlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000000000000000000001C /* TonePlayer.swift */; };
+		A1000000000000000000001D /* LearningLibraryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000000000000000000001D /* LearningLibraryView.swift */; };
+		A1000000000000000000001E /* SightReadingPracticeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000000000000000000001E /* SightReadingPracticeView.swift */; };
+		A1000000000000000000001F /* FingerboardPracticeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000000000000000000001F /* FingerboardPracticeView.swift */; };
+		A10000000000000000000020 /* EarTrainingPracticeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000020 /* EarTrainingPracticeView.swift */; };
+		A10000000000000000000021 /* PracticeToneGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000021 /* PracticeToneGenerator.swift */; };
+		A10000000000000000000022 /* ScoreFingering.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000022 /* ScoreFingering.swift */; };
+		A10000000000000000000023 /* MusicXMLParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000023 /* MusicXMLParser.swift */; };
+		A10000000000000000000024 /* ScorePlayback.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000024 /* ScorePlayback.swift */; };
+		A10000000000000000000025 /* ScorePracticeSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000025 /* ScorePracticeSession.swift */; };
+		A10000000000000000000026 /* ScoreWorkbenchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000026 /* ScoreWorkbenchView.swift */; };
+		A10000000000000000000028 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000028 /* PrivacyInfo.xcprivacy */; };
+		A10000000000000000000029 /* DorewioLessonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000029 /* DorewioLessonView.swift */; };
+		A10000000000000000000027 /* MXLArchive.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000027 /* MXLArchive.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		A20000000000000000000001 /* dorewioApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = dorewioApp.swift; sourceTree = "<group>"; };
+		A20000000000000000000002 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		A20000000000000000000003 /* TrainingSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingSession.swift; sourceTree = "<group>"; };
+		A20000000000000000000004 /* AudioPitchEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPitchEngine.swift; sourceTree = "<group>"; };
+		A20000000000000000000005 /* PitchTraceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PitchTraceView.swift; sourceTree = "<group>"; };
+		A20000000000000000000006 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		A20000000000000000000007 /* dorewio.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = dorewio.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A20000000000000000000008 /* VibratoAnalyzer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VibratoAnalyzer.swift; sourceTree = "<group>"; };
+		A20000000000000000000009 /* PitchDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PitchDetector.swift; sourceTree = "<group>"; };
+		A2000000000000000000000A /* BowPractice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BowPractice.swift; sourceTree = "<group>"; };
+		A2000000000000000000000B /* BowPracticeSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BowPracticeSession.swift; sourceTree = "<group>"; };
+		A2000000000000000000000C /* BowPracticeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BowPracticeView.swift; sourceTree = "<group>"; };
+		A2000000000000000000000D /* PracticeTools.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticeTools.swift; sourceTree = "<group>"; };
+		A2000000000000000000000E /* TunerSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TunerSession.swift; sourceTree = "<group>"; };
+		A2000000000000000000000F /* TunerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TunerView.swift; sourceTree = "<group>"; };
+		A20000000000000000000010 /* RhythmPracticeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RhythmPracticeView.swift; sourceTree = "<group>"; };
+		A20000000000000000000011 /* AudioTranscriptionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioTranscriptionService.swift; sourceTree = "<group>"; };
+		A20000000000000000000012 /* PracticeStudioSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticeStudioSession.swift; sourceTree = "<group>"; };
+		A20000000000000000000013 /* PracticeStudioView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticeStudioView.swift; sourceTree = "<group>"; };
+		A20000000000000000000014 /* PracticeDesign.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticeDesign.swift; sourceTree = "<group>"; };
+		A20000000000000000000015 /* AudioWaveformService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioWaveformService.swift; sourceTree = "<group>"; };
+		A20000000000000000000016 /* PracticeHistory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticeHistory.swift; sourceTree = "<group>"; };
+		A20000000000000000000017 /* PracticeHistoryStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticeHistoryStore.swift; sourceTree = "<group>"; };
+		A20000000000000000000018 /* TodayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayView.swift; sourceTree = "<group>"; };
+		A20000000000000000000019 /* PracticeLibraryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticeLibraryView.swift; sourceTree = "<group>"; };
+		A2000000000000000000001A /* ProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressView.swift; sourceTree = "<group>"; };
+		A2000000000000000000001B /* LearningPractice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LearningPractice.swift; sourceTree = "<group>"; };
+		A2000000000000000000001C /* TonePlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TonePlayer.swift; sourceTree = "<group>"; };
+		A2000000000000000000001D /* LearningLibraryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LearningLibraryView.swift; sourceTree = "<group>"; };
+		A2000000000000000000001E /* SightReadingPracticeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SightReadingPracticeView.swift; sourceTree = "<group>"; };
+		A2000000000000000000001F /* FingerboardPracticeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FingerboardPracticeView.swift; sourceTree = "<group>"; };
+		A20000000000000000000020 /* EarTrainingPracticeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EarTrainingPracticeView.swift; sourceTree = "<group>"; };
+		A20000000000000000000021 /* PracticeToneGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticeToneGenerator.swift; sourceTree = "<group>"; };
+		A20000000000000000000022 /* ScoreFingering.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreFingering.swift; sourceTree = "<group>"; };
+		A20000000000000000000023 /* MusicXMLParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicXMLParser.swift; sourceTree = "<group>"; };
+		A20000000000000000000024 /* ScorePlayback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScorePlayback.swift; sourceTree = "<group>"; };
+		A20000000000000000000025 /* ScorePracticeSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScorePracticeSession.swift; sourceTree = "<group>"; };
+		A20000000000000000000026 /* ScoreWorkbenchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreWorkbenchView.swift; sourceTree = "<group>"; };
+		A20000000000000000000028 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		A20000000000000000000029 /* DorewioLessonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DorewioLessonView.swift; sourceTree = "<group>"; };
+		A20000000000000000000027 /* MXLArchive.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MXLArchive.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		A30000000000000000000001 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
-			files = ();
+			files = (
+			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		4B94A4D314575C37A3F96C69 /* PBXResourcesBuildPhase */ = {
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		A40000000000000000000001 = {
+			isa = PBXGroup;
+			children = (
+				A40000000000000000000002 /* dorewio */,
+				A40000000000000000000004 /* VibratoCore */,
+				A40000000000000000000003 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		A40000000000000000000002 /* dorewio */ = {
+			isa = PBXGroup;
+			children = (
+				A20000000000000000000001 /* dorewioApp.swift */,
+				A20000000000000000000002 /* ContentView.swift */,
+				A20000000000000000000005 /* PitchTraceView.swift */,
+				A20000000000000000000003 /* TrainingSession.swift */,
+				A20000000000000000000004 /* AudioPitchEngine.swift */,
+				A2000000000000000000000B /* BowPracticeSession.swift */,
+				A2000000000000000000000C /* BowPracticeView.swift */,
+				A2000000000000000000000E /* TunerSession.swift */,
+				A2000000000000000000000F /* TunerView.swift */,
+				A20000000000000000000010 /* RhythmPracticeView.swift */,
+				A20000000000000000000011 /* AudioTranscriptionService.swift */,
+				A20000000000000000000012 /* PracticeStudioSession.swift */,
+				A20000000000000000000013 /* PracticeStudioView.swift */,
+				A20000000000000000000014 /* PracticeDesign.swift */,
+				A20000000000000000000015 /* AudioWaveformService.swift */,
+				A20000000000000000000017 /* PracticeHistoryStore.swift */,
+				A20000000000000000000018 /* TodayView.swift */,
+				A20000000000000000000019 /* PracticeLibraryView.swift */,
+				A2000000000000000000001A /* ProgressView.swift */,
+				A2000000000000000000001C /* TonePlayer.swift */,
+				A2000000000000000000001D /* LearningLibraryView.swift */,
+				A2000000000000000000001E /* SightReadingPracticeView.swift */,
+				A2000000000000000000001F /* FingerboardPracticeView.swift */,
+				A20000000000000000000020 /* EarTrainingPracticeView.swift */,
+				A20000000000000000000025 /* ScorePracticeSession.swift */,
+				A20000000000000000000026 /* ScoreWorkbenchView.swift */,
+				A20000000000000000000028 /* PrivacyInfo.xcprivacy */,
+				A20000000000000000000029 /* DorewioLessonView.swift */,
+				A20000000000000000000006 /* Assets.xcassets */,
+			);
+			path = dorewio;
+			sourceTree = "<group>";
+		};
+		A40000000000000000000003 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A20000000000000000000007 /* dorewio.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		A40000000000000000000004 /* VibratoCore */ = {
+			isa = PBXGroup;
+			children = (
+				A20000000000000000000008 /* VibratoAnalyzer.swift */,
+				A20000000000000000000009 /* PitchDetector.swift */,
+				A2000000000000000000000A /* BowPractice.swift */,
+				A2000000000000000000000D /* PracticeTools.swift */,
+				A20000000000000000000016 /* PracticeHistory.swift */,
+				A2000000000000000000001B /* LearningPractice.swift */,
+				A20000000000000000000021 /* PracticeToneGenerator.swift */,
+				A20000000000000000000022 /* ScoreFingering.swift */,
+				A20000000000000000000023 /* MusicXMLParser.swift */,
+				A20000000000000000000027 /* MXLArchive.swift */,
+				A20000000000000000000024 /* ScorePlayback.swift */,
+			);
+			name = VibratoCore;
+			path = Sources/VibratoCore;
+			sourceTree = SOURCE_ROOT;
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		A50000000000000000000001 /* dorewio */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A70000000000000000000002 /* Build configuration list for PBXNativeTarget "dorewio" */;
+			buildPhases = (
+				A30000000000000000000002 /* Sources */,
+				A30000000000000000000001 /* Frameworks */,
+				A30000000000000000000003 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = dorewio;
+			packageProductDependencies = (
+			);
+			productName = dorewio;
+			productReference = A20000000000000000000007 /* dorewio.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		A60000000000000000000001 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 2660;
+				LastUpgradeCheck = 2660;
+				TargetAttributes = {
+					A50000000000000000000001 = {
+						CreatedOnToolsVersion = 26.6;
+					};
+				};
+			};
+			buildConfigurationList = A70000000000000000000001 /* Build configuration list for PBXProject "dorewio" */;
+			developmentRegion = zh-Hans;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				"zh-Hans",
+			);
+			mainGroup = A40000000000000000000001;
+			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+			);
+			preferredProjectObjectVersion = 77;
+			productRefGroup = A40000000000000000000003 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				A50000000000000000000001 /* dorewio */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		A30000000000000000000003 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
-			files = (13B9239210F0578AA0749431 /* Assets.xcassets in Resources */, );
+			files = (
+				A10000000000000000000006 /* Assets.xcassets in Resources */,
+				A10000000000000000000028 /* PrivacyInfo.xcprivacy in Resources */,
+			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		05600115A40C57A7A262DF5C /* PBXSourcesBuildPhase */ = {
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		A30000000000000000000002 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
-			files = (B39F75B759EC570B971168FF /* dorewioApp.swift in Sources */, 0E46F19BB9365E56B91FB92B /* ViolinNote.swift in Sources */, B6A2E5F1634E59A3954F58A6 /* TonePlayer.swift in Sources */, 800606F671BF5A4B94CB7429 /* FingerboardView.swift in Sources */, 7F121277135E5F27ADA0CE75 /* PracticeView.swift in Sources */, AA0000000000000000000301 /* ScoreModels.swift in Sources */, AA0000000000000000000302 /* MusicXMLParser.swift in Sources */, AA0000000000000000000303 /* MXLArchive.swift in Sources */, AA0000000000000000000304 /* ScoreFingering.swift in Sources */, AA0000000000000000000305 /* ScorePlayback.swift in Sources */, AA0000000000000000000306 /* PracticeToneGenerator.swift in Sources */, AA0000000000000000000307 /* ScorePlaybackSession.swift in Sources */, AA0000000000000000000308 /* ScorePracticeView.swift in Sources */);
+			files = (
+				A10000000000000000000001 /* dorewioApp.swift in Sources */,
+				A10000000000000000000002 /* ContentView.swift in Sources */,
+				A10000000000000000000003 /* TrainingSession.swift in Sources */,
+				A10000000000000000000004 /* AudioPitchEngine.swift in Sources */,
+				A10000000000000000000005 /* PitchTraceView.swift in Sources */,
+				A10000000000000000000008 /* VibratoAnalyzer.swift in Sources */,
+				A10000000000000000000009 /* PitchDetector.swift in Sources */,
+				A1000000000000000000000A /* BowPractice.swift in Sources */,
+				A1000000000000000000000B /* BowPracticeSession.swift in Sources */,
+				A1000000000000000000000C /* BowPracticeView.swift in Sources */,
+				A1000000000000000000000D /* PracticeTools.swift in Sources */,
+				A1000000000000000000000E /* TunerSession.swift in Sources */,
+				A1000000000000000000000F /* TunerView.swift in Sources */,
+				A10000000000000000000010 /* RhythmPracticeView.swift in Sources */,
+				A10000000000000000000011 /* AudioTranscriptionService.swift in Sources */,
+				A10000000000000000000012 /* PracticeStudioSession.swift in Sources */,
+				A10000000000000000000013 /* PracticeStudioView.swift in Sources */,
+				A10000000000000000000014 /* PracticeDesign.swift in Sources */,
+				A10000000000000000000015 /* AudioWaveformService.swift in Sources */,
+				A10000000000000000000016 /* PracticeHistory.swift in Sources */,
+				A10000000000000000000017 /* PracticeHistoryStore.swift in Sources */,
+				A10000000000000000000018 /* TodayView.swift in Sources */,
+				A10000000000000000000019 /* PracticeLibraryView.swift in Sources */,
+				A1000000000000000000001A /* ProgressView.swift in Sources */,
+				A1000000000000000000001B /* LearningPractice.swift in Sources */,
+				A1000000000000000000001C /* TonePlayer.swift in Sources */,
+				A1000000000000000000001D /* LearningLibraryView.swift in Sources */,
+				A1000000000000000000001E /* SightReadingPracticeView.swift in Sources */,
+				A1000000000000000000001F /* FingerboardPracticeView.swift in Sources */,
+				A10000000000000000000020 /* EarTrainingPracticeView.swift in Sources */,
+				A10000000000000000000025 /* ScorePracticeSession.swift in Sources */,
+				A10000000000000000000026 /* ScoreWorkbenchView.swift in Sources */,
+				A10000000000000000000021 /* PracticeToneGenerator.swift in Sources */,
+				A10000000000000000000022 /* ScoreFingering.swift in Sources */,
+				A10000000000000000000023 /* MusicXMLParser.swift in Sources */,
+				A10000000000000000000027 /* MXLArchive.swift in Sources */,
+				A10000000000000000000024 /* ScorePlayback.swift in Sources */,
+				A10000000000000000000029 /* DorewioLessonView.swift in Sources */,
+			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		B39F75B759EC570B971168FF /* dorewioApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 736052EC316554A4B4C3271A /* dorewioApp.swift */; };
-		736052EC316554A4B4C3271A /* dorewioApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = dorewioApp.swift; sourceTree = "<group>"; };
-		0E46F19BB9365E56B91FB92B /* ViolinNote.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEFC5250EB5A517DBF4C26F7 /* ViolinNote.swift */; };
-		AEFC5250EB5A517DBF4C26F7 /* ViolinNote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViolinNote.swift; sourceTree = "<group>"; };
-		B6A2E5F1634E59A3954F58A6 /* TonePlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F9D14B148658C5B41AF7E5 /* TonePlayer.swift */; };
-		57F9D14B148658C5B41AF7E5 /* TonePlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TonePlayer.swift; sourceTree = "<group>"; };
-		800606F671BF5A4B94CB7429 /* FingerboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80F3AD8F32EF56B1A46BC2ED /* FingerboardView.swift */; };
-		80F3AD8F32EF56B1A46BC2ED /* FingerboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FingerboardView.swift; sourceTree = "<group>"; };
-		7F121277135E5F27ADA0CE75 /* PracticeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6675DAA91BE5C469CE8B8D5 /* PracticeView.swift */; };
-		AA0000000000000000000301 /* ScoreModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0000000000000000000201 /* ScoreModels.swift */; };
-		AA0000000000000000000302 /* MusicXMLParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0000000000000000000202 /* MusicXMLParser.swift */; };
-		AA0000000000000000000303 /* MXLArchive.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0000000000000000000203 /* MXLArchive.swift */; };
-		AA0000000000000000000304 /* ScoreFingering.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0000000000000000000204 /* ScoreFingering.swift */; };
-		AA0000000000000000000305 /* ScorePlayback.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0000000000000000000205 /* ScorePlayback.swift */; };
-		AA0000000000000000000306 /* PracticeToneGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0000000000000000000206 /* PracticeToneGenerator.swift */; };
-		AA0000000000000000000307 /* ScorePlaybackSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0000000000000000000207 /* ScorePlaybackSession.swift */; };
-		AA0000000000000000000308 /* ScorePracticeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0000000000000000000208 /* ScorePracticeView.swift */; };
-		D6675DAA91BE5C469CE8B8D5 /* PracticeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticeView.swift; sourceTree = "<group>"; };
-		AA0000000000000000000201 /* ScoreModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreModels.swift; sourceTree = "<group>"; };
-		AA0000000000000000000202 /* MusicXMLParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicXMLParser.swift; sourceTree = "<group>"; };
-		AA0000000000000000000203 /* MXLArchive.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MXLArchive.swift; sourceTree = "<group>"; };
-		AA0000000000000000000204 /* ScoreFingering.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreFingering.swift; sourceTree = "<group>"; };
-		AA0000000000000000000205 /* ScorePlayback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScorePlayback.swift; sourceTree = "<group>"; };
-		AA0000000000000000000206 /* PracticeToneGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticeToneGenerator.swift; sourceTree = "<group>"; };
-		AA0000000000000000000207 /* ScorePlaybackSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScorePlaybackSession.swift; sourceTree = "<group>"; };
-		AA0000000000000000000208 /* ScorePracticeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScorePracticeView.swift; sourceTree = "<group>"; };
-		13B9239210F0578AA0749431 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 03DEB38EBE29524799CCB790 /* Assets.xcassets */; };
-		03DEB38EBE29524799CCB790 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		B750D3BE85BB5D37B5B75146 /* dorewio.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = dorewio.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		B4ABA46143B55F8A9A4A53C4 /* root */ = {isa = PBXGroup; children = (5BFBE8A2B05B5AB1A2CF9F1D /* sources */, AA0000000000000000000100 /* VibratoCore */, 93D332D30C6A588FB9145DE8 /* products */); name = Root; sourceTree = "<group>"; };
-		AA0000000000000000000100 /* VibratoCore */ = {isa = PBXGroup; children = (AA0000000000000000000201 /* ScoreModels.swift */, AA0000000000000000000202 /* MusicXMLParser.swift */, AA0000000000000000000203 /* MXLArchive.swift */, AA0000000000000000000204 /* ScoreFingering.swift */, AA0000000000000000000205 /* ScorePlayback.swift */, AA0000000000000000000206 /* PracticeToneGenerator.swift */); name = VibratoCore; path = Sources/VibratoCore; sourceTree = "<group>"; };
-		5BFBE8A2B05B5AB1A2CF9F1D /* dorewio */ = {isa = PBXGroup; children = (736052EC316554A4B4C3271A /* app */, 1FF0825DF4AD5175BA59052A /* models */, 8D4BF57A142D5ECBACFC0F7F /* services */, 8B7F50AC9C1F56D3AFFD0E35 /* views */, 03DEB38EBE29524799CCB790 /* assets */); name = dorewio; path = dorewio; sourceTree = "<group>"; };
-		1FF0825DF4AD5175BA59052A /* Models */ = {isa = PBXGroup; children = (AEFC5250EB5A517DBF4C26F7 /* model */); name = Models; path = Models; sourceTree = "<group>"; };
-		8D4BF57A142D5ECBACFC0F7F /* Services */ = {isa = PBXGroup; children = (57F9D14B148658C5B41AF7E5 /* tone */, AA0000000000000000000207 /* ScorePlaybackSession.swift */); name = Services; path = Services; sourceTree = "<group>"; };
-		8B7F50AC9C1F56D3AFFD0E35 /* Views */ = {isa = PBXGroup; children = (80F3AD8F32EF56B1A46BC2ED /* board */, D6675DAA91BE5C469CE8B8D5 /* practice */, AA0000000000000000000208 /* ScorePracticeView.swift */); name = Views; path = Views; sourceTree = "<group>"; };
-		93D332D30C6A588FB9145DE8 /* Products */ = {isa = PBXGroup; children = (B750D3BE85BB5D37B5B75146 /* productref */); name = Products; sourceTree = "<group>"; };
-		DCD53269A7415E518F5AE7DC /* dorewio */ = {isa = PBXNativeTarget; buildConfigurationList = 16DDC2169ECF5740883E4D01 /* Build configuration list for PBXNativeTarget "dorewio" */; buildPhases = (05600115A40C57A7A262DF5C, B45741BB6832556DA7933BE8, 4B94A4D314575C37A3F96C69); buildRules = (); dependencies = (); name = dorewio; productName = dorewio; productReference = B750D3BE85BB5D37B5B75146 /* dorewio.app */; productType = "com.apple.product-type.application"; };
-		8FB2C1CD0B56549D929F36F9 /* Project object */ = {isa = PBXProject; attributes = { BuildIndependentTargetsInParallel = 1; LastSwiftUpdateCheck = 1500; LastUpgradeCheck = 1500; TargetAttributes = { DCD53269A7415E518F5AE7DC = { CreatedOnToolsVersion = 15.0; }; }; }; buildConfigurationList = 811D313B6B775DB8806F6B8B; compatibilityVersion = "Xcode 15.0"; developmentRegion = en; hasScannedForEncodings = 0; knownRegions = (en, Base); mainGroup = B4ABA46143B55F8A9A4A53C4; productRefGroup = 93D332D30C6A588FB9145DE8; projectDirPath = ""; projectRoot = ""; targets = (DCD53269A7415E518F5AE7DC); };
-		0682FDEB3A2B5A108880B5AA /* Debug */ = {isa = XCBuildConfiguration; buildSettings = { SDKROOT = "iphoneos"; IPHONEOS_DEPLOYMENT_TARGET = "17.0"; SWIFT_VERSION = "5.0"; CLANG_ENABLE_MODULES = "YES"; SWIFT_OPTIMIZATION_LEVEL = "-Onone"; DEBUG_INFORMATION_FORMAT = "dwarf"; GCC_OPTIMIZATION_LEVEL = 0; }; name = Debug; };
-		C4B098F4A54B5D5F9A05D454 /* Release */ = {isa = XCBuildConfiguration; buildSettings = { SDKROOT = "iphoneos"; IPHONEOS_DEPLOYMENT_TARGET = "17.0"; SWIFT_VERSION = "5.0"; CLANG_ENABLE_MODULES = "YES"; SWIFT_OPTIMIZATION_LEVEL = "-O"; DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym"; GCC_OPTIMIZATION_LEVEL = s; }; name = Release; };
-		811D313B6B775DB8806F6B8B /* Configurations */ = {isa = XCConfigurationList; buildConfigurations = (0682FDEB3A2B5A108880B5AA /* Debug */, C4B098F4A54B5D5F9A05D454 /* Release */); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
-		2DC2827953AC5D6FA048964C /* Debug */ = {isa = XCBuildConfiguration; buildSettings = { ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon; CODE_SIGN_STYLE = Automatic; CURRENT_PROJECT_VERSION = 1; GENERATE_INFOPLIST_FILE = YES; INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES; INFOPLIST_KEY_UILaunchScreen_Generation = YES; IPHONEOS_DEPLOYMENT_TARGET = "17.0"; MARKETING_VERSION = "0.1.0"; PRODUCT_BUNDLE_IDENTIFIER = "com.jorgut.dorewio"; PRODUCT_NAME = "$(TARGET_NAME)"; SUPPORTED_PLATFORMS = "iphoneos iphonesimulator"; SWIFT_VERSION = "5.0"; TARGETED_DEVICE_FAMILY = 1; ENABLE_PREVIEWS = YES; SWIFT_EMIT_LOC_STRINGS = YES; SWIFT_OPTIMIZATION_LEVEL = "-Onone"; }; name = Debug; };
-		411F2755DE7F5CDDB81DDE9D /* Release */ = {isa = XCBuildConfiguration; buildSettings = { ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon; CODE_SIGN_STYLE = Automatic; CURRENT_PROJECT_VERSION = 1; GENERATE_INFOPLIST_FILE = YES; INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES; INFOPLIST_KEY_UILaunchScreen_Generation = YES; IPHONEOS_DEPLOYMENT_TARGET = "17.0"; MARKETING_VERSION = "0.1.0"; PRODUCT_BUNDLE_IDENTIFIER = "com.jorgut.dorewio"; PRODUCT_NAME = "$(TARGET_NAME)"; SUPPORTED_PLATFORMS = "iphoneos iphonesimulator"; SWIFT_VERSION = "5.0"; TARGETED_DEVICE_FAMILY = 1; ENABLE_PREVIEWS = YES; SWIFT_EMIT_LOC_STRINGS = YES; SWIFT_OPTIMIZATION_LEVEL = "-O"; }; name = Release; };
-		16DDC2169ECF5740883E4D01 /* Configurations */ = {isa = XCConfigurationList; buildConfigurations = (2DC2827953AC5D6FA048964C /* Debug */, 411F2755DE7F5CDDB81DDE9D /* Release */); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		B10000000000000000000001 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		B10000000000000000000002 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				SWIFT_COMPILATION_MODE = wholemodule;
+			};
+			name = Release;
+		};
+		B10000000000000000000003 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 3;
+				DEVELOPMENT_TEAM = GB38532D8G;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = dorewio;
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.music";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "用于调音、分析小提琴音高与揉弦，并录制你的练习。";
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MARKETING_VERSION = 0.1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.archintera.VibratoCoach;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_STRICT_CONCURRENCY = complete;
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		B10000000000000000000004 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 3;
+				DEVELOPMENT_TEAM = GB38532D8G;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = dorewio;
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.music";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "用于调音、分析小提琴音高与揉弦，并录制你的练习。";
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MARKETING_VERSION = 0.1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.archintera.VibratoCoach;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_STRICT_CONCURRENCY = complete;
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		A70000000000000000000001 /* Build configuration list for PBXProject "dorewio" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B10000000000000000000001 /* Debug */,
+				B10000000000000000000002 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A70000000000000000000002 /* Build configuration list for PBXNativeTarget "dorewio" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B10000000000000000000003 /* Debug */,
+				B10000000000000000000004 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
 	};
-	rootObject = 8FB2C1CD0B56549D929F36F9 /* Project object */;
+	rootObject = A60000000000000000000001 /* Project object */;
 }
