@@ -123,6 +123,12 @@ final class ProStore: ObservableObject {
     }
 }
 
+/// Launch switch: with the Paid Apps Agreement not yet signed, build 9 ships as a
+/// fully free app (no paywall). Flip to `true` for the paid 1.1 release.
+enum ProLaunchMode {
+    static let gatingEnabled = false
+}
+
 /// Wraps a Pro-only feature. Free users see the paywall instead.
 struct ProGate<Content: View>: View {
     @EnvironmentObject private var proStore: ProStore
@@ -133,7 +139,7 @@ struct ProGate<Content: View>: View {
     }
 
     var body: some View {
-        if proStore.isPro {
+        if !ProLaunchMode.gatingEnabled || proStore.isPro {
             content
         } else {
             PaywallView()

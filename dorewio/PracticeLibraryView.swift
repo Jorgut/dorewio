@@ -46,12 +46,12 @@ struct PracticeLibraryView: View {
                         proRoutes: []
                     )
                     PracticeGroup(
-                        title: "技巧训练（Pro）",
+                        title: ProLaunchMode.gatingEnabled ? "技巧训练（Pro）" : "技巧训练",
                         items: [
                             (.bow, "运弓", "弓段、弓速与换弓控制", "arrow.up.and.down"),
                             (.vibrato, "揉弦", "速度、幅度与音高中心", "waveform.path")
                         ],
-                        proRoutes: [.bow, .vibrato]
+                        proRoutes: ProLaunchMode.gatingEnabled ? [.bow, .vibrato] : []
                     )
                 }
                 .padding()
