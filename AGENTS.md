@@ -35,4 +35,4 @@ TMPDIR="$PWD/.tmp/TMPDIR" CLANG_MODULE_CACHE_PATH="$PWD/.tmp/clang-module-cache"
 
 - Keep `CFBundleDisplayName = dorewio`, `ITSAppUsesNonExemptEncryption = NO`, microphone usage description and `PrivacyInfo.xcprivacy` intact.
 - App Store screenshots: 1320×2868 (iPhone 6.9"/6.7"), 3–10 images, show real app UI.
-- Privacy policy: <https://jorgut.github.io/vibratocoach/PRIVACY.html> · Support: <https://jorgut.github.io/vibratocoach/SUPPORT.html>.
+- Privacy policy: <https://jorgut.github.io/dorewio/PRIVACY.html> · Support: <https://jorgut.github.io/dorewio/SUPPORT.html>.
