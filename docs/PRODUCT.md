@@ -2,33 +2,26 @@
 
 **Brand:** dorewio.  
 **Category:** Violin learning  
-**First platform:** iOS native, SwiftUI  
-**Audience:** Complete beginners learning how A-G pitch names, Do-Re-Mi, strings and first-position left-hand finger positions connect.
+**Platform:** iOS native, SwiftUI  
+**Audience:** Complete beginners learning pitch names (A–G), fixed-do solfège, the four violin strings (G3, D4, A4, E5) and first-position left-hand fingering — including learners who practice without their instrument.
 
-## Primary user journey
+## Primary user journeys
 
-1. See a target pitch, for example F5 (Fa).
-2. See a vertical violin fingerboard, scroll above and body below.
-3. Select E string and low first finger.
-4. Hear a reference pitch and see correct/incorrect feedback.
-5. Move to the next short exercise.
+1. **First lesson:** see a target pitch (e.g. F5 = Fa) → see a vertical violin fingerboard (scroll above, body below) → select E string and low first finger → hear a reference pitch → get correct/incorrect feedback.
+2. **Daily practice:** choose with-violin / without-violin → complete a 10-minute plan → streak and per-skill progress.
+3. **Play along:** import a single-voice score (`.musicxml`, `.xml`, `.mxl`) → see first-position string/finger per note → play with 0.5×–1.0× tempo, measure loop, metronome and count-in.
+4. **Tune and check pitch:** real-time tuner for G/D/A/E, intonation trace, vibrato analysis.
 
 ## Music rules
 
 - Octave number (F5) is not the finger number (1).
 - F natural and F-sharp must be clearly distinguished.
-- For the diagram, string position and scale length are schematically proportioned; not a millimeter ruler.
+- The fingerboard diagram is schematically proportioned; it is not a millimeter ruler or fretboard.
 
-## Score workspace (beyond the starter)
+## In scope (1.0)
 
-A second tab imports an existing single-voice score (`.musicxml`, `.xml`, compressed `.mxl`) and plays it back with:
+Offline operation, no account, local practice history, tuner and pitch analysis, bow/rhythm/sight-reading/ear-training/fingerboard practice, single-voice score import and playback, audio import with melody extraction.
 
-1. the first-position string and finger printed on every note,
-2. the currently sounding note highlighted while it plays,
-3. tempo from 0.5× to 1.0×, measure-range looping, and an optional metronome with one measure of count-in.
+## Out of scope (1.0)
 
-It is a play-along tool, not a notation editor or an accuracy grader. Multi-voice scores, repeats/jumps, ornaments, dynamics and tempo changes are not interpreted; the app plays the first part's pitches and durations as read.
-
-## Out of scope for starter
-
-Payments, accounts, cloud sync, AI listening, microphone input, actual violin sample playback and full sheet music reading.
+Accounts, cloud sync, AI accompaniment, multi-voice scores, repeats/jumps/ornaments/dynamics interpretation, notation editing, sampled violin recordings.

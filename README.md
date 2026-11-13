@@ -2,46 +2,60 @@
 
 **Learn music. Play with confidence.**
 
-dorewio. is a native iOS-first violin-learning app built using SwiftUI.
+dorewio. is a native iOS-first violin-learning app built with SwiftUI. It is offline-first: no account, no backend, no data collection — practice history, recordings and imported scores stay on the device.
 
-## First lesson / 第一课
+This repository is the **shipping app** for the App Store record **「小提琴自学」** (Apple ID `6827607435`, bundle ID `com.archintera.VibratoCoach`). The Xcode project and target are named `dorewio`; the bundle ID must not change.
 
-For absolute beginners: connect scientific note names (such as **F5**), fixed-do solfège (**Fa**), the four violin strings (**G3, D4, A4, E5**) and actual first-position fingering (**low first finger on E**).
+## Features
 
-## MVP
-
-- Interactive violin fingerboard, scroll at top and body at bottom
-- String and finger selection with immediate feedback
-- Eight beginner note exercises
-- Reference tone playback (synthesized sine wave, not sampled violin)
-- Score workspace: import and play back single-voice MusicXML / MXL with first-position fingering
-- iOS 17+, SwiftUI, AVFoundation, no backend or user accounts
-
-## Score workspace / 乐谱
-
-Beyond the starter lesson, the **乐谱** tab imports single-voice sheet music and plays it back so you can follow the score directly:
-
-- Accepts `.musicxml`, `.xml` and compressed `.mxl` (decompressed in memory, no external unzip)
-- Shows the first-position string and finger for every note and highlights the note being played
-- Play / pause / stop, 0.5×–1.0× tempo, and a measure-range loop
-- Optional metronome and one-measure count-in before playback starts
-- Notes outside first position still sound but are marked without fingering
-
-Try it with the sample scores in [`Examples/`](Examples/). The parsing, fingering and playback engine live in [`Sources/VibratoCore`](Sources/VibratoCore) and are covered by `swift test` (81 tests).
-
-![Score workspace on iPhone simulator](docs/screenshots/score-workspace-empty.png)
+- **第一课 / First lesson** — connect scientific pitch names (F5 = Fa), fixed-do solfège, the four violin strings (G3/D4/A4/E5) and first-position fingering (low first finger on E).
+- **调音 / Tuner** — real-time pitch detection for G/D/A/E open strings, cents display, adjustable A4.
+- **音准与揉弦 / Intonation & vibrato** — live pitch trace and vibrato analysis.
+- **运弓 / Bowing** — bow distribution, speed and string-crossing basics.
+- **节奏 / Rhythm** — tap along to a target tempo and get a regularity score.
+- **识谱 / Sight reading** — staff notation to pitch-name drills.
+- **第一把位 / Fingerboard** — string + finger position quiz.
+- **听辨 / Ear training** — open-string listening drills.
+- **曲目工作室 / Score studio** — import single-voice MusicXML (`.musicxml`, `.xml` or compressed `.mxl`), play it back with first-position fingering, 0.5×–1.0× tempo, measure loop, metronome and count-in; or import audio, slow it down and extract a melody.
+- **今天 / Daily plan & progress** — with-violin and without-violin 10-minute plans, streaks and per-skill progress.
 
 ## Opening the project
 
-Open `dorewio.xcodeproj` on macOS in Xcode 15 or later. Choose an iPhone simulator and run the `dorewio` scheme. On device, select your own Apple Development Team for signing.
+Open `dorewio.xcodeproj` on macOS (Xcode 26 or later). Choose an iPhone simulator and run the `dorewio` scheme. On device, select your Apple Development Team for signing.
 
-**Validation:** macOS build and simulator run verified on 2026-11-11 with Xcode 27.2 (iPhone 18 Pro, iOS 27.2). `xcodebuild` for the iOS Simulator succeeded, the app launched, and the first lesson rendered. The simulator pass surfaced two M0 issues, fixed in this change: the open-string row sat outside the fingerboard panel, and the string/finger buttons only had a 33 pt hit area. Buttons now expose a 44 pt hit area and every dot sits inside the fingerboard. Real-device testing has not been completed yet.
+```bash
+# Simulator build (no signing)
+xcodebuild -project dorewio.xcodeproj -scheme dorewio \
+  -destination 'generic/platform=iOS Simulator' \
+  -derivedDataPath .deriveddata CODE_SIGNING_ALLOWED=NO build
+```
 
-![First lesson on iPhone simulator](docs/screenshots/m0-first-lesson.png)
+```bash
+# Core unit tests
+TMPDIR="$PWD/.tmp/TMPDIR" CLANG_MODULE_CACHE_PATH="$PWD/.tmp/clang-module-cache" \
+  swift test --scratch-path .build --cache-path .swiftpm-cache --disable-sandbox
+```
+
+## Repository layout
+
+```
+dorewio.xcodeproj          Xcode project (scheme: dorewio, bundle: com.archintera.VibratoCoach)
+dorewio/                   App target (SwiftUI views, sessions, assets, PrivacyInfo.xcprivacy)
+Sources/VibratoCore/       Testable music core: tuner math, MusicXML/MXL parsing, fingering, playback
+Tests/dorewioTests/        Swift Testing suite for VibratoCore
+outputs/                   Sample MusicXML scores and implementation notes
+docs/                      Product docs, release state, business research, screenshots
+```
+
+## Release state
+
+Current App Store state (2026-11-13): version **1.0 Prepare for Submission**, build **1.0 (7)** uploaded and attached, listing name `dorewio`, subtitle `小提琴 · 调音 · 识谱 · 跟奏`, 5 App Store screenshots, privacy policy and support pages hosted at <https://jorgut.github.io/vibratocoach/>. **Not yet submitted for review.**
+
+See [docs/RELEASE_STATE.md](docs/RELEASE_STATE.md) for the detailed checklist.
 
 ## Roadmap
 
-See [docs/ROADMAP.md](docs/ROADMAP.md).
+See [docs/ROADMAP.md](docs/ROADMAP.md). Monetization research (buyout vs subscription) lives in [docs/BUSINESS_MODEL_RESEARCH_2026-11-13.md](docs/BUSINESS_MODEL_RESEARCH_2026-11-13.md).
 
 ## License
 

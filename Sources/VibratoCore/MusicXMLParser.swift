@@ -1,21 +1,21 @@
 import Foundation
 
 /// 从 MusicXML 导入的单声部乐谱。
-public struct ImportedScore: Sendable, Equatable {
+public nonisolated struct ImportedScore: Sendable, Equatable {
     public let title: String
     public let bpm: Double
     public let notes: [ScoreNote]
     public let measureStartBeats: [Double]
     public let divisions: Int
 
-    public var measureCount: Int { measureStartBeats.count }
+    public nonisolated var measureCount: Int { measureStartBeats.count }
 
     /// 全曲最后一个音结束的位置（以拍计）。
-    public var endBeat: Double {
+    public nonisolated var endBeat: Double {
         notes.reduce(0) { max($0, $1.startBeat + $1.durationBeats) }
     }
 
-    public init(
+    public nonisolated init(
         title: String,
         bpm: Double,
         notes: [ScoreNote],
@@ -30,7 +30,7 @@ public struct ImportedScore: Sendable, Equatable {
     }
 }
 
-public enum MusicXMLImportError: LocalizedError, Equatable {
+public nonisolated enum MusicXMLImportError: LocalizedError, Equatable {
     case unreadableFile
     case unsupportedFormat
     case emptyScore
@@ -53,8 +53,8 @@ public enum MusicXMLImportError: LocalizedError, Equatable {
 /// 只读取第一个 part 的音高与时值；和弦只保留首个音，倚音跳过，
 /// 连音线会把延音并入前一个同音。速度优先取 `<sound tempo="…">`，
 /// 次选取节拍器标记，否则回退到 80 BPM。
-public enum MusicXMLParser {
-    public static func parse(data: Data, fallbackTitle: String = "导入乐谱") throws -> ImportedScore {
+public nonisolated enum MusicXMLParser {
+    public nonisolated static func parse(data: Data, fallbackTitle: String = "导入乐谱") throws -> ImportedScore {
         guard !data.isEmpty else { throw MusicXMLImportError.unreadableFile }
 
         // .mxl 是 ZIP 压缩包：先取出主 MusicXML，再走同一套解析流程。
@@ -85,7 +85,7 @@ public enum MusicXMLParser {
         )
     }
 
-    public static func parse(contentsOf url: URL) throws -> ImportedScore {
+    public nonisolated static func parse(contentsOf url: URL) throws -> ImportedScore {
         let fallback = url.deletingPathExtension().lastPathComponent
         do {
             let data = try Data(contentsOf: url)
@@ -100,7 +100,7 @@ public enum MusicXMLParser {
     }
 }
 
-private final class MusicXMLParserDelegate: NSObject, XMLParserDelegate {
+private nonisolated final class MusicXMLParserDelegate: NSObject, XMLParserDelegate {
     private(set) var title = ""
     private(set) var tempo: Double = 80
     private(set) var notes: [ScoreNote] = []

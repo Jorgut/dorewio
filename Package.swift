@@ -12,14 +12,7 @@ let package = Package(
         .library(name: "VibratoCore", targets: ["VibratoCore"])
     ],
     targets: [
-        .target(
-            name: "VibratoCore",
-            path: "Sources/VibratoCore"
-        ),
-        .testTarget(
-            name: "VibratoCoreTests",
-            dependencies: ["VibratoCore"],
-            path: "Tests/VibratoCoreTests"
-        )
+        .target(name: "VibratoCore"),
+        .testTarget(name: "dorewioTests", dependencies: ["VibratoCore"], path: "Tests/dorewioTests")
     ]
 )

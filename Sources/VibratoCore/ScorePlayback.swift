@@ -1,14 +1,14 @@
 import Foundation
 
 /// 播放计划中的单个音符：起始与时长都已换算成秒。
-public struct ScorePlaybackEvent: Hashable, Identifiable, Sendable {
+public nonisolated struct ScorePlaybackEvent: Hashable, Identifiable, Sendable {
     /// 对应乐谱原始音符的索引，便于界面高亮。
     public let id: Int
     public let midiNote: Int
     public let startSeconds: Double
     public let durationSeconds: Double
 
-    public init(id: Int, midiNote: Int, startSeconds: Double, durationSeconds: Double) {
+    public nonisolated init(id: Int, midiNote: Int, startSeconds: Double, durationSeconds: Double) {
         self.id = id
         self.midiNote = midiNote
         self.startSeconds = startSeconds
@@ -17,20 +17,20 @@ public struct ScorePlaybackEvent: Hashable, Identifiable, Sendable {
 }
 
 /// 节拍器拍点：`seconds` 从播放开始算起，预备拍也计入其中。
-public struct ScoreClick: Hashable, Sendable {
+public nonisolated struct ScoreClick: Hashable, Sendable {
     /// 距离播放开始的时间（含预备拍）。
     public let seconds: Double
     /// 是否为小节起点（重拍）。
     public let isDownbeat: Bool
 
-    public init(seconds: Double, isDownbeat: Bool) {
+    public nonisolated init(seconds: Double, isDownbeat: Bool) {
         self.seconds = seconds
         self.isDownbeat = isDownbeat
     }
 }
 
 /// 可直接交给播放器的按谱时间轴。
-public struct ScorePlaybackTimeline: Sendable, Equatable {
+public nonisolated struct ScorePlaybackTimeline: Sendable, Equatable {
     public let events: [ScorePlaybackEvent]
     public let totalSeconds: Double
     public let tempoScale: Double
@@ -39,7 +39,7 @@ public struct ScorePlaybackTimeline: Sendable, Equatable {
     /// 节拍器拍点，包含预备拍与正曲；`seconds` 均从播放开始算起。
     public let clicks: [ScoreClick]
 
-    public init(
+    public nonisolated init(
         events: [ScorePlaybackEvent],
         totalSeconds: Double,
         tempoScale: Double,
@@ -55,7 +55,7 @@ public struct ScorePlaybackTimeline: Sendable, Equatable {
 
     /// 返回当前时间正在发声（或刚结束）的音符 ID。
     /// 预备拍期间返回 nil；正曲时间会先减去预备拍再查找。
-    public func eventIndex(at time: Double) -> Int? {
+    public nonisolated func eventIndex(at time: Double) -> Int? {
         guard let first = events.first else { return nil }
         guard time >= leadInSeconds else { return nil }
         let scoreTime = time - leadInSeconds
@@ -76,7 +76,7 @@ public struct ScorePlaybackTimeline: Sendable, Equatable {
 }
 
 /// 把导入的乐谱换算成播放时间轴，并渲染成可播放的采样。
-public enum ScorePlayback {
+public nonisolated enum ScorePlayback {
     /// 最低与最高播放速度（相对乐谱标记速度）。
     public static let minimumTempoScale = 0.4
     public static let maximumTempoScale = 1.2
@@ -91,7 +91,7 @@ public enum ScorePlayback {
     private static let downbeatClickFrequency = 1_760.0
     private static let beatClickFrequency = 1_200.0
 
-    public static func timeline(
+    public nonisolated static func timeline(
         score: ImportedScore,
         tempoScale: Double = 1,
         loopMeasures: ClosedRange<Int>? = nil,
@@ -167,7 +167,7 @@ public enum ScorePlayback {
     /// 用与指板、示范音一致的音色把时间轴渲染为单声道采样。
     ///
     /// - `metronomeEnabled == true` 时渲染全部拍点；否则只保留预备拍的拍点。
-    public static func renderSamples(
+    public nonisolated static func renderSamples(
         timeline: ScorePlaybackTimeline,
         sampleRate: Double,
         metronomeEnabled: Bool = false
@@ -216,7 +216,7 @@ public enum ScorePlayback {
     // MARK: - 拍点计算
 
     /// 第一小节的拍数；只有一个拍位时回退到 4 拍。
-    private static func firstMeasureBeats(of score: ImportedScore) -> Double {
+    private nonisolated static func firstMeasureBeats(of score: ImportedScore) -> Double {
         let starts = score.measureStartBeats
         if starts.count >= 2 {
             let length = starts[1] - starts[0]
@@ -226,7 +226,7 @@ public enum ScorePlayback {
     }
 
     /// 预备拍拍点：从播放开始到正曲起点，每个拍一下，第一拍是重拍。
-    private static func countInClicks(
+    private nonisolated static func countInClicks(
         leadInBeats: Double,
         secondsPerBeat: Double
     ) -> [ScoreClick] {
@@ -241,7 +241,7 @@ public enum ScorePlayback {
     }
 
     /// 正曲拍点：每个小节从起点开始每个拍一下，小节起点是重拍。
-    private static func beatClicks(
+    private nonisolated static func beatClicks(
         score: ImportedScore,
         regionStartBeat: Double,
         regionEndBeat: Double,
@@ -277,7 +277,7 @@ public enum ScorePlayback {
     }
 
     /// 单个 click 的短促采样：正弦 + 快速指数衰减，重拍音高更高。
-    private static func clickSamples(isDownbeat: Bool, sampleRate: Double) -> [Float] {
+    private nonisolated static func clickSamples(isDownbeat: Bool, sampleRate: Double) -> [Float] {
         guard sampleRate > 0 else { return [] }
         let frameCount = max(1, Int((clickDurationSeconds * sampleRate).rounded()))
         let frequency = isDownbeat ? downbeatClickFrequency : beatClickFrequency

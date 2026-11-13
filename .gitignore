@@ -8,3 +8,12 @@ DerivedData/
 .swiftpm/
 .deriveddata/
 .tmp/
+
+# Build artifacts
+.build/
+*.xcarchive
+*.ipa
+build/
+.deriveddata*/
+.build-*/
+.swiftpm-*/

@@ -1,6 +1,6 @@
 import Foundation
 
-public enum PracticeToneGenerator {
+public nonisolated enum PracticeToneGenerator {
     public static func samples(
         frequency: Double,
         duration: TimeInterval,

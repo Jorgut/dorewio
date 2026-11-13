@@ -2,7 +2,7 @@ import Compression
 import Foundation
 
 /// 读取 .mxl（ZIP 压缩的 MusicXML）时可能出现的错误。
-public enum MXLImportError: LocalizedError, Equatable, Sendable {
+public nonisolated enum MXLImportError: LocalizedError, Equatable, Sendable {
     /// 不是有效的 ZIP 压缩包，或压缩包结构损坏、被截断。
     case invalidArchive
     /// 压缩包里找不到 MusicXML 乐谱文件。
@@ -39,7 +39,7 @@ public enum MXLImportError: LocalizedError, Equatable, Sendable {
 /// 不解压到磁盘、不依赖系统解压工具；支持 store（method 0）与 deflate（method 8），
 /// 拒绝加密条目与 ZIP64，并对条目数量、文件名长度和解压后大小设上限，
 /// 遇到损坏数据时抛出明确的 ``MXLImportError`` 而不是崩溃或死循环。
-public enum MXLArchive {
+public nonisolated enum MXLArchive {
     /// 单个条目解压后的最大字节数（8 MB）。
     public static let maximumEntryBytes = 8 * 1024 * 1024
 
@@ -59,7 +59,7 @@ public enum MXLArchive {
     ///
     /// 优先读取 `META-INF/container.xml` 中 `<rootfile full-path="…">` 指向的条目；
     /// 没有可用的 container.xml 时，回退到第一个 `.musicxml` / `.xml` 条目。
-    public static func extractMusicXML(from data: Data) throws -> Data {
+    public nonisolated static func extractMusicXML(from data: Data) throws -> Data {
         guard data.count >= 22, data.starts(with: [0x50, 0x4B]) else {
             throw MXLImportError.invalidArchive
         }
@@ -346,7 +346,7 @@ public enum MXLArchive {
 }
 
 /// 读取 `META-INF/container.xml`，取出第一个 rootfile 的 full-path。
-private final class ContainerXMLDelegate: NSObject, XMLParserDelegate {
+private nonisolated final class ContainerXMLDelegate: NSObject, XMLParserDelegate {
     private(set) var rootfilePath: String?
 
     func parser(
