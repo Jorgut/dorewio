@@ -5,7 +5,7 @@ App Store Connect record: **小提琴自学** · Apple ID `6827607435` · bundle
 ## Current status
 
 - App Store version **1.0 — Prepare for Submission** (not submitted for review)
-- Attached build: **1.0 (8)** · delivery UUID `50143707-6f39-4065-883a-31907a0b8e4b` · processing `VALID`
+- Attached build: **1.0 (9)** (free launch) · delivery UUID pending · processing pending
 - Listing name: **dorewio** · subtitle **小提琴 · 调音 · 识谱 · 跟奏**
 - Category: Music (primary) / Education (secondary) · Age rating **4+** · copyright `2026 Altankhuu Jorgutyn`
 - Pricing: app **free** (no in-app purchases yet) · availability: all 175 countries/regions
@@ -22,7 +22,8 @@ App Store Connect record: **小提琴自学** · Apple ID `6827607435` · bundle
 | 5 | Added `PrivacyInfo.xcprivacy` |
 | 6 | New dorewio icon + display name `dorewio` |
 | 7 | New icon + first-lesson screen ported from dorewio |
-| 8 | StoreKit 2 Pro buyout + paywall + gated training/studio (current) |
+| 8 | StoreKit 2 Pro buyout + paywall + gated training/studio |
+| 9 | **Free launch**: Pro gating disabled (`ProLaunchMode.gatingEnabled = false`), all features free |
 
 ## Known caveats
 
@@ -69,7 +70,13 @@ xcrun altool --upload-app -f build/export/dorewio.ipa -t ios \
 
 Never commit `$ASC_KEY_PATH` (`.p8`), `.xcarchive`, `.ipa` or provisioning profiles.
 
-## Monetization — dorewio Pro
+## Launch mode (build 9)
+
+Paid Apps Agreement is not signed yet and the developer cannot complete Apple 2FA right now, so 1.0 launches as a **free app with all features unlocked**: `ProLaunchMode.gatingEnabled = false` in `dorewio/ProStore.swift`. The StoreKit/IAP code and the `dorewio Pro` product remain in place; flipping the flag to `true` in the 1.1 build re-enables the paywall after the Paid Apps Agreement is active.
+
+China mainland is excluded from availability (174 of 175 territories); ICP filing is a later task. Re-enable CHN in Pricing and Availability after the ICP filing number is entered in App Information.
+
+## Monetization — dorewio Pro (deferred to 1.1)
 
 - Model: **one-time non-consumable unlock** (buyout). Product ID `com.archintera.VibratoCoach.pro.lifetime`.
 - Price: base territory USA **$9.99** (Apple price points; China ≈ ¥68; no subscription, no renewal).
