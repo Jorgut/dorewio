@@ -59,6 +59,15 @@ Current App Store state (2026-11-13): version **1.0 Prepare for Submission**, bu
 
 See [docs/RELEASE_STATE.md](docs/RELEASE_STATE.md) for the detailed checklist.
 
+## Free vs Pro
+
+The app is free to download. **dorewio Pro** is a one-time (non-consumable) purchase, product ID `com.archintera.VibratoCoach.pro.lifetime`:
+
+- **Free:** tuner, metronome, first lesson, daily plan, basic rhythm / sight-reading / fingerboard / ear-training.
+- **Pro:** all technique training (bow, vibrato, intonation), score studio (MusicXML/MXL import and playback, audio import and melody extraction) and full practice statistics. Restore purchases is available on the Pro screen.
+
+No subscription, no account, no server. See `docs/RELEASE_STATE.md` for the current App Store state.
+
 ## Roadmap
 
 See [docs/ROADMAP.md](docs/ROADMAP.md). Monetization research (buyout vs subscription) lives in [docs/BUSINESS_MODEL_RESEARCH_2026-11-13.md](docs/BUSINESS_MODEL_RESEARCH_2026-11-13.md).

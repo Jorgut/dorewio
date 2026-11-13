@@ -5,7 +5,7 @@ App Store Connect record: **小提琴自学** · Apple ID `6827607435` · bundle
 ## Current status
 
 - App Store version **1.0 — Prepare for Submission** (not submitted for review)
-- Attached build: **1.0 (7)** · delivery UUID `3f574b00-f848-403f-bf58-585c37b47bee` · processing `VALID`
+- Attached build: **1.0 (8)** · delivery UUID `50143707-6f39-4065-883a-31907a0b8e4b` · processing `VALID`
 - Listing name: **dorewio** · subtitle **小提琴 · 调音 · 识谱 · 跟奏**
 - Category: Music (primary) / Education (secondary) · Age rating **4+** · copyright `2026 Altankhuu Jorgutyn`
 - Pricing: app **free** (no in-app purchases yet) · availability: all 175 countries/regions
@@ -21,7 +21,8 @@ App Store Connect record: **小提琴自学** · Apple ID `6827607435` · bundle
 | 4 | First upload of the rebranded project; old icon |
 | 5 | Added `PrivacyInfo.xcprivacy` |
 | 6 | New dorewio icon + display name `dorewio` |
-| 7 | Current build: new icon + first-lesson screen ported from dorewio |
+| 7 | New icon + first-lesson screen ported from dorewio |
+| 8 | StoreKit 2 Pro buyout + paywall + gated training/studio (current) |
 
 ## Known caveats
 
@@ -68,9 +69,25 @@ xcrun altool --upload-app -f build/export/dorewio.ipa -t ios \
 
 Never commit `$ASC_KEY_PATH` (`.p8`), `.xcarchive`, `.ipa` or provisioning profiles.
 
+## Monetization — dorewio Pro
+
+- Model: **one-time non-consumable unlock** (buyout). Product ID `com.archintera.VibratoCoach.pro.lifetime`.
+- Price: base territory USA **$9.99** (Apple price points; China ≈ ¥68; no subscription, no renewal).
+- IAP record: `6834334407` — state **READY_TO_SUBMIT**, localized (zh-Hans), review screenshot uploaded, available in all 175 territories.
+- Free tier: tuner, metronome, first lesson, daily plan, basic rhythm/sight-reading/fingerboard/ear-training.
+- Pro: all technique training (bow/vibrato/intonation), score studio (MusicXML/MXL import + playback, audio import + melody extraction), full stats.
+- Implementation: `dorewio/ProStore.swift` (StoreKit 2, `Transaction.updates` / `currentEntitlements`, restore via `AppStore.sync()`), `ProGate` and `PaywallView`; locked destinations in `ContentView`/`PracticeLibraryView`.
+- App Store review notes include the product ID and restore path.
+
+## Blocking prerequisites before submission
+
+1. **Paid Apps Agreement must be signed** in App Store Connect → Business → Agreements (requires bank/tax details). The Business page currently reports "To offer apps or other in-app purchases, you must sign the Paid Apps Agreement."
+2. **Mainland China App 备案 (ICP)** must be completed and the filing number entered in App Store Connect before China distribution.
+3. First IAP must be submitted together with app version 1.0 (review submission must contain both the version and the IAP).
+
 ## Next steps
 
-1. Decide monetization: **buyout Pro (¥68, recommended)** vs subscription — see `docs/BUSINESS_MODEL_RESEARCH_2026-11-13.md`.
-2. Implement StoreKit 2 (buyout + paywall + restore) and ship as build 8, still version 1.0.
-3. Complete App 备案 (ICP) for mainland China before enabling China distribution.
-4. Submit version 1.0 for review after IAP is added (first IAP must ship with a version).
+1. Sign the Paid Apps Agreement (and consider the Small Business Program for 15% commission).
+2. Create the review submission with version 1.0 + IAP `6834334407`, submit for review.
+3. After approval: verify the paywall/restore flow with a sandbox account, then release.
+4. Complete App 备案 for mainland China.

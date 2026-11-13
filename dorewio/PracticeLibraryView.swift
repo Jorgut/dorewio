@@ -16,10 +16,10 @@ enum PracticeDestination {
     static func view(for route: PracticeRoute) -> some View {
         switch route {
         case .tuner: TunerView()
-        case .vibrato: VibratoPracticeView()
-        case .bow: BowPracticeView()
+        case .vibrato: ProGate { VibratoPracticeView() }
+        case .bow: ProGate { BowPracticeView() }
         case .rhythm: RhythmPracticeView()
-        case .studio: PracticeStudioView()
+        case .studio: ProGate { PracticeStudioView() }
         case .sightReading: SightReadingPracticeView()
         case .fingerboard: FingerboardPracticeView()
         case .earTraining: EarTrainingPracticeView()
@@ -42,14 +42,16 @@ struct PracticeLibraryView: View {
                         items: [
                             (.tuner, "调音", "先让四根空弦回到中心", "tuningfork"),
                             (.rhythm, "节奏", "建立稳定的内部拍点", "metronome")
-                        ]
+                        ],
+                        proRoutes: []
                     )
                     PracticeGroup(
-                        title: "技巧训练",
+                        title: "技巧训练（Pro）",
                         items: [
                             (.bow, "运弓", "弓段、弓速与换弓控制", "arrow.up.and.down"),
                             (.vibrato, "揉弦", "速度、幅度与音高中心", "waveform.path")
-                        ]
+                        ],
+                        proRoutes: [.bow, .vibrato]
                     )
                 }
                 .padding()
@@ -65,6 +67,7 @@ struct PracticeLibraryView: View {
 private struct PracticeGroup: View {
     let title: String
     let items: [(PracticeRoute, String, String, String)]
+    var proRoutes: Set<PracticeRoute> = []
 
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
@@ -83,6 +86,15 @@ private struct PracticeGroup: View {
                             Text(detail).font(.subheadline).foregroundStyle(.secondary)
                         }
                         .frame(maxWidth: .infinity, alignment: .leading)
+                        if proRoutes.contains(route) {
+                            Text("PRO")
+                                .font(.caption2.weight(.bold))
+                                .foregroundStyle(PracticePalette.accent)
+                                .padding(.horizontal, 7)
+                                .padding(.vertical, 3)
+                                .background(PracticePalette.accent.opacity(0.12), in: Capsule())
+                                .accessibilityLabel("Pro 功能")
+                        }
                         Image(systemName: "chevron.right")
                             .font(.caption.weight(.semibold))
                             .foregroundStyle(.tertiary)
