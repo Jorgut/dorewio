@@ -19,7 +19,9 @@ struct ContentView: View {
                 }
 
             NavigationStack {
-                PracticeStudioView()
+                ProGate {
+                    PracticeStudioView()
+                }
             }
                 .tabItem {
                     Label("曲目", systemImage: "music.note.list")
