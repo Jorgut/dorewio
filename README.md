@@ -6,6 +6,12 @@ dorewio. is a native iOS-first violin-learning app built with SwiftUI. It is off
 
 This repository is the **shipping app** for the App Store record **「小提琴自学」** (Apple ID `6827607435`, bundle ID `com.archintera.VibratoCoach`). The Xcode project and target are named `dorewio`; the bundle ID must not change.
 
+## The name
+
+**dorewio.** — **do–re** is the solfège starting point (and the first lesson), and the **w** is two **V**s for **Violin** and **Viola**; the trailing period is part of the wordmark.
+
+The project began in August 2026 as **VibratoCoach**, a vibrato-practice experiment, before growing into a full daily-practice app. Read [docs/BRAND.md](docs/BRAND.md) for the full story — including why the bundle ID still contains the old name.
+
 ## Features
 
 - **第一课 / First lesson** — connect scientific pitch names (F5 = Fa), fixed-do solfège, the four violin strings (G3/D4/A4/E5) and first-position fingering (low first finger on E).
@@ -49,7 +55,7 @@ docs/                      Product docs, release state, business research, scree
 
 ## Release state
 
-Current App Store state (2026-11-13): version **1.0 Prepare for Submission**, build **1.0 (7)** uploaded and attached, listing name `dorewio`, subtitle `小提琴 · 调音 · 识谱 · 跟奏`, 5 App Store screenshots, privacy policy and support pages hosted at <https://jorgut.github.io/vibratocoach/>. **Not yet submitted for review.**
+Current App Store state (2026-11-13): version **1.0 Prepare for Submission**, build **1.0 (7)** uploaded and attached, listing name `dorewio`, subtitle `小提琴 · 调音 · 识谱 · 跟奏`, 5 App Store screenshots, privacy policy and support pages hosted in this repository at <https://jorgut.github.io/dorewio/PRIVACY.html> and <https://jorgut.github.io/dorewio/SUPPORT.html>. **Not yet submitted for review.**
 
 See [docs/RELEASE_STATE.md](docs/RELEASE_STATE.md) for the detailed checklist.
 

@@ -12,7 +12,7 @@ App Store Connect record: **小提琴自学** · Apple ID `6827607435` · bundle
 - App Privacy: **Data Not Collected** (published)
 - Screenshots: 5 × iPhone 6.9"/6.7" (1320×2868) — see `docs/screenshots/app-1.0/`
 - Review contact: Altankhuu JORGUTYN · +8618588751947 · honaler@gmail.com · demo account not required
-- Privacy policy: <https://jorgut.github.io/vibratocoach/PRIVACY.html> · Support: <https://jorgut.github.io/vibratocoach/SUPPORT.html>
+- Privacy policy: <https://jorgut.github.io/dorewio/PRIVACY.html> · Support: <https://jorgut.github.io/dorewio/SUPPORT.html>
 
 ## Build history in this version
 
