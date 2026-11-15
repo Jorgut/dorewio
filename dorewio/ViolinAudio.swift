@@ -115,64 +115,43 @@ final class ViolinNotePlayer: ObservableObject {
 }
 
 /// Continuous violin tone whose pitch can be bent by a touch gesture.
+/// Uses a seamless looping buffer plus AVAudioUnitTimePitch instead of a
+/// realtime source-node callback, which keeps the audio graph stable while
+/// the user drags (the previous source-node version could trap on device).
 final class VibratoTouchEngine {
     private let engine = AVAudioEngine()
-    private var sourceNode: AVAudioSourceNode?
-    private let lock = NSLock()
-    private var baseFrequency = 440.0
-    private var cents = 0.0
-    private var amplitude = 0.0
-    private var phase = 0.0
+    private let player = AVAudioPlayerNode()
+    private let timePitch = AVAudioUnitTimePitch()
+    private let format = AVAudioFormat(standardFormatWithSampleRate: 44_100, channels: 1)
+    private var configured = false
     private var isRunning = false
+    private var loopBuffer: AVAudioPCMBuffer?
+
+    init() {
+        engine.attach(player)
+        engine.attach(timePitch)
+    }
 
     func start(baseFrequency: Double) {
-        self.baseFrequency = baseFrequency
-        cents = 0
-        amplitude = 0.28
-        phase = 0
-        guard !isRunning else { return }
-
+        stop()
+        guard let format else { return }
         do {
             let session = AVAudioSession.sharedInstance()
             try session.setCategory(.playback, mode: .default, options: [.mixWithOthers])
             try session.setActive(true)
-
-            let format = AVAudioFormat(standardFormatWithSampleRate: 44_100, channels: 1)
-            let source = AVAudioSourceNode { [weak self] _, _, frameCount, audioBufferList -> OSStatus in
-                guard let self else { return noErr }
-                self.lock.lock()
-                let base = self.baseFrequency
-                let cents = self.cents
-                let level = self.amplitude
-                var phase = self.phase
-                self.lock.unlock()
-
-                let frequency = base * pow(2, cents / 1_200)
-                let abl = UnsafeMutableAudioBufferListPointer(audioBufferList)
-                guard let channel = abl.first?.mData?.assumingMemoryBound(to: Float.self) else {
-                    return noErr
-                }
-                let harmonics: [(Double, Double)] = [(1, 1.0), (2, 0.42), (3, 0.24), (4, 0.12)]
-                for frame in 0..<Int(frameCount) {
-                    var sample = 0.0
-                    for harmonic in harmonics {
-                        sample += sin(phase * harmonic.0) * harmonic.1
-                    }
-                    sample *= level * 0.16
-                    channel[frame] = Float(sample)
-                    phase += 2 * .pi * frequency / 44_100
-                    if phase > 2 * .pi { phase -= 2 * .pi }
-                }
-                self.lock.lock()
-                self.phase = phase
-                self.lock.unlock()
-                return noErr
+            if !configured {
+                engine.connect(player, to: timePitch, format: format)
+                engine.connect(timePitch, to: engine.mainMixerNode, format: format)
+                configured = true
             }
-            sourceNode = source
-            engine.attach(source)
-            engine.connect(source, to: engine.mainMixerNode, format: format)
+            loopBuffer = makeLoop(frequency: baseFrequency)
+            timePitch.pitch = 0
             engine.prepare()
             try engine.start()
+            player.play()
+            if let loopBuffer {
+                player.scheduleBuffer(loopBuffer, at: nil, options: .loops)
+            }
             isRunning = true
         } catch {
             isRunning = false
@@ -180,22 +159,40 @@ final class VibratoTouchEngine {
     }
 
     func setCents(_ cents: Double) {
-        lock.lock()
-        self.cents = max(-100, min(100, cents))
-        lock.unlock()
+        timePitch.pitch = Float(max(-100, min(100, cents)))
     }
 
     func stop() {
         guard isRunning else { return }
-        lock.lock()
-        amplitude = 0
-        lock.unlock()
+        player.stop()
         engine.stop()
-        if let sourceNode {
-            engine.detach(sourceNode)
-        }
-        sourceNode = nil
+        engine.reset()
         isRunning = false
         try? AVAudioSession.sharedInstance().setActive(false, options: .notifyOthersOnDeactivation)
+    }
+
+    /// Generates an integer number of periods so the loop is seamless.
+    private func makeLoop(frequency: Double) -> AVAudioPCMBuffer? {
+        guard let format else { return nil }
+        let sampleRate = 44_100.0
+        let cycles = max(1, Int((frequency * 0.6).rounded()))
+        let duration = Double(cycles) / frequency
+        let frameCount = Int(sampleRate * duration)
+        guard let buffer = AVAudioPCMBuffer(pcmFormat: format, frameCapacity: AVAudioFrameCount(frameCount)),
+              let channel = buffer.floatChannelData?[0] else {
+            return nil
+        }
+        buffer.frameLength = AVAudioFrameCount(frameCount)
+        let harmonics: [(Double, Double)] = [(1, 1.0), (2, 0.42), (3, 0.24), (4, 0.12)]
+        var phase = 0.0
+        for frame in 0..<frameCount {
+            var sample = 0.0
+            for harmonic in harmonics {
+                sample += sin(phase * harmonic.0) * harmonic.1
+            }
+            channel[frame] = Float(sample * 0.16)
+            phase += 2 * .pi * frequency / sampleRate
+        }
+        return buffer
     }
 }

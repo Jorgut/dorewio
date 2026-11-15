@@ -1,4 +1,5 @@
 import SwiftUI
+import UIKit
 
 struct BowPracticeView: View {
     @EnvironmentObject private var history: PracticeHistoryStore
@@ -9,23 +10,27 @@ struct BowPracticeView: View {
     @State private var practiceStartedAt: Date?
 
     var body: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: 24) {
-                PracticeSectionHeader(
-                    eyebrow: "右手",
-                    title: "把弓速和弓段练成肌肉记忆",
-                    detail: "跟随方向与口令，不要为了追拍牺牲音色"
-                )
-                ExerciseSelectionSection(session: session, category: $category)
-                TempoSection(session: session)
-                Toggle("节拍声音", isOn: $soundEnabled)
-                    .tint(PracticePalette.accent)
-                    .practiceSurface()
-                BowMotionSection(session: session)
-                ExerciseDetailSection(exercise: session.selectedExercise)
-                BowPracticeControls(session: session)
-            }
-            .padding()
+        VStack(alignment: .leading, spacing: 12) {
+            PracticeSectionHeader(
+                eyebrow: "右手",
+                title: "把弓速和弓段练成肌肉记忆",
+                detail: "跟随方向与口令，不要为了追拍牺牲音色"
+            )
+            ExerciseSelectionSection(session: session, category: $category)
+            TempoSection(session: session)
+            Toggle("节拍声音", isOn: $soundEnabled)
+                .tint(PracticePalette.accent)
+                .practiceSurface(padding: 12)
+            BowMotionSection(session: session)
+        }
+        .padding(.horizontal, 16)
+        .padding(.top, 8)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+        .safeAreaInset(edge: .bottom) {
+            BowPracticeControls(session: session)
+                .padding(.horizontal, 16)
+                .padding(.bottom, 8)
+                .background(PracticePalette.canvas.opacity(0.96))
         }
         .background(PracticePalette.canvas)
         .navigationTitle("运弓练习")
@@ -37,11 +42,15 @@ struct BowPracticeView: View {
             clicker.play(accent: (beat - 1) % 4 == 0)
         }
         .onChange(of: soundEnabled) { clicker.isEnabled = soundEnabled }
-        .onChange(of: session.isRunning) { updatePracticeTimer(isActive: session.isRunning) }
+        .onChange(of: session.isRunning) {
+            updatePracticeTimer(isActive: session.isRunning)
+            UIApplication.shared.isIdleTimerDisabled = session.isRunning
+        }
         .onDisappear {
             finishPractice()
             session.stop()
             clicker.stop()
+            UIApplication.shared.isIdleTimerDisabled = false
         }
     }
 
@@ -150,8 +159,8 @@ private struct BowMotionSection: View {
                 .monospacedDigit()
         }
         .frame(maxWidth: .infinity)
-        .padding(.vertical, 20)
-        .practiceSurface(padding: 18)
+        .padding(.vertical, 10)
+        .practiceSurface(padding: 14)
         .accessibilityElement(children: .ignore)
         .accessibilityLabel(accessibilityDescription)
     }

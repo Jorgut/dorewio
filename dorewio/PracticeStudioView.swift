@@ -1,4 +1,5 @@
 import SwiftUI
+import UIKit
 import UniformTypeIdentifiers
 
 struct PracticeStudioView: View {
@@ -85,15 +86,18 @@ struct PracticeStudioView: View {
         .onChange(of: session.isPlaying) {
             if session.isPlaying { scoreSession.pause() }
             updatePracticeTimer(isActive: session.isPlaying || scoreSession.isPlaying)
+            UIApplication.shared.isIdleTimerDisabled = session.isPlaying || scoreSession.isPlaying
         }
         .onChange(of: scoreSession.isPlaying) {
             if scoreSession.isPlaying { session.pause() }
             updatePracticeTimer(isActive: session.isPlaying || scoreSession.isPlaying)
+            UIApplication.shared.isIdleTimerDisabled = session.isPlaying || scoreSession.isPlaying
         }
         .onDisappear {
             finishPractice()
             session.stop()
             scoreSession.stop()
+            UIApplication.shared.isIdleTimerDisabled = false
         }
     }
 

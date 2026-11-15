@@ -1,4 +1,5 @@
 import SwiftUI
+import UIKit
 
 struct TunerView: View {
     @EnvironmentObject private var history: PracticeHistoryStore
@@ -6,30 +7,38 @@ struct TunerView: View {
     @State private var practiceStartedAt: Date?
 
     var body: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: 22) {
-                PracticeSectionHeader(
-                    eyebrow: "实时音准",
-                    title: "让每一个长音落在中心",
-                    detail: "先拉空弦，稳定后再调整弦轴或微调器"
-                )
-                TunerDial(reading: session.reading, isListening: session.isListening)
-                StringReference(reading: session.reading)
-                CalibrationPanel(concertA: $session.concertA)
-                TunerStatus(state: session.state, reading: session.reading)
-                TunerListenButton(session: session)
-            }
-            .padding()
+        VStack(alignment: .leading, spacing: 14) {
+            PracticeSectionHeader(
+                eyebrow: "实时音准",
+                title: "让每一个长音落在中心",
+                detail: "先拉空弦，稳定后再调整弦轴或微调器"
+            )
+            TunerDial(reading: session.reading, isListening: session.isListening)
+            StringReference(reading: session.reading)
+            CalibrationPanel(concertA: $session.concertA)
+            TunerStatus(state: session.state, reading: session.reading)
+            Spacer(minLength: 0)
+        }
+        .padding(.horizontal, 16)
+        .padding(.top, 8)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+        .safeAreaInset(edge: .bottom) {
+            TunerListenButton(session: session)
+                .padding(.horizontal, 16)
+                .padding(.bottom, 8)
+                .background(PracticePalette.canvas.opacity(0.96))
         }
         .background(PracticePalette.canvas)
         .navigationTitle("调音")
         .navigationBarTitleDisplayMode(.inline)
         .onChange(of: session.isListening) {
             updatePracticeTimer(isActive: session.isListening)
+            UIApplication.shared.isIdleTimerDisabled = session.isListening
         }
         .onDisappear {
             finishPractice()
             session.stop()
+            UIApplication.shared.isIdleTimerDisabled = false
         }
     }
 
@@ -97,7 +106,7 @@ private struct TunerDial: View {
                 }
                 .offset(y: 18)
             }
-            .frame(height: 230)
+            .frame(height: 190)
             .accessibilityElement(children: .ignore)
             .accessibilityLabel(accessibilityText)
 

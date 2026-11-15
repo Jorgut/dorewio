@@ -9,6 +9,7 @@ App Store Connect record: **小提琴自学** · Apple ID `6827607435` · bundle
 - Build in review: 1.0 (9) — **rejected 2026-11-15 (Guideline 2.1 – Information Needed)**
 - Build 10: light iteration (bundled sample score, first-run onboarding, About/support screen)
 - Build 11: **audio crash fix** — the microphone tap closure was MainActor-isolated and trapped on the realtime audio thread (`EXC_BREAKPOINT` in `AudioPitchEngine.start`); fixed by making the tap `@Sendable` and capturing only non-isolated locals.
+- Build 14: one-page tuner/rhythm/bow, idle-timer fix for score playback black screen, vibrato intro/practice split, immersive no-instrument neck, stable looped vibrato audio engine (replaces realtime source node).
 - Build 13: vibrato redesign (有琴/无琴 modes, center gauge, target ranges, reference/demo tones, simulated neck with violin tone), rhythm click/haptic + target metronome, fingerboard note playback and entry rename (把位练习). QA pass pending.
 - Build 12: C2 immersive fingerboard (GDAE above neck, square neck, positions 1–3 with swipe + rail, 4–7 greyed), bowing click sound toggle, standalone metronome (sound + haptics), plus build 10/11 changes. TestFlight verification pending.
 - Listing name: **dorewio** · subtitle **小提琴 · 调音 · 识谱 · 跟奏**

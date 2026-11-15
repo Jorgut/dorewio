@@ -71,16 +71,20 @@ struct VibratoPracticeView: View {
     @StateObject private var simulation = VibratoSimulationSession()
     @StateObject private var notePlayer = ViolinNotePlayer()
     @State private var mode: VibratoMode
+    @State private var isPracticing = false
     @State private var practiceStartedAt: Date?
     @State private var haptic = UIImpactFeedbackGenerator(style: .light)
 
     init() {
         _mode = State(initialValue: CommandLine.arguments.contains("-vibratoNoInstrument") ? .withoutViolin : .withViolin)
+        _isPracticing = State(initialValue: CommandLine.arguments.contains("-vibratoPractice"))
     }
 
     var body: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: 20) {
+        VStack(alignment: .leading, spacing: 14) {
+            if isPracticing {
+                practiceContent
+            } else {
                 PracticeSectionHeader(
                     eyebrow: "左手 · 揉弦",
                     title: "先拉准长音，再开始揉弦",
@@ -93,42 +97,124 @@ struct VibratoPracticeView: View {
                     }
                 }
                 .pickerStyle(.segmented)
-                .onChange(of: mode) {
-                    stopAll()
-                }
+                .onChange(of: mode) { stopAll() }
 
-                if mode == .withViolin {
-                    withViolinContent
-                } else {
-                    withoutViolinContent
-                }
+                introContent
+                Spacer(minLength: 0)
             }
-            .padding()
-            .frame(maxWidth: .infinity, alignment: .leading)
         }
+        .padding(.horizontal, isPracticing && mode == .withoutViolin ? 0 : 16)
+        .padding(.top, 8)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
         .background(PracticePalette.canvas)
         .navigationTitle("揉弦练习")
         .navigationBarTitleDisplayMode(.inline)
-        .onDisappear { stopAll() }
+        .onChange(of: session.isListening) {
+            updatePracticeTimer(isActive: session.isListening)
+            UIApplication.shared.isIdleTimerDisabled = session.isListening || simulation.isTouching
+        }
+        .onChange(of: simulation.isTouching) {
+            UIApplication.shared.isIdleTimerDisabled = session.isListening || simulation.isTouching
+        }
+        .onDisappear {
+            stopAll()
+            UIApplication.shared.isIdleTimerDisabled = false
+        }
     }
 
-    // MARK: 有琴
+    // MARK: 开始前入口
 
-    private var withViolinContent: some View {
-        VStack(alignment: .leading, spacing: 16) {
+    private var introContent: some View {
+        VStack(alignment: .leading, spacing: 14) {
             GuideCard(steps: [
-                "选目标音：先选一根空弦，不用按指",
-                "拉准长音：让音准指针进入绿色区域，稳定 2 秒",
-                "开始揉弦：手腕放松，前后均匀摆动"
+                mode == .withViolin
+                    ? "选目标音：先选一根空弦，不用按指"
+                    : "选目标弦：任意一根空弦都可以",
+                mode == .withViolin
+                    ? "拉准长音：让音准指针进入绿色区域，稳定 2 秒"
+                    : "按住琴弦：手机上下拖动手指，模拟揉弦动作",
+                mode == .withViolin
+                    ? "开始揉弦：手腕放松，前后均匀摆动"
+                    : "看反馈：速度 5–7 Hz、幅度 20–100 音分、均匀 ≥70%"
             ])
 
-            targetCard(
-                selected: $session.targetNote,
-                frequency: session.targetNote.frequency,
-                onChange: { session.resetForTargetChange() }
-            )
+            targetCard
 
-            VStack(alignment: .leading, spacing: 10) {
+            Button {
+                isPracticing = true
+                haptic.impactOccurred(intensity: 0.7)
+            } label: {
+                Label("开始练习", systemImage: "waveform")
+                    .font(.headline)
+                    .frame(maxWidth: .infinity)
+            }
+            .buttonStyle(PressablePrimaryButtonStyle())
+
+            Text(mode == .withViolin
+                 ? "进入后点「开始监听」，用真实琴声练习揉弦。"
+                 : "进入后按住任意一根弦上下拖动，手机就是琴颈。")
+                .font(.caption)
+                .foregroundStyle(.secondary)
+        }
+    }
+
+    private var targetCard: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            Text(mode == .withViolin ? "目标音" : "目标弦").font(.headline)
+            let binding: Binding<TargetNote> = mode == .withViolin ? $session.targetNote : $simulation.target
+            Picker("目标音", selection: binding) {
+                ForEach(TargetNote.choices) { note in
+                    Text(note.name).tag(note)
+                }
+            }
+            .pickerStyle(.segmented)
+            .onChange(of: binding.wrappedValue) {
+                if mode == .withViolin { session.resetForTargetChange() } else { simulation.reset() }
+            }
+
+            Text("\(binding.wrappedValue.name) = \(binding.wrappedValue.stringHint)")
+                .font(.caption)
+                .foregroundStyle(.secondary)
+
+            HStack(spacing: 10) {
+                Button("试听参考音", systemImage: "speaker.wave.2") {
+                    notePlayer.playFrequency(binding.wrappedValue.frequency)
+                }
+                .buttonStyle(.bordered)
+                Button("示范揉弦", systemImage: "waveform") {
+                    notePlayer.playVibratoDemo(frequency: binding.wrappedValue.frequency)
+                }
+                .buttonStyle(.bordered)
+            }
+            .font(.subheadline)
+        }
+        .practiceSurface(padding: 14)
+    }
+
+    // MARK: 练习页
+
+    @ViewBuilder
+    private var practiceContent: some View {
+        if mode == .withViolin {
+            withViolinPractice
+        } else {
+            withoutViolinPractice
+        }
+    }
+
+    private var withViolinPractice: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            HStack {
+                VStack(alignment: .leading, spacing: 2) {
+                    Text("有琴 · \(session.targetNote.name)").font(.headline)
+                    Text(session.targetNote.stringHint).font(.caption).foregroundStyle(.secondary)
+                }
+                Spacer()
+                Button("结束") { endPractice() }
+                    .buttonStyle(.bordered)
+            }
+
+            VStack(alignment: .leading, spacing: 8) {
                 HStack {
                     Text("中心音准").font(.headline)
                     Spacer()
@@ -137,27 +223,20 @@ struct VibratoPracticeView: View {
                         .foregroundStyle(centerColor)
                 }
                 CenterCentsGauge(cents: currentCents)
-                HStack(spacing: 16) {
-                    Text("偏低 -50")
-                    Spacer()
-                    Text("准")
-                    Spacer()
-                    Text("偏高 +50")
+                HStack {
+                    Text("偏低 -50"); Spacer(); Text("准"); Spacer(); Text("偏高 +50")
                 }
                 .font(.caption2)
                 .foregroundStyle(.secondary)
             }
-            .practiceSurface(padding: 16)
+            .practiceSurface(padding: 14)
 
-            VStack(alignment: .leading, spacing: 10) {
-                HStack {
-                    Text("实时音高").font(.headline)
-                    Spacer()
-                    Text("最近 3 秒").font(.caption).foregroundStyle(.secondary)
-                }
+            VStack(alignment: .leading, spacing: 6) {
+                Text("实时音高").font(.headline)
                 PitchTraceView(samples: session.samples, targetName: session.targetNote.name)
+                    .frame(height: 100)
             }
-            .practiceSurface(padding: 16)
+            .practiceSurface(padding: 14)
 
             VibratoMetrics(result: session.result)
 
@@ -170,99 +249,59 @@ struct VibratoPracticeView: View {
             }
             .buttonStyle(PressablePrimaryButtonStyle())
             .disabled(session.state == .requestingPermission)
-
-            Text("手机放谱架上，麦克风朝向琴身；先拉空弦长音，再开始揉弦。")
-                .font(.caption)
-                .foregroundStyle(.secondary)
         }
-        .onChange(of: session.isListening) { updatePracticeTimer(isActive: session.isListening) }
     }
 
-    // MARK: 无琴
-
-    private var withoutViolinContent: some View {
-        VStack(alignment: .leading, spacing: 16) {
-            GuideCard(steps: [
-                "选目标弦：任意一根空弦都可以",
-                "按住琴弦：手机上下拖动手指，模拟揉弦动作",
-                "看反馈：速度 5–7 Hz、幅度 20–100 音分、均匀 ≥70%"
-            ])
-
-            targetCard(
-                selected: $simulation.target,
-                frequency: simulation.target.frequency,
-                onChange: { simulation.reset() }
+    private var withoutViolinPractice: some View {
+        ZStack(alignment: .bottom) {
+            ImmersiveNeckView(
+                target: simulation.target,
+                currentCents: simulation.currentCents,
+                isTouching: simulation.isTouching,
+                onBegin: { note in
+                    simulation.target = note
+                    simulation.begin()
+                    haptic.impactOccurred(intensity: 0.7)
+                },
+                onUpdate: { cents in simulation.update(cents: cents) },
+                onEnd: { simulation.end() }
             )
+            .ignoresSafeArea(edges: .bottom)
 
-            HStack(alignment: .top, spacing: 10) {
-                VStack(alignment: .leading, spacing: 8) {
-                    Text("把手机当作琴颈").font(.caption.weight(.semibold))
-                    Text("按住任意一根弦上下拖动；松手结束。")
-                        .font(.caption2)
-                        .foregroundStyle(.secondary)
-                    Text(simulation.isTouching ? "正在揉弦" : "等待触摸")
-                        .font(.caption)
-                        .foregroundStyle(simulation.isTouching ? PracticePalette.accent : .secondary)
+            VStack(alignment: .leading, spacing: 0) {
+                HStack {
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text("无琴 · 把手机当作琴颈").font(.headline)
+                        Text("按住任意一根弦，上下拖动；松手结束")
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                    }
                     Spacer()
+                    Button("结束") { endPractice() }
+                        .buttonStyle(.bordered)
                 }
-                .frame(width: 116, alignment: .leading)
+                .padding(.horizontal, 16)
+                .padding(.top, 8)
 
-                SimulatedNeckView(
-                    target: simulation.target,
-                    currentCents: simulation.currentCents,
-                    isTouching: simulation.isTouching,
-                    onBegin: { note in
-                        simulation.target = note
-                        simulation.begin()
-                        haptic.impactOccurred(intensity: 0.7)
-                    },
-                    onUpdate: { cents in simulation.update(cents: cents) },
-                    onEnd: { simulation.end() }
-                )
+                Spacer()
             }
-            .frame(height: 500)
 
-            VibratoMetrics(result: simulation.result)
-
-            FeedbackCard(message: withoutViolinFeedback, state: simulationFeedbackState)
-
-            Text("无琴模式用合成的小提琴音色；带上琴后切换到「有琴」，由麦克风分析真实揉弦。")
-                .font(.caption)
-                .foregroundStyle(.secondary)
+            VStack(spacing: 8) {
+                VibratoMetrics(result: simulation.result)
+                Text(withoutViolinFeedback)
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+            }
+            .padding(12)
+            .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 16))
+            .padding(.horizontal, 12)
+            .padding(.bottom, 8)
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 
-    // MARK: 共用
-
-    private func targetCard(selected: Binding<TargetNote>, frequency: Double, onChange: @escaping () -> Void) -> some View {
-        VStack(alignment: .leading, spacing: 10) {
-            Text("目标音").font(.headline)
-            Picker("目标音", selection: selected) {
-                ForEach(TargetNote.choices) { note in
-                    Text("\(note.name)\n\(note.stringHint)").tag(note)
-                }
-            }
-            .pickerStyle(.segmented)
-            .onChange(of: selected.wrappedValue) { onChange() }
-
-            Text("\(selected.wrappedValue.name) = \(selected.wrappedValue.stringHint)")
-                .font(.caption)
-                .foregroundStyle(.secondary)
-
-            HStack(spacing: 10) {
-                Button("试听参考音", systemImage: "speaker.wave.2") {
-                    notePlayer.playFrequency(frequency)
-                }
-                .buttonStyle(.bordered)
-                Button("示范揉弦", systemImage: "waveform") {
-                    notePlayer.playVibratoDemo(frequency: frequency)
-                }
-                .buttonStyle(.bordered)
-            }
-            .font(.subheadline)
-        }
-        .practiceSurface(padding: 16)
-    }
+    // MARK: 数据
 
     private var currentCents: Double {
         guard let frequency = session.currentFrequency else { return 0 }
@@ -283,14 +322,14 @@ struct VibratoPracticeView: View {
 
     private var withViolinFeedback: String {
         switch session.state {
-        case .idle: return "选好目标音，点「开始监听」"
+        case .idle: return "点「开始监听」，先拉一个稳定的长音"
         case .requestingPermission: return "正在请求麦克风权限"
         case .permissionDenied: return "请在系统设置中允许麦克风访问"
         case .failed: return "无法启动麦克风，请稍后重试"
         case .listening:
             guard let result = session.result else {
                 if abs(currentCents) > 12 {
-                    return currentCents > 0 ? "先把长音拉准：现在偏高，放松手腕回到中心" : "先把长音拉准：现在偏低，调整手指角度回到中心"
+                    return currentCents > 0 ? "先把长音拉准：现在偏高" : "先把长音拉准：现在偏低"
                 }
                 return "保持长音，先让音准对准中心，再开始揉弦"
             }
@@ -314,9 +353,7 @@ struct VibratoPracticeView: View {
     private var withoutViolinFeedback: String {
         guard !simulation.isTouching else { return "保持按住并上下拖动，感受幅度和速度" }
         guard let result = simulation.result else { return "按住任意一根弦，上下拖动手指开始练习" }
-        if abs(result.centerOffsetCents) > 12 {
-            return "摆动中心偏离：尽量围绕弦的中点来回"
-        }
+        if abs(result.centerOffsetCents) > 12 { return "摆动中心偏离：尽量围绕弦的中点来回" }
         if result.regularity < 0.7 { return "摆动不够均匀：放慢，保持每次幅度一致" }
         if result.extentCents < 20 { return "幅度偏窄：手指上下多移动一点" }
         if result.extentCents > 100 { return "幅度偏宽：减小上下移动距离" }
@@ -325,8 +362,9 @@ struct VibratoPracticeView: View {
         return "揉弦均匀，保持这个感觉"
     }
 
-    private var simulationFeedbackState: FeedbackKind {
-        simulation.result?.feedback == .good ? .good : .neutral
+    private func endPractice() {
+        stopAll()
+        isPracticing = false
     }
 
     private func stopAll() {
@@ -350,3 +388,30 @@ struct VibratoPracticeView: View {
         practiceStartedAt = nil
     }
 }
+
+#if DEBUG
+struct VibratoSelfTestView: View {
+    @StateObject private var simulation = VibratoSimulationSession()
+    @State private var log = "running"
+
+    var body: some View {
+        VStack(spacing: 16) {
+            Text("Vibrato simulation self-test").font(.headline)
+            Text(log).font(.caption).multilineTextAlignment(.center)
+        }
+        .task {
+            for cycle in 0..<6 {
+                simulation.begin()
+                for step in 0..<120 {
+                    simulation.update(cents: sin(Double(step) / 8) * 40)
+                    try? await Task.sleep(for: .milliseconds(12))
+                }
+                simulation.end()
+                log = "cycle \(cycle + 1) done, result: \(simulation.result != nil)"
+                try? await Task.sleep(for: .milliseconds(120))
+            }
+            log = "all cycles completed"
+        }
+    }
+}
+#endif
