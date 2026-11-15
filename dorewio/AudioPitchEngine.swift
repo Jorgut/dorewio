@@ -26,9 +26,14 @@ final class AudioPitchEngine {
             throw AudioPitchEngineError.inputUnavailable
         }
 
+        // The tap runs on a realtime audio thread. Unless this closure is
+        // explicitly @Sendable and avoids capturing MainActor-isolated state,
+        // Swift's executor check traps (EXC_BREAKPOINT) on the actual device
+        // when the first buffer arrives.
         let analysisQueue = analysisQueue
         let analysisGate = analysisGate
-        input.installTap(onBus: 0, bufferSize: 2_048, format: nil) { buffer, _ in
+        let handleFrequency: @Sendable (Double) -> Void = onFrequency
+        let tapBlock: @Sendable (AVAudioPCMBuffer, AVAudioTime) -> Void = { buffer, _ in
             guard let channel = buffer.floatChannelData?.pointee else { return }
             guard analysisGate.wait(timeout: .now()) == .success else { return }
             let samples = Array(UnsafeBufferPointer(start: channel, count: Int(buffer.frameLength)))
@@ -39,9 +44,10 @@ final class AudioPitchEngine {
                     samples: samples,
                     sampleRate: sampleRate
                 ) else { return }
-                onFrequency(frequency)
+                handleFrequency(frequency)
             }
         }
+        input.installTap(onBus: 0, bufferSize: 2_048, format: nil, block: tapBlock)
         tapInstalled = true
         engine = newEngine
         inputNode = input
