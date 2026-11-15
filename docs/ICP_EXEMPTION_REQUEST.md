@@ -137,7 +137,15 @@ Title: Account holder
 
 备选是走“单机应用备案”（找省内通信管理局/接入商确认是否受理无服务器/无域名的单机 App），拿到备案号后填入 App Store Connect。成本更高、周期更长。
 
-## 4. 提交后的跟踪清单
+## 4. 提交记录
+
+- 提交时间：2026-11-15 20:30（Asia/Almaty）
+- 渠道：Developer Contact Us → 分发 → 有关分发的其他疑问 → 电子邮件
+- **Case ID：`30000016363562`**
+- 提交账号：`juhonl@163.com`（HONGLIANG ZHU，Account Holder）
+- 状态：等待 Apple 邮件回复（通常 1–2 个工作日）
+
+## 5. 提交后的跟踪清单
 
 - [ ] Contact Us 已提交，记录 case number：__________
 - [ ] 收到 Apple 回复邮件（要求声明）
