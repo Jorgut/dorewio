@@ -49,6 +49,9 @@
 		A1000000000000000000002A /* ProStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000000000000000000002A /* ProStore.swift */; };
 		A1000000000000000000002C /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000000000000000000002C /* AboutView.swift */; };
 		A1000000000000000000002E /* MetronomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000000000000000000002E /* MetronomeView.swift */; };
+		A1000000000000000000002F /* ViolinAudio.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000000000000000000002F /* ViolinAudio.swift */; };
+		A10000000000000000000031 /* VibratoComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000031 /* VibratoComponents.swift */; };
+		A10000000000000000000030 /* VibratoPracticeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000030 /* VibratoPracticeView.swift */; };
 		A1000000000000000000002D /* MetronomeClickPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000000000000000000002D /* MetronomeClickPlayer.swift */; };
 		A1000000000000000000002B /* SampleScore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000000000000000000002B /* SampleScore.swift */; };
 		A10000000000000000000027 /* MXLArchive.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000027 /* MXLArchive.swift */; };
@@ -98,6 +101,9 @@
 		A2000000000000000000002A /* ProStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProStore.swift; sourceTree = "<group>"; };
 		A2000000000000000000002C /* AboutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
 		A2000000000000000000002E /* MetronomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetronomeView.swift; sourceTree = "<group>"; };
+		A2000000000000000000002F /* ViolinAudio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViolinAudio.swift; sourceTree = "<group>"; };
+		A20000000000000000000031 /* VibratoComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VibratoComponents.swift; sourceTree = "<group>"; };
+		A20000000000000000000030 /* VibratoPracticeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VibratoPracticeView.swift; sourceTree = "<group>"; };
 		A2000000000000000000002D /* MetronomeClickPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetronomeClickPlayer.swift; sourceTree = "<group>"; };
 		A2000000000000000000002B /* SampleScore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleScore.swift; sourceTree = "<group>"; };
 		A20000000000000000000027 /* MXLArchive.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MXLArchive.swift; sourceTree = "<group>"; };
@@ -157,6 +163,9 @@
 				A2000000000000000000002A /* ProStore.swift */,
 				A2000000000000000000002C /* AboutView.swift */,
 				A2000000000000000000002E /* MetronomeView.swift */,
+				A2000000000000000000002F /* ViolinAudio.swift */,
+				A20000000000000000000031 /* VibratoComponents.swift */,
+				A20000000000000000000030 /* VibratoPracticeView.swift */,
 				A2000000000000000000002D /* MetronomeClickPlayer.swift */,
 				A2000000000000000000002B /* SampleScore.swift */,
 				A20000000000000000000006 /* Assets.xcassets */,
@@ -307,6 +316,9 @@
 				A1000000000000000000002A /* ProStore.swift in Sources */,
 				A1000000000000000000002C /* AboutView.swift in Sources */,
 				A1000000000000000000002E /* MetronomeView.swift in Sources */,
+				A1000000000000000000002F /* ViolinAudio.swift in Sources */,
+				A10000000000000000000031 /* VibratoComponents.swift in Sources */,
+				A10000000000000000000030 /* VibratoPracticeView.swift in Sources */,
 				A1000000000000000000002D /* MetronomeClickPlayer.swift in Sources */,
 				A1000000000000000000002B /* SampleScore.swift in Sources */,
 			);

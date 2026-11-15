@@ -29,7 +29,7 @@ struct AboutView: View {
                 VStack(alignment: .leading, spacing: 10) {
                     Text("关于")
                         .font(.headline)
-                    Text("一款离线的小提琴自学 App：调音、音准、节奏、识谱、第一把位、听辨，以及导入 MusicXML/MXL 乐谱直接跟奏。无需账号，练习数据只保存在本机。")
+                    Text("一款离线的小提琴自学 App：调音、音准、节奏、识谱、把位（1–7）、听辨，以及导入 MusicXML/MXL 乐谱直接跟奏。无需账号，练习数据只保存在本机。")
                         .font(.subheadline)
                         .foregroundStyle(.secondary)
                         .fixedSize(horizontal: false, vertical: true)
