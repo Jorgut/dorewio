@@ -6,7 +6,8 @@ App Store Connect record: **小提琴自学** · Apple ID `6827607435` · bundle
 
 - App Store version **1.0 — Waiting for Review** (submitted 2026-11-13 10:43 UTC)
 - Release type: **automatically release after approval**
-- Attached build: **1.0 (9)** (free launch) · delivery UUID `28b57775-17ab-4966-a223-455b059245a2` · `VALID`
+- Build in review: 1.0 (9) — **rejected 2026-11-15 (Guideline 2.1 – Information Needed)**
+- Next build: **1.0 (10)** — light iteration (bundled sample score, first-run onboarding, About/support screen); demo recording pending
 - Listing name: **dorewio** · subtitle **小提琴 · 调音 · 识谱 · 跟奏**
 - Category: Music (primary) / Education (secondary) · Age rating **4+** · copyright `2026 Altankhuu Jorgutyn`
 - Pricing: app **free** (no in-app purchases yet) · availability: all 175 countries/regions
@@ -25,6 +26,7 @@ App Store Connect record: **小提琴自学** · Apple ID `6827607435` · bundle
 | 7 | New icon + first-lesson screen ported from dorewio |
 | 8 | StoreKit 2 Pro buyout + paywall + gated training/studio |
 | 9 | **Free launch**: Pro gating disabled (`ProLaunchMode.gatingEnabled = false`), all features free |
+| 10 | Light iteration: bundled 小星星 sample score + one-tap demo, first-run 3-step onboarding, About/support page with version and ICP placeholder |
 
 ## Known caveats
 

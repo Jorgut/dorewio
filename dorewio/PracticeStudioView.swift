@@ -29,7 +29,7 @@ struct PracticeStudioView: View {
                     detail: "导入乐谱直接跟奏，或用音频放慢、循环再提取旋律"
                 )
 
-                ScoreWorkbench(session: scoreSession) { showsScoreImporter = true }
+                ScoreWorkbench(session: scoreSession, importAction: { showsScoreImporter = true }, sampleAction: { scoreSession.importSampleScore() })
 
                 if session.audioURL == nil {
                     StudioEmptyState(

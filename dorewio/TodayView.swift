@@ -2,12 +2,17 @@ import SwiftUI
 
 struct TodayView: View {
     @EnvironmentObject private var history: PracticeHistoryStore
+    @AppStorage("dorewio.hasSeenOnboarding") private var hasSeenOnboarding = false
+    @State private var showsAbout = false
 
     var body: some View {
         NavigationStack {
             ScrollView {
                 VStack(alignment: .leading, spacing: 26) {
                     TodayHeader()
+                    if !hasSeenOnboarding {
+                        OnboardingCard { hasSeenOnboarding = true }
+                    }
                     StudyModePicker()
                     DailyProgressSection()
                     DailyPlanSection()
@@ -19,6 +24,21 @@ struct TodayView: View {
             .background(PracticePalette.canvas)
             .navigationTitle("今天")
             .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button {
+                        showsAbout = true
+                    } label: {
+                        Image(systemName: "info.circle")
+                    }
+                    .accessibilityLabel("关于 dorewio")
+                }
+            }
+            .sheet(isPresented: $showsAbout) {
+                NavigationStack {
+                    AboutView()
+                }
+            }
             .navigationDestination(for: PracticeRoute.self, destination: PracticeDestination.view)
         }
     }
@@ -232,5 +252,45 @@ private struct StudioPrompt: View {
         }
         .buttonStyle(.plain)
         .practiceSurface(padding: 16)
+    }
+}
+
+
+private struct OnboardingCard: View {
+    let dismiss: () -> Void
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 16) {
+            HStack {
+                Label("3 步开始练琴", systemImage: "sparkles")
+                    .font(.headline)
+                Spacer()
+                Button("知道了", action: dismiss)
+                    .font(.subheadline.weight(.semibold))
+            }
+
+            step(1, "调音", "训练 → 调音：先把四根空弦调准")
+            step(2, "第一课", "学习 → dorewio 第一课：认识音名、弦和手指")
+            step(3, "跟谱演奏", "曲目 → 试试示例：小星星，导入自己的乐谱也可以")
+
+            Text("全部功能离线可用，无需账号。")
+                .font(.caption)
+                .foregroundStyle(.secondary)
+        }
+        .practiceSurface(padding: 18)
+    }
+
+    private func step(_ index: Int, _ title: String, _ detail: String) -> some View {
+        HStack(alignment: .top, spacing: 12) {
+            Text("\(index)")
+                .font(.caption.weight(.bold))
+                .foregroundStyle(PracticePalette.accent)
+                .frame(width: 24, height: 24)
+                .background(PracticePalette.accent.opacity(0.12), in: Circle())
+            VStack(alignment: .leading, spacing: 2) {
+                Text(title).font(.subheadline.weight(.semibold))
+                Text(detail).font(.caption).foregroundStyle(.secondary)
+            }
+        }
     }
 }
