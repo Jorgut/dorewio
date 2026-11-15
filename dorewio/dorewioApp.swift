@@ -13,6 +13,14 @@ struct DorewioApp: App {
                     NavigationStack {
                         PaywallView()
                     }
+                } else if CommandLine.arguments.contains("-fingerboardPreview") {
+                    NavigationStack {
+                        FingerboardPracticeView()
+                    }
+                } else if CommandLine.arguments.contains("-metronomePreview") {
+                    NavigationStack {
+                        MetronomeView()
+                    }
                 } else {
                     ContentView()
                 }

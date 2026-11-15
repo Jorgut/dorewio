@@ -9,6 +9,7 @@ enum PracticeRoute: Hashable {
     case sightReading
     case fingerboard
     case earTraining
+    case metronome
 }
 
 enum PracticeDestination {
@@ -23,6 +24,7 @@ enum PracticeDestination {
         case .sightReading: SightReadingPracticeView()
         case .fingerboard: FingerboardPracticeView()
         case .earTraining: EarTrainingPracticeView()
+        case .metronome: MetronomeView()
         }
     }
 }
@@ -41,6 +43,7 @@ struct PracticeLibraryView: View {
                         title: "开始练琴",
                         items: [
                             (.tuner, "调音", "先让四根空弦回到中心", "tuningfork"),
+                            (.metronome, "节拍器", "稳定拍点、重音与速度", "metronome"),
                             (.rhythm, "节奏", "建立稳定的内部拍点", "metronome")
                         ],
                         proRoutes: []

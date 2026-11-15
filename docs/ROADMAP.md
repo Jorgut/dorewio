@@ -35,6 +35,18 @@ Shipping app: dorewio. (App Store record: 小提琴自学, bundle `com.archinter
 - [ ] TestFlight QA and real-device testing of build 7+
 - [ ] App Store review and release
 
+## M4.5 — Post-rejection iteration
+- [x] Fix microphone tap crash (`AudioPitchEngine` closure was MainActor-isolated on the realtime audio thread)
+- [x] Fingerboard rework: vertical C2 immersive layout, GDAE above the neck, square neck, positions 1–3 with swipe + rail, 4–7 greyed
+- [x] Bowing practice click sound (toggle) and standalone metronome entry (BPM/拍号/重音/声音+震动)
+- [x] Bundled sample score + first-run onboarding + About/support screen
+- [ ] Record physical-device demo and resubmit 1.0
+
+## M6 — Score tools
+- [ ] PDF read-only viewer entry in 曲目 (PDFKit, offline; 1.1)
+- [ ] PDF OMR → MusicXML import/export (cloud OMR, opt-in upload, privacy update; 1.2 Beta)
+- [ ] MIDI import (monophonic track selection; 1.2)
+
 ## M5 — Monetization (next)
 - [x] Competitor and pricing research (`docs/BUSINESS_MODEL_RESEARCH_2026-11-13.md`)
 - [ ] Decide buyout vs subscription
