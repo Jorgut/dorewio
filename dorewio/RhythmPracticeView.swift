@@ -82,13 +82,18 @@ struct RhythmPracticeView: View {
                 Label(feedback, systemImage: result == nil ? "metronome" : "chart.bar.fill")
                     .frame(maxWidth: .infinity, alignment: .leading)
 
-                Button("重新开始", systemImage: "arrow.counterclockwise", action: reset)
-                    .buttonStyle(.bordered)
-                    .controlSize(.large)
         }
         .padding(.horizontal, 16)
         .padding(.top, 8)
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+        .safeAreaInset(edge: .bottom) {
+            Button("重新开始", systemImage: "arrow.counterclockwise", action: reset)
+                .buttonStyle(.bordered)
+                .controlSize(.large)
+                .padding(.bottom, 8)
+                .frame(maxWidth: .infinity)
+                .background(PracticePalette.canvas.opacity(0.96))
+        }
         .background(PracticePalette.canvas)
         .navigationTitle("节奏练习")
         .navigationBarTitleDisplayMode(.inline)

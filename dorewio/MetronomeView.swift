@@ -14,8 +14,7 @@ struct MetronomeView: View {
     @State private var haptic = UIImpactFeedbackGenerator(style: .medium)
 
     var body: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: 22) {
+        VStack(alignment: .leading, spacing: 14) {
                 PracticeSectionHeader(
                     eyebrow: "节拍器",
                     title: "把拍点变成身体记忆",
@@ -62,17 +61,23 @@ struct MetronomeView: View {
                 }
                 .practiceSurface(padding: 18)
 
-                Button {
-                    isRunning ? stop() : start()
-                } label: {
-                    Label(isRunning ? "停止" : "开始", systemImage: isRunning ? "stop.fill" : "play.fill")
-                        .font(.headline)
-                        .frame(maxWidth: .infinity)
-                }
-                .buttonStyle(PressablePrimaryButtonStyle())
-                .tint(isRunning ? .red : PracticePalette.accent)
+        }
+        .padding(.horizontal, 16)
+        .padding(.top, 8)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+        .safeAreaInset(edge: .bottom) {
+            Button {
+                isRunning ? stop() : start()
+            } label: {
+                Label(isRunning ? "停止" : "开始", systemImage: isRunning ? "stop.fill" : "play.fill")
+                    .font(.headline)
+                    .frame(maxWidth: .infinity)
             }
-            .padding()
+            .buttonStyle(PressablePrimaryButtonStyle())
+            .tint(isRunning ? .red : PracticePalette.accent)
+            .padding(.horizontal, 16)
+            .padding(.bottom, 8)
+            .background(PracticePalette.canvas.opacity(0.96))
         }
         .background(PracticePalette.canvas)
         .navigationTitle("节拍器")
