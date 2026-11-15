@@ -4,7 +4,7 @@ App Store Connect record: **小提琴自学** · Apple ID `6827607435` · bundle
 
 ## Current status
 
-- App Store version **1.0 — Waiting for Review** (submitted 2026-11-13 10:43 UTC)
+- App Store version **1.0 — Waiting for Review** (resubmitted 2026-11-15 14:10 UTC with build 17 and the physical-device demo video)
 - Release type: **automatically release after approval**
 - Build in review: 1.0 (9) — **rejected 2026-11-15 (Guideline 2.1 – Information Needed)**
 - Build 10: light iteration (bundled sample score, first-run onboarding, About/support screen)
