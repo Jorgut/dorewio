@@ -80,18 +80,37 @@ final class ScorePracticeSession: ObservableObject {
 
         do {
             let imported = try MusicXMLParser.parse(contentsOf: url)
-            score = imported
-            fileName = url.lastPathComponent
-            tempoScale = 1
-            loopEnabled = false
-            loopStartMeasure = 1
-            loopEndMeasure = imported.measureCount
-            currentTime = 0
-            currentNoteIndex = nil
-            errorMessage = nil
+            apply(imported, fileName: url.lastPathComponent)
         } catch {
             errorMessage = (error as? LocalizedError)?.errorDescription ?? error.localizedDescription
         }
+    }
+
+    /// Load the bundled demo score so the score studio can be tried without
+    /// selecting a file from the Files app.
+    func importSampleScore() {
+        stop()
+        do {
+            let imported = try MusicXMLParser.parse(
+                data: Data(SampleScore.twinkleMusicXML.utf8),
+                fallbackTitle: SampleScore.twinkleTitle
+            )
+            apply(imported, fileName: SampleScore.twinkleFileName)
+        } catch {
+            errorMessage = (error as? LocalizedError)?.errorDescription ?? error.localizedDescription
+        }
+    }
+
+    private func apply(_ imported: ImportedScore, fileName: String) {
+        score = imported
+        self.fileName = fileName
+        tempoScale = 1
+        loopEnabled = false
+        loopStartMeasure = 1
+        loopEndMeasure = imported.measureCount
+        currentTime = 0
+        currentNoteIndex = nil
+        errorMessage = nil
     }
 
     func removeScore() {

@@ -4,6 +4,7 @@ import SwiftUI
 struct ScoreWorkbench: View {
     @ObservedObject var session: ScorePracticeSession
     let importAction: () -> Void
+    var sampleAction: (() -> Void)? = nil
 
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
@@ -42,16 +43,29 @@ struct ScoreWorkbench: View {
 
             Divider()
 
-            Button("导入乐谱（MusicXML / MXL）", systemImage: "folder", action: importAction)
-                .buttonStyle(.borderedProminent)
-                .tint(PracticePalette.accent)
-                .controlSize(.large)
+            ViewThatFits(in: .horizontal) {
+                HStack(spacing: 12) { importButtons }
+                VStack(spacing: 12) { importButtons }
+            }
 
-            Text("支持 .mxl（自动解压）、.musicxml 与 .xml 单声部乐谱。")
+            Text("支持 .mxl（自动解压）、.musicxml 与 .xml 单声部乐谱。没有乐谱？先试试内置的小星星。")
                 .font(.caption)
                 .foregroundStyle(.secondary)
         }
         .practiceSurface(padding: 20)
+    }
+
+    @ViewBuilder
+    private var importButtons: some View {
+        Button("导入乐谱（MusicXML / MXL）", systemImage: "folder", action: importAction)
+            .buttonStyle(.borderedProminent)
+            .tint(PracticePalette.accent)
+            .controlSize(.large)
+        if let sampleAction {
+            Button("试试示例：小星星", systemImage: "sparkles", action: sampleAction)
+                .buttonStyle(.bordered)
+                .controlSize(.large)
+        }
     }
 
     // MARK: - 乐谱信息
