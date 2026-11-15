@@ -21,7 +21,15 @@ struct DorewioApp: App {
                     NavigationStack {
                         MetronomeView()
                     }
-                } else if CommandLine.arguments.contains("-vibratoPreview") || CommandLine.arguments.contains("-vibratoNoInstrument") {
+                } else if CommandLine.arguments.contains("-vibratoSelfTest") {
+                    VibratoSelfTestView()
+                } else if CommandLine.arguments.contains("-tunerPreview") {
+                    NavigationStack { TunerView() }
+                } else if CommandLine.arguments.contains("-rhythmPreview") {
+                    NavigationStack { RhythmPracticeView() }
+                } else if CommandLine.arguments.contains("-bowPreview") {
+                    NavigationStack { BowPracticeView() }
+                } else if CommandLine.arguments.contains("-vibratoPreview") || CommandLine.arguments.contains("-vibratoNoInstrument") || CommandLine.arguments.contains("-vibratoPractice") {
                     NavigationStack {
                         VibratoPracticeView()
                     }

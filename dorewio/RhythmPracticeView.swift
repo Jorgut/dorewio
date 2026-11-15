@@ -1,4 +1,5 @@
 import SwiftUI
+import UIKit
 
 struct RhythmPracticeView: View {
     @EnvironmentObject private var history: PracticeHistoryStore
@@ -13,8 +14,7 @@ struct RhythmPracticeView: View {
     @State private var targetTimer: Timer?
 
     var body: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: 24) {
+        VStack(alignment: .leading, spacing: 14) {
                 PracticeSectionHeader(
                     eyebrow: "节拍",
                     title: "先让拍点稳定，再把节奏放进弓里",
@@ -31,7 +31,7 @@ struct RhythmPracticeView: View {
                             if isPlayingTarget { restartTargetTimer() }
                         }
                 }
-                .practiceSurface()
+                .practiceSurface(padding: 14)
 
                 VStack(alignment: .leading, spacing: 12) {
                     HStack {
@@ -73,7 +73,7 @@ struct RhythmPracticeView: View {
                         Text("跟随节拍点击").font(.headline)
                         Text("已记录 \(tapTimes.count) 次").font(.caption)
                     }
-                    .frame(maxWidth: .infinity, minHeight: 170)
+                    .frame(maxWidth: .infinity, minHeight: 130)
                 }
                 .buttonStyle(.borderedProminent)
                 .tint(PracticePalette.accent)
@@ -85,16 +85,19 @@ struct RhythmPracticeView: View {
                 Button("重新开始", systemImage: "arrow.counterclockwise", action: reset)
                     .buttonStyle(.bordered)
                     .controlSize(.large)
-            }
-            .padding()
         }
+        .padding(.horizontal, 16)
+        .padding(.top, 8)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
         .background(PracticePalette.canvas)
         .navigationTitle("节奏练习")
         .navigationBarTitleDisplayMode(.inline)
+        .onChange(of: isPlayingTarget) { UIApplication.shared.isIdleTimerDisabled = isPlayingTarget }
         .onDisappear {
             stopTargetMetronome()
             clicker.stop()
             finishPractice()
+            UIApplication.shared.isIdleTimerDisabled = false
         }
     }
 

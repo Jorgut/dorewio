@@ -80,7 +80,11 @@ struct MetronomeView: View {
         .onChange(of: bpm) { if isRunning { restartTimer() } }
         .onChange(of: beatsPerBar) { beat = 0 }
         .onChange(of: soundEnabled) { clicker.isEnabled = soundEnabled }
-        .onDisappear { stop() }
+        .onChange(of: isRunning) { UIApplication.shared.isIdleTimerDisabled = isRunning }
+        .onDisappear {
+            stop()
+            UIApplication.shared.isIdleTimerDisabled = false
+        }
     }
 
     private var beatIndicator: some View {

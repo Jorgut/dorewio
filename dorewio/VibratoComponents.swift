@@ -202,3 +202,99 @@ struct SimulatedNeckView: View {
         .accessibilityLabel("模拟琴颈，按住任意弦上下拖动练习揉弦")
     }
 }
+
+
+struct ImmersiveNeckView: View {
+    let target: TargetNote
+    let currentCents: Double
+    let isTouching: Bool
+    let onBegin: (TargetNote) -> Void
+    let onUpdate: (Double) -> Void
+    let onEnd: () -> Void
+
+    @State private var activeNote: TargetNote?
+    private let strings = TargetNote.choices
+
+    var body: some View {
+        GeometryReader { geo in
+            let neckWidth = min(max(200, geo.size.width * 0.62), 280)
+            let neckHeight = max(300, geo.size.height - 220)
+            VStack(spacing: 0) {
+                HStack(spacing: 0) {
+                    ForEach(strings) { note in
+                        VStack(spacing: 2) {
+                            Text(note.name).font(.system(size: 13, weight: .bold))
+                            Text(note.stringHint).font(.system(size: 8)).foregroundStyle(.secondary)
+                        }
+                        .frame(maxWidth: .infinity)
+                    }
+                }
+                .frame(width: neckWidth, height: 38)
+
+                ZStack(alignment: .topLeading) {
+                    LinearGradient(
+                        colors: [Color(red: 0.97, green: 0.91, blue: 0.79), Color(red: 0.90, green: 0.79, blue: 0.58)],
+                        startPoint: .top,
+                        endPoint: .bottom
+                    )
+                    Rectangle().fill(Color(red: 0.98, green: 0.95, blue: 0.87)).frame(height: 5)
+                    ForEach(Array(strings.enumerated()), id: \.element.id) { index, note in
+                        Rectangle()
+                            .fill(Color.black.opacity(0.38))
+                            .frame(width: 2)
+                            .offset(x: (CGFloat(index) + 0.5) * neckWidth / 4 - 1, y: 5)
+                        Rectangle()
+                            .fill(Color.clear)
+                            .contentShape(Rectangle())
+                            .frame(width: neckWidth / 4, height: neckHeight)
+                            .offset(x: CGFloat(index) * neckWidth / 4)
+                            .gesture(
+                                DragGesture(minimumDistance: 0)
+                                    .onChanged { value in
+                                        if activeNote != note {
+                                            activeNote = note
+                                            onBegin(note)
+                                        }
+                                        onUpdate(Double(-value.translation.height / 60) * 100)
+                                    }
+                                    .onEnded { _ in
+                                        activeNote = nil
+                                        onEnd()
+                                    }
+                            )
+                    }
+                    if let activeNote, let index = strings.firstIndex(of: activeNote) {
+                        Circle()
+                            .fill(PracticePalette.accent)
+                            .frame(width: 54, height: 54)
+                            .overlay {
+                                VStack(spacing: 1) {
+                                    Text(activeNote.name).font(.system(size: 10, weight: .bold))
+                                    Text("\(Int(currentCents.rounded()))\u{00A2}").font(.system(size: 7))
+                                }
+                                .foregroundStyle(.white)
+                            }
+                            .position(
+                                x: (CGFloat(index) + 0.5) * neckWidth / 4,
+                                y: neckHeight / 2 + CGFloat(currentCents / 100) * (neckHeight / 2 - 40)
+                            )
+                    }
+                    Text(isTouching ? "保持按住，上下摆动" : "按住任意一根弦开始")
+                        .font(.system(size: 11, weight: .semibold))
+                        .foregroundStyle(.white)
+                        .padding(.horizontal, 12)
+                        .padding(.vertical, 6)
+                        .background(Color.black.opacity(0.38), in: Capsule())
+                        .position(x: neckWidth / 2, y: neckHeight - 26)
+                }
+                .frame(width: neckWidth, height: neckHeight)
+                .clipShape(.rect(cornerRadius: 0))
+                .overlay(Rectangle().stroke(Color.black.opacity(0.10), lineWidth: 1))
+            }
+            .frame(width: geo.size.width, height: geo.size.height, alignment: .top)
+            .padding(.top, 84)
+        }
+        .accessibilityElement(children: .contain)
+        .accessibilityLabel("模拟琴颈，按住任意弦上下拖动练习揉弦")
+    }
+}

@@ -43,6 +43,7 @@ Shipping app: dorewio. (App Store record: 小提琴自学, bundle `com.archinter
 - [x] Vibrato redesign: beginner guide, center gauge, target ranges, reference/demo tones, 有琴/无琴 split and touch-simulated neck
 - [x] Rhythm feedback: tap click + haptic, target metronome
 - [x] Fingerboard note playback on every answer; rename entry to 把位练习
+- [x] One-page layouts (tuner/rhythm/bow), idle-timer/black-screen fix, score note playback
 - [ ] Record physical-device demo and resubmit 1.0
 
 ## M6 — Score tools
