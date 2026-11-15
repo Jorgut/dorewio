@@ -3,7 +3,9 @@ import SwiftUI
 struct BowPracticeView: View {
     @EnvironmentObject private var history: PracticeHistoryStore
     @StateObject private var session = BowPracticeSession()
+    @StateObject private var clicker = MetronomeClickPlayer()
     @State private var category = BowExerciseCategory.basic
+    @State private var soundEnabled = true
     @State private var practiceStartedAt: Date?
 
     var body: some View {
@@ -16,6 +18,9 @@ struct BowPracticeView: View {
                 )
                 ExerciseSelectionSection(session: session, category: $category)
                 TempoSection(session: session)
+                Toggle("节拍声音", isOn: $soundEnabled)
+                    .tint(PracticePalette.accent)
+                    .practiceSurface()
                 BowMotionSection(session: session)
                 ExerciseDetailSection(exercise: session.selectedExercise)
                 BowPracticeControls(session: session)
@@ -26,10 +31,17 @@ struct BowPracticeView: View {
         .navigationTitle("运弓练习")
         .navigationBarTitleDisplayMode(.inline)
         .sensoryFeedback(.impact(weight: .medium), trigger: session.beatPulse)
+        .onChange(of: session.beatPulse) {
+            guard soundEnabled, session.isRunning else { return }
+            let beat = max(1, session.beatPulse)
+            clicker.play(accent: (beat - 1) % 4 == 0)
+        }
+        .onChange(of: soundEnabled) { clicker.isEnabled = soundEnabled }
         .onChange(of: session.isRunning) { updatePracticeTimer(isActive: session.isRunning) }
         .onDisappear {
             finishPractice()
             session.stop()
+            clicker.stop()
         }
     }
 
