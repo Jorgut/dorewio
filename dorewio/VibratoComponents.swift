@@ -86,7 +86,7 @@ struct VibratoMetrics: View {
                 .foregroundStyle(.secondary)
                 .lineLimit(1)
         }
-        .frame(maxWidth: .infinity, alignment: .leading)
+        .frame(maxWidth: .infinity, minHeight: 64, alignment: .leading)
         .padding(10)
         .practiceSurface(padding: 10)
         .accessibilityElement(children: .combine)
@@ -297,4 +297,231 @@ struct ImmersiveNeckView: View {
         .accessibilityElement(children: .contain)
         .accessibilityLabel("模拟琴颈，按住任意弦上下拖动练习揉弦")
     }
+}
+
+struct VibratoNotePosition: Identifiable, Hashable {
+    let string: ViolinString
+    let finger: Int
+    let midiNote: Int
+    let name: String
+    var isOpen: Bool { finger == 0 }
+    var id: String { "\(string.rawValue)-\(finger)" }
+}
+
+enum VibratoNoteBook {
+    static func positions(advanced: Bool) -> [VibratoNotePosition] {
+        let strings: [ViolinString] = [.g, .d, .a, .e]
+        var result: [VibratoNotePosition] = []
+        for string in strings {
+            let openName: String
+            let openMIDI: Int
+            switch string {
+            case .g: openName = "G3"; openMIDI = 55
+            case .d: openName = "D4"; openMIDI = 62
+            case .a: openName = "A4"; openMIDI = 69
+            case .e: openName = "E5"; openMIDI = 76
+            }
+            result.append(VibratoNotePosition(string: string, finger: 0, midiNote: openMIDI, name: openName))
+            for finger in 1...4 {
+                guard advanced || finger == 1 else { continue }
+                guard let note = firstPositionNote(on: string, finger: finger) else { continue }
+                result.append(VibratoNotePosition(string: string, finger: finger, midiNote: note.midi, name: note.name))
+            }
+        }
+        return result
+    }
+
+    private static func firstPositionNote(on string: ViolinString, finger: Int) -> (midi: Int, name: String)? {
+        switch (string, finger) {
+        case (.g, 1): (57, "A3")
+        case (.g, 2): (59, "B3")
+        case (.g, 3): (60, "C4")
+        case (.g, 4): (62, "D4")
+        case (.d, 1): (64, "E4")
+        case (.d, 2): (65, "F4")
+        case (.d, 3): (67, "G4")
+        case (.d, 4): (69, "A4")
+        case (.a, 1): (71, "B4")
+        case (.a, 2): (72, "C5")
+        case (.a, 3): (74, "D5")
+        case (.a, 4): (76, "E5")
+        case (.e, 1): (77, "F5")
+        case (.e, 2): (79, "G5")
+        case (.e, 3): (81, "A5")
+        case (.e, 4): (83, "B5")
+        default: nil
+        }
+    }
+}
+
+enum VibratoDotStyle: String, CaseIterable, Identifiable {
+    case solid = "实心"
+    case dashed = "虚线"
+    case hidden = "隐藏"
+    var id: Self { self }
+}
+
+struct VibratoNeckPanel: View {
+    let target: TargetNote
+    let currentCents: Double
+    let isTouching: Bool
+    let advanced: Bool
+    let dotStyle: VibratoDotStyle
+    let onBegin: (TargetNote) -> Void
+    let onUpdate: (Double) -> Void
+    let onEnd: () -> Void
+    let onTapNote: (VibratoNotePosition) -> Void
+
+    @State private var activeNote: TargetNote?
+    private let strings: [ViolinString] = [.g, .d, .a, .e]
+    private let positions = VibratoNoteBook.positions(advanced: true)
+
+    var body: some View {
+        VStack(spacing: 0) {
+            HStack(spacing: 0) {
+                ForEach(strings, id: \.self) { string in
+                    VStack(spacing: 1) {
+                        Text(string.rawValue).font(.system(size: 12, weight: .bold))
+                        Text(targetHint(for: string)).font(.system(size: 7)).foregroundStyle(.secondary)
+                    }
+                    .frame(maxWidth: .infinity)
+                }
+            }
+            .frame(height: 32)
+
+            GeometryReader { geo in
+                let width = geo.size.width
+                let height = geo.size.height
+                ZStack(alignment: .topLeading) {
+                    LinearGradient(
+                        colors: [Color(red: 0.97, green: 0.91, blue: 0.79), Color(red: 0.90, green: 0.79, blue: 0.58)],
+                        startPoint: .top,
+                        endPoint: .bottom
+                    )
+                    Rectangle().fill(Color(red: 0.98, green: 0.95, blue: 0.87)).frame(height: 5)
+
+                    ForEach(Array(strings.enumerated()), id: \.element.id) { index, string in
+                        Rectangle()
+                            .fill(Color.black.opacity(0.35))
+                            .frame(width: 2)
+                            .offset(x: (CGFloat(index) + 0.5) * width / 4 - 1, y: 5)
+                        Rectangle()
+                            .fill(Color.clear)
+                            .contentShape(Rectangle())
+                            .frame(width: width / 4, height: height)
+                            .offset(x: CGFloat(index) * width / 4)
+                            .gesture(
+                                DragGesture(minimumDistance: 0)
+                                    .onChanged { value in
+                                        if activeNote?.name != targetName(for: string) {
+                                            activeNote = TargetNote.choices.first { $0.name == targetName(for: string) }
+                                            if let note = activeNote { onBegin(note) }
+                                        }
+                                        onUpdate(Double(-value.translation.height / 60) * 100)
+                                    }
+                                    .onEnded { _ in
+                                        activeNote = nil
+                                        onEnd()
+                                    }
+                            )
+                    }
+
+                    if dotStyle != .hidden {
+                        ForEach(positions.filter { advanced || $0.finger <= 1 }, id: \.id) { position in
+                            dot(position, width: width, height: height)
+                                .position(x: (CGFloat(column(of: position.string)) + 0.5) * width / 4,
+                                          y: rowY(for: position.finger, height: height))
+                        }
+                    }
+
+                    if let activeNote {
+                        Circle()
+                            .fill(PracticePalette.accent)
+                            .frame(width: 40, height: 40)
+                            .overlay {
+                                Text(activeNote.name).font(.system(size: 8, weight: .bold)).foregroundStyle(.white)
+                            }
+                            .position(
+                                x: width / 2,
+                                y: height / 2 + CGFloat(currentCents / 100) * (height / 2 - 30)
+                            )
+                    }
+
+                    Text(isTouching ? "按住并上下拖动" : "按住琴弦开始")
+                        .font(.system(size: 9))
+                        .foregroundStyle(.white)
+                        .padding(.horizontal, 8)
+                        .padding(.vertical, 4)
+                        .background(Color.black.opacity(0.35), in: Capsule())
+                        .position(x: width / 2, y: height - 18)
+                }
+            }
+        }
+        .background(Color(red: 1.0, green: 0.99, blue: 0.96))
+        .clipShape(.rect(cornerRadius: 0))
+        .overlay(Rectangle().stroke(Color.black.opacity(0.08), lineWidth: 1))
+        .accessibilityElement(children: .contain)
+        .accessibilityLabel("模拟琴颈，按住任意弦上下拖动练习揉弦")
+    }
+
+    private func dot(_ position: VibratoNotePosition, width: CGFloat, height: CGFloat) -> some View {
+        Button {
+            onTapNote(position)
+        } label: {
+            Group {
+                switch dotStyle {
+                case .solid:
+                    Circle()
+                        .fill(color(for: position))
+                        .frame(width: 32, height: 32)
+                        .overlay {
+                            Text(position.name)
+                                .font(.system(size: 7, weight: .bold))
+                                .foregroundStyle(.white)
+                        }
+                case .dashed:
+                    Circle()
+                        .strokeBorder(color(for: position).opacity(0.55), style: StrokeStyle(lineWidth: 1, dash: [3, 3]))
+                        .background(Circle().fill(color(for: position).opacity(0.10)))
+                        .frame(width: 32, height: 32)
+                        .overlay {
+                            Text(position.name)
+                                .font(.system(size: 7, weight: .bold))
+                                .foregroundStyle(color(for: position).opacity(0.9))
+                        }
+                case .hidden:
+                    EmptyView()
+                }
+            }
+        }
+        .buttonStyle(.plain)
+        .accessibilityLabel("\(position.name)，\(position.finger == 0 ? "空弦" : "\(position.finger) 指")")
+    }
+
+    private func color(for position: VibratoNotePosition) -> Color {
+        switch position.finger {
+        case 0: PracticePalette.accent
+        case 1: Color(red: 0.70, green: 0.42, blue: 0.00)
+        default: Color.secondary.opacity(0.55)
+        }
+    }
+
+    private func rowY(for finger: Int, height: CGFloat) -> CGFloat {
+        let fractions: [Int: CGFloat] = [0: 0.12, 1: 0.30, 2: 0.48, 3: 0.66, 4: 0.84]
+        return height * (fractions[finger] ?? 0.5)
+    }
+
+    private func column(of string: ViolinString) -> Int {
+        switch string {
+        case .g: 0; case .d: 1; case .a: 2; case .e: 3
+        }
+    }
+
+    private func targetHint(for string: ViolinString) -> String {
+        switch string {
+        case .g: "G3"; case .d: "D4"; case .a: "A4"; case .e: "E5"
+        }
+    }
+
+    private func targetName(for string: ViolinString) -> String { targetHint(for: string) }
 }

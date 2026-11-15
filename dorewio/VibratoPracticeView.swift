@@ -74,6 +74,8 @@ struct VibratoPracticeView: View {
     @State private var isPracticing = false
     @State private var practiceStartedAt: Date?
     @State private var haptic = UIImpactFeedbackGenerator(style: .light)
+    @State private var dotStyle: VibratoDotStyle = .solid
+    @State private var advancedDots = false
 
     init() {
         _mode = State(initialValue: CommandLine.arguments.contains("-vibratoNoInstrument") ? .withoutViolin : .withViolin)
@@ -103,12 +105,29 @@ struct VibratoPracticeView: View {
                 Spacer(minLength: 0)
             }
         }
-        .padding(.horizontal, isPracticing && mode == .withoutViolin ? 0 : 16)
+        .padding(.horizontal, 16)
         .padding(.top, 8)
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
         .background(PracticePalette.canvas)
         .navigationTitle("揉弦练习")
         .navigationBarTitleDisplayMode(.inline)
+        .navigationBarBackButtonHidden(isPracticing)
+        .toolbar {
+            if isPracticing {
+                ToolbarItem(placement: .topBarLeading) {
+                    Button { endPractice() } label: {
+                        Image(systemName: "chevron.left")
+                    }
+                    .accessibilityLabel("返回揉弦入口")
+                }
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button("结束") { endPractice() }
+                }
+            }
+        }
+        .onChange(of: isPracticing) {
+            if !isPracticing { stopAll() }
+        }
         .onChange(of: session.isListening) {
             updatePracticeTimer(isActive: session.isListening)
             UIApplication.shared.isIdleTimerDisabled = session.isListening || simulation.isTouching
@@ -210,8 +229,6 @@ struct VibratoPracticeView: View {
                     Text(session.targetNote.stringHint).font(.caption).foregroundStyle(.secondary)
                 }
                 Spacer()
-                Button("结束") { endPractice() }
-                    .buttonStyle(.bordered)
             }
 
             VStack(alignment: .leading, spacing: 8) {
@@ -253,52 +270,105 @@ struct VibratoPracticeView: View {
     }
 
     private var withoutViolinPractice: some View {
-        ZStack(alignment: .bottom) {
-            ImmersiveNeckView(
-                target: simulation.target,
-                currentCents: simulation.currentCents,
-                isTouching: simulation.isTouching,
-                onBegin: { note in
-                    simulation.target = note
-                    simulation.begin()
-                    haptic.impactOccurred(intensity: 0.7)
-                },
-                onUpdate: { cents in simulation.update(cents: cents) },
-                onEnd: { simulation.end() }
-            )
-            .ignoresSafeArea(edges: .bottom)
-
-            VStack(alignment: .leading, spacing: 0) {
-                HStack {
-                    VStack(alignment: .leading, spacing: 2) {
-                        Text("无琴 · 把手机当作琴颈").font(.headline)
-                        Text("按住任意一根弦，上下拖动；松手结束")
-                            .font(.caption)
-                            .foregroundStyle(.secondary)
-                    }
-                    Spacer()
-                    Button("结束") { endPractice() }
-                        .buttonStyle(.bordered)
+        VStack(alignment: .leading, spacing: 10) {
+            HStack(alignment: .top) {
+                VStack(alignment: .leading, spacing: 2) {
+                    Text("无琴 · \(simulation.target.name) 弦").font(.headline)
+                    Text("按住琴弦上下拖动；点圆点可听音")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
                 }
-                .padding(.horizontal, 16)
-                .padding(.top, 8)
-
                 Spacer()
+                Text(simulation.isTouching ? "正在揉弦" : "等待触摸")
+                    .font(.caption.weight(.semibold))
+                    .foregroundStyle(simulation.isTouching ? PracticePalette.accent : .secondary)
             }
 
-            VStack(spacing: 8) {
-                VibratoMetrics(result: simulation.result)
-                Text(withoutViolinFeedback)
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
-                    .frame(maxWidth: .infinity, alignment: .leading)
+            HStack(alignment: .top, spacing: 10) {
+                VStack(alignment: .leading, spacing: 8) {
+                    metricCard
+                    centerGaugeCard
+                    Text(withoutViolinFeedback)
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+                .frame(maxWidth: .infinity)
+
+                VibratoNeckPanel(
+                    target: simulation.target,
+                    currentCents: simulation.currentCents,
+                    isTouching: simulation.isTouching,
+                    advanced: advancedDots,
+                    dotStyle: dotStyle,
+                    onBegin: { note in
+                        simulation.target = note
+                        simulation.begin()
+                        haptic.impactOccurred(intensity: 0.7)
+                    },
+                    onUpdate: { cents in simulation.update(cents: cents) },
+                    onEnd: { simulation.end() },
+                    onTapNote: { position in
+                        notePlayer.play(midiNote: position.midiNote)
+                        haptic.impactOccurred(intensity: 0.4)
+                    }
+                )
+                .frame(width: 150)
+                .frame(maxHeight: .infinity)
             }
-            .padding(12)
-            .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 16))
-            .padding(.horizontal, 12)
-            .padding(.bottom, 8)
+            .frame(maxHeight: .infinity)
+
+            HStack(spacing: 10) {
+                Picker("音位显示", selection: $dotStyle) {
+                    ForEach(VibratoDotStyle.allCases) { style in
+                        Text(style.rawValue).tag(style)
+                    }
+                }
+                .pickerStyle(.segmented)
+                Toggle("进阶 2–4 指", isOn: $advancedDots)
+                    .font(.caption)
+                    .fixedSize()
+            }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
+    }
+
+    private var metricCard: some View {
+        VStack(spacing: 0) {
+            metricRow("速度", value: simulation.result?.rateHz, target: "5–7 Hz", good: simulation.result.map { (5...7).contains($0.rateHz) } ?? false)
+            metricRow("幅度", value: simulation.result?.extentCents, target: "20–100 音分", good: simulation.result.map { (20...100).contains($0.extentCents) } ?? false)
+            metricRow("均匀", value: simulation.result.map { $0.regularity * 100 }, target: "≥70%", good: simulation.result.map { $0.regularity >= 0.7 } ?? false)
+        }
+        .practiceSurface(padding: 10)
+    }
+
+    private func metricRow(_ title: String, value: Double?, target: String, good: Bool) -> some View {
+        HStack {
+            Text(title).font(.caption2).foregroundStyle(.secondary).frame(width: 30, alignment: .leading)
+            Text(value.map { String(format: "%.1f", $0) } ?? "--")
+                .font(.subheadline.weight(.bold).monospacedDigit())
+                .foregroundStyle(good ? PracticePalette.success : .primary)
+                .frame(width: 54, alignment: .leading)
+            Text(target).font(.system(size: 8)).foregroundStyle(.secondary)
+            Spacer(minLength: 0)
+            Circle()
+                .fill(good ? PracticePalette.success : Color.black.opacity(0.10))
+                .frame(width: 6, height: 6)
+        }
+        .padding(.vertical, 4)
+    }
+
+    private var centerGaugeCard: some View {
+        VStack(alignment: .leading, spacing: 4) {
+            Text("中心音准").font(.caption.weight(.semibold))
+            CenterCentsGauge(cents: simulation.currentCents)
+            HStack {
+                Text("偏低 -50"); Spacer(); Text("准"); Spacer(); Text("偏高 +50")
+            }
+            .font(.system(size: 7))
+            .foregroundStyle(.secondary)
+        }
+        .practiceSurface(padding: 10)
     }
 
     // MARK: 数据
