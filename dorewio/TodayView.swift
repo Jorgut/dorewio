@@ -3,12 +3,13 @@ import SwiftUI
 struct TodayView: View {
     @EnvironmentObject private var history: PracticeHistoryStore
     @AppStorage("dorewio.hasSeenOnboarding") private var hasSeenOnboarding = false
-    @State private var showsAbout = false
+    @State private var showsSettings = false
 
     var body: some View {
         NavigationStack {
             ScrollView {
                 VStack(alignment: .leading, spacing: 26) {
+                    BrandBar()
                     TodayHeader()
                     if !hasSeenOnboarding {
                         OnboardingCard { hasSeenOnboarding = true }
@@ -17,6 +18,7 @@ struct TodayView: View {
                     DailyProgressSection()
                     DailyPlanSection()
                     StudioPrompt()
+                    HomeFooter()
                 }
                 .padding(.horizontal, 16)
             }
@@ -27,16 +29,16 @@ struct TodayView: View {
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
-                        showsAbout = true
+                        showsSettings = true
                     } label: {
-                        Image(systemName: "info.circle")
+                        Image(systemName: "gearshape")
                     }
-                    .accessibilityLabel("关于 dorewio")
+                    .accessibilityLabel("设置")
                 }
             }
-            .sheet(isPresented: $showsAbout) {
+            .sheet(isPresented: $showsSettings) {
                 NavigationStack {
-                    AboutView()
+                    SettingsView()
                 }
             }
             .navigationDestination(for: PracticeRoute.self, destination: PracticeDestination.view)
@@ -292,5 +294,45 @@ private struct OnboardingCard: View {
                 Text(detail).font(.caption).foregroundStyle(.secondary)
             }
         }
+    }
+}
+
+
+private struct BrandBar: View {
+    var body: some View {
+        HStack(spacing: 11) {
+            Image("BrandMark")
+                .resizable()
+                .frame(width: 38, height: 38)
+                .clipShape(.rect(cornerRadius: 9))
+                .accessibilityHidden(true)
+            VStack(alignment: .leading, spacing: 1) {
+                Text("dorewio.")
+                    .font(.title3.bold())
+                Text("Learn music. Play with confidence.")
+                    .font(.caption2)
+                    .foregroundStyle(.secondary)
+            }
+            Spacer()
+        }
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel("dorewio，Learn music, Play with confidence")
+    }
+}
+
+private struct HomeFooter: View {
+    var body: some View {
+        VStack(spacing: 3) {
+            Text("dorewio. designed by archintera")
+                .font(.caption.weight(.semibold))
+                .foregroundStyle(.secondary)
+            Text("© 2026 archintera. All rights reserved.")
+                .font(.caption2)
+                .foregroundStyle(.tertiary)
+        }
+        .frame(maxWidth: .infinity, alignment: .center)
+        .padding(.top, 6)
+        .padding(.bottom, 4)
+        .accessibilityElement(children: .combine)
     }
 }
