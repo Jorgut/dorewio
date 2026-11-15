@@ -89,7 +89,7 @@ private struct DorewioLessonEntry: View {
             .frame(maxWidth: .infinity, alignment: .leading)
             .background(
                 LinearGradient(
-                    colors: [Color.white, PracticePalette.accent.opacity(0.06)],
+                    colors: [PracticePalette.paper, PracticePalette.accent.opacity(0.06)],
                     startPoint: .topLeading,
                     endPoint: .bottomTrailing
                 ),

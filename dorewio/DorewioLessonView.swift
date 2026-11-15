@@ -52,7 +52,7 @@ struct DorewioFingerboardView: View {
     let revealAnswer: Bool
     let onTap: (DorewioFingerChoice) -> Void
 
-    private let red = Color(red: 0.74, green: 0.24, blue: 0.20)
+    private let red = PracticePalette.accent
     private let fingerSteps = [0, 1, 3, 5, 7]
 
     var body: some View {
@@ -96,7 +96,7 @@ struct DorewioFingerboardView: View {
                     path.move(to: CGPoint(x: xs[0] - 23, y: panelTop + 2))
                     path.addLine(to: CGPoint(x: xs[3] + 23, y: panelTop + 2))
                 }
-                .stroke(.white, lineWidth: 7)
+                .stroke(Color(white: 0.85), lineWidth: 7)
 
                 ForEach(Array(ViolinString.allCases.enumerated()), id: \.element.id) { index, string in
                     ForEach(0..<fingerSteps.count, id: \.self) { finger in
@@ -129,7 +129,7 @@ struct DorewioFingerboardView: View {
 
                 Text("琴身 · BODY ↓")
                     .font(.caption2.weight(.semibold))
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(.white.opacity(0.55))
                     .position(x: center, y: geometry.size.height - 15)
             }
         }
@@ -182,14 +182,14 @@ struct DorewioLessonView: View {
                             .minimumScaleFactor(0.8)
                         Text(current.solfege)
                             .font(.title2)
-                            .foregroundStyle(Color(red: 0.74, green: 0.24, blue: 0.20))
+                            .foregroundStyle(PracticePalette.accent)
                         Spacer()
                         Button {
                             tone.play(frequency: PitchName.frequency(for: current.midi))
                         } label: {
                             Image(systemName: "speaker.wave.2.fill")
                                 .frame(width: 46, height: 46)
-                                .background(Color(white: 0.92), in: Circle())
+                                .background(Color.primary.opacity(0.08), in: Circle())
                         }
                         .accessibilityLabel("播放参考音")
                     }
@@ -199,7 +199,7 @@ struct DorewioLessonView: View {
                 }
                 .padding(20)
                 .frame(maxWidth: .infinity, alignment: .leading)
-                .background(Color(white: 0.96), in: RoundedRectangle(cornerRadius: 18))
+                .background(PracticePalette.paper, in: RoundedRectangle(cornerRadius: 18))
 
                 DorewioFingerboardView(selected: choice, answer: answer, revealAnswer: correct) { tapped in
                     choice = tapped
@@ -231,7 +231,7 @@ struct DorewioLessonView: View {
                             .font(.headline)
                             .foregroundStyle(.white)
                             .padding(16)
-                            .background(Color(red: 0.74, green: 0.24, blue: 0.20), in: RoundedRectangle(cornerRadius: 14))
+                            .background(PracticePalette.accent, in: RoundedRectangle(cornerRadius: 14))
                         }
                     }
                 }
@@ -241,8 +241,8 @@ struct DorewioLessonView: View {
             }
             .padding(20)
         }
-        .tint(Color(red: 0.74, green: 0.24, blue: 0.20))
-        .background(Color.white)
+        .tint(PracticePalette.accent)
+        .background(PracticePalette.canvas)
         .navigationTitle("第一课")
         .navigationBarTitleDisplayMode(.inline)
     }

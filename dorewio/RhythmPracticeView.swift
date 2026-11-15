@@ -40,7 +40,7 @@ struct RhythmPracticeView: View {
                         HStack(spacing: 7) {
                             ForEach(0..<4, id: \.self) { index in
                                 Circle()
-                                    .fill(index == targetBeat && isPlayingTarget ? PracticePalette.accent : Color.black.opacity(0.12))
+                                    .fill(index == targetBeat && isPlayingTarget ? PracticePalette.accent : Color.primary.opacity(0.12))
                                     .frame(width: 10, height: 10)
                             }
                         }
