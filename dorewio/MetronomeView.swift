@@ -97,7 +97,7 @@ struct MetronomeView: View {
             HStack(spacing: 12) {
                 ForEach(0..<beatsPerBar, id: \.self) { index in
                     Circle()
-                        .fill(index == beat ? PracticePalette.accent : Color.black.opacity(0.10))
+                        .fill(index == beat ? PracticePalette.accent : Color.primary.opacity(0.12))
                         .frame(width: index == beat ? 18 : 12, height: index == beat ? 18 : 12)
                         .animation(.snappy(duration: 0.12), value: beat)
                 }

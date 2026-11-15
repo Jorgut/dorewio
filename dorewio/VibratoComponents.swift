@@ -381,8 +381,12 @@ struct VibratoNeckPanel: View {
             HStack(spacing: 0) {
                 ForEach(strings, id: \.self) { string in
                     VStack(spacing: 1) {
-                        Text(string.rawValue).font(.system(size: 12, weight: .bold))
-                        Text(targetHint(for: string)).font(.system(size: 7)).foregroundStyle(.secondary)
+                        Text(string.rawValue)
+                            .font(.system(size: 12, weight: .bold))
+                            .foregroundStyle(Color.black.opacity(0.78))
+                        Text(targetHint(for: string))
+                            .font(.system(size: 7))
+                            .foregroundStyle(Color.black.opacity(0.55))
                     }
                     .frame(maxWidth: .infinity)
                 }

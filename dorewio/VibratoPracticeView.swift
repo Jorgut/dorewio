@@ -341,7 +341,7 @@ struct VibratoPracticeView: View {
             Text(target).font(.system(size: 8)).foregroundStyle(.secondary)
             Spacer(minLength: 0)
             Circle()
-                .fill(good ? PracticePalette.success : Color.black.opacity(0.10))
+                .fill(good ? PracticePalette.success : Color.primary.opacity(0.10))
                 .frame(width: 6, height: 6)
         }
         .padding(.vertical, 4)

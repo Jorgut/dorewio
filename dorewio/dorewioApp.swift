@@ -9,7 +9,9 @@ struct DorewioApp: App {
         WindowGroup {
             Group {
                 #if DEBUG
-                if CommandLine.arguments.contains("-paywallPreview") {
+                if CommandLine.arguments.contains("-lessonPreview") {
+                    NavigationStack { DorewioLessonView() }
+                } else if CommandLine.arguments.contains("-paywallPreview") {
                     NavigationStack {
                         PaywallView()
                     }

@@ -326,7 +326,7 @@ private struct FingerboardCard: View {
                     ForEach(rows) { row in
                         Text(row.label)
                             .font(.system(size: 9))
-                            .foregroundStyle(.secondary)
+                            .foregroundStyle(Color.black.opacity(0.55))
                             .frame(width: gutterWidth, height: rowHeight)
                     }
                 }
@@ -417,7 +417,7 @@ private struct FingerboardCard: View {
                 } label: {
                     Text("\(number)")
                         .font(.system(size: 10, weight: .bold))
-                        .foregroundStyle(number == positionNumber ? Color.white : (FingerboardBook.supportedPositions.contains(number) ? Color.primary : Color.secondary.opacity(0.45)))
+                        .foregroundStyle(number == positionNumber ? Color.white : (FingerboardBook.supportedPositions.contains(number) ? Color.black.opacity(0.72) : Color.black.opacity(0.25)))
                         .frame(width: 22, height: 22)
                         .background(
                             number == positionNumber
@@ -431,7 +431,7 @@ private struct FingerboardCard: View {
             }
             Text("把位")
                 .font(.system(size: 8))
-                .foregroundStyle(Color.secondary.opacity(0.6))
+                .foregroundStyle(Color.black.opacity(0.45))
                 .padding(.top, 2)
         }
         .frame(width: railWidth)
@@ -469,7 +469,7 @@ private struct FingerboardCard: View {
         }
         if note == question { return PracticePalette.success }
         if note == selected { return PracticePalette.accent }
-        return Color.secondary.opacity(0.30)
+        return Color.black.opacity(0.18)
     }
 
     private func stringColumn(_ string: ViolinString) -> Int {
