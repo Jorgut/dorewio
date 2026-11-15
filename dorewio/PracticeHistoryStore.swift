@@ -103,7 +103,7 @@ extension PracticeKind {
         case .rhythm: "节奏"
         case .repertoire: "曲目练习"
         case .sightReading: "基础识谱"
-        case .fingerboard: "第一把位"
+        case .fingerboard: "把位练习"
         case .earTraining: "空弦听辨"
         }
     }

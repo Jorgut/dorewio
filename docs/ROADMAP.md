@@ -40,6 +40,9 @@ Shipping app: dorewio. (App Store record: 小提琴自学, bundle `com.archinter
 - [x] Fingerboard rework: vertical C2 immersive layout, GDAE above the neck, square neck, positions 1–3 with swipe + rail, 4–7 greyed
 - [x] Bowing practice click sound (toggle) and standalone metronome entry (BPM/拍号/重音/声音+震动)
 - [x] Bundled sample score + first-run onboarding + About/support screen
+- [x] Vibrato redesign: beginner guide, center gauge, target ranges, reference/demo tones, 有琴/无琴 split and touch-simulated neck
+- [x] Rhythm feedback: tap click + haptic, target metronome
+- [x] Fingerboard note playback on every answer; rename entry to 把位练习
 - [ ] Record physical-device demo and resubmit 1.0
 
 ## M6 — Score tools

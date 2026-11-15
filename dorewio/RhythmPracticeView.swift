@@ -6,6 +6,11 @@ struct RhythmPracticeView: View {
     @State private var tapTimes: [Double] = []
     @State private var result: RhythmScore?
     @State private var practiceStartedAt: Date?
+    @StateObject private var clicker = MetronomeClickPlayer()
+    @State private var haptic = UIImpactFeedbackGenerator(style: .light)
+    @State private var isPlayingTarget = false
+    @State private var targetBeat = 0
+    @State private var targetTimer: Timer?
 
     var body: some View {
         ScrollView {
@@ -21,9 +26,37 @@ struct RhythmPracticeView: View {
                     }
                     Slider(value: $bpm, in: 40...180, step: 1)
                         .tint(PracticePalette.accent)
-                        .onChange(of: bpm) { reset() }
+                        .onChange(of: bpm) {
+                            reset()
+                            if isPlayingTarget { restartTargetTimer() }
+                        }
                 }
                 .practiceSurface()
+
+                VStack(alignment: .leading, spacing: 12) {
+                    HStack {
+                        Text("目标节拍").font(.headline)
+                        Spacer()
+                        HStack(spacing: 7) {
+                            ForEach(0..<4, id: \.self) { index in
+                                Circle()
+                                    .fill(index == targetBeat && isPlayingTarget ? PracticePalette.accent : Color.black.opacity(0.12))
+                                    .frame(width: 10, height: 10)
+                            }
+                        }
+                        .accessibilityHidden(true)
+                    }
+                    Text("先跟着目标速度点头或打拍，再点击下面的按钮跟上")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                    Button(isPlayingTarget ? "停止节拍" : "开始播放目标节拍", systemImage: isPlayingTarget ? "stop.fill" : "play.fill") {
+                        isPlayingTarget ? stopTargetMetronome() : startTargetMetronome()
+                    }
+                    .buttonStyle(.bordered)
+                    .controlSize(.large)
+                    .tint(PracticePalette.accent)
+                }
+                .practiceSurface(padding: 16)
 
                 ViewThatFits(in: .horizontal) {
                     HStack(spacing: 10) {
@@ -58,7 +91,11 @@ struct RhythmPracticeView: View {
         .background(PracticePalette.canvas)
         .navigationTitle("节奏练习")
         .navigationBarTitleDisplayMode(.inline)
-        .onDisappear(perform: finishPractice)
+        .onDisappear {
+            stopTargetMetronome()
+            clicker.stop()
+            finishPractice()
+        }
     }
 
     @ViewBuilder
@@ -94,6 +131,41 @@ struct RhythmPracticeView: View {
         tapTimes.append(now)
         if tapTimes.count > 12 { tapTimes.removeFirst() }
         result = RhythmScorer.score(tapTimes: tapTimes, targetBPM: bpm)
+        clicker.play(accent: false)
+        haptic.impactOccurred(intensity: 0.7)
+    }
+
+    private func startTargetMetronome() {
+        guard !isPlayingTarget else { return }
+        isPlayingTarget = true
+        targetBeat = 0
+        clicker.start()
+        fireTargetBeat()
+        restartTargetTimer()
+    }
+
+    private func stopTargetMetronome() {
+        isPlayingTarget = false
+        targetTimer?.invalidate()
+        targetTimer = nil
+        clicker.stop()
+        targetBeat = 0
+    }
+
+    private func restartTargetTimer() {
+        targetTimer?.invalidate()
+        let timer = Timer(timeInterval: 60 / bpm, repeats: true) { _ in
+            Task { @MainActor in fireTargetBeat() }
+        }
+        timer.tolerance = 0.002
+        RunLoop.main.add(timer, forMode: .common)
+        targetTimer = timer
+    }
+
+    private func fireTargetBeat() {
+        guard isPlayingTarget else { return }
+        clicker.play(accent: targetBeat == 0)
+        targetBeat = (targetBeat + 1) % 4
     }
 
     private func reset() {

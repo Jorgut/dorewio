@@ -21,6 +21,10 @@ struct DorewioApp: App {
                     NavigationStack {
                         MetronomeView()
                     }
+                } else if CommandLine.arguments.contains("-vibratoPreview") || CommandLine.arguments.contains("-vibratoNoInstrument") {
+                    NavigationStack {
+                        VibratoPracticeView()
+                    }
                 } else {
                     ContentView()
                 }

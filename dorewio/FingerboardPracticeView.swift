@@ -142,6 +142,7 @@ struct FingerboardPracticeView: View {
     @State private var hasSaved = false
     @State private var showsAdvancedNotice = false
     @State private var haptic = UIImpactFeedbackGenerator(style: .light)
+    @StateObject private var notePlayer = ViolinNotePlayer()
 
     private var pool: [FingerboardNote] { FingerboardBook.questions(for: positionNumber) }
     private var question: FingerboardNote { pool[questionIndex % pool.count] }
@@ -191,6 +192,7 @@ struct FingerboardPracticeView: View {
         .background(PracticePalette.canvas)
         .navigationTitle(positionNumber == 1 ? "第一把位" : "第 \(positionNumber) 把位")
         .navigationBarTitleDisplayMode(.inline)
+        .onDisappear { notePlayer.stop() }
         .alert("进阶把位", isPresented: $showsAdvancedNotice) {
             Button("好", role: .cancel) {}
         } message: {
@@ -243,6 +245,7 @@ struct FingerboardPracticeView: View {
         selected = note
         answered += 1
         if note == question { correct += 1 }
+        notePlayer.play(midiNote: note.midiNote)
         haptic.impactOccurred(intensity: 0.6)
         if answered == 5 { saveResult() }
     }

@@ -166,7 +166,7 @@ extension LearningSkill {
     var title: String {
         switch self {
         case .sightReading: "基础识谱"
-        case .fingerboard: "第一把位"
+        case .fingerboard: "把位练习"
         case .rhythm: "节奏点击"
         case .earTraining: "空弦听辨"
         }
