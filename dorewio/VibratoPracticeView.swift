@@ -288,6 +288,7 @@ struct VibratoPracticeView: View {
                 VStack(alignment: .leading, spacing: 8) {
                     metricCard
                     centerGaugeCard
+                    dotControlsCard
                     Text(withoutViolinFeedback)
                         .font(.caption)
                         .foregroundStyle(.secondary)
@@ -313,22 +314,10 @@ struct VibratoPracticeView: View {
                         haptic.impactOccurred(intensity: 0.4)
                     }
                 )
-                .frame(width: 150)
+                .frame(width: 200)
                 .frame(maxHeight: .infinity)
             }
             .frame(maxHeight: .infinity)
-
-            HStack(spacing: 10) {
-                Picker("音位显示", selection: $dotStyle) {
-                    ForEach(VibratoDotStyle.allCases) { style in
-                        Text(style.rawValue).tag(style)
-                    }
-                }
-                .pickerStyle(.segmented)
-                Toggle("进阶 2–4 指", isOn: $advancedDots)
-                    .font(.caption)
-                    .fixedSize()
-            }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
@@ -356,6 +345,20 @@ struct VibratoPracticeView: View {
                 .frame(width: 6, height: 6)
         }
         .padding(.vertical, 4)
+    }
+
+    private var dotControlsCard: some View {
+        VStack(alignment: .leading, spacing: 6) {
+            Picker("音位显示", selection: $dotStyle) {
+                ForEach(VibratoDotStyle.allCases) { style in
+                    Text(style.rawValue).tag(style)
+                }
+            }
+            .pickerStyle(.segmented)
+            Toggle("进阶 2–4 指", isOn: $advancedDots)
+                .font(.caption2)
+        }
+        .practiceSurface(padding: 8)
     }
 
     private var centerGaugeCard: some View {
