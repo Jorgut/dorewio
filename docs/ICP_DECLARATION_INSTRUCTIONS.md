@@ -4,10 +4,10 @@
 
 ## 使用文件
 
-- 打印/签字：`docs/icp/dorewio-ICP-declaration-EN-HONGLIANG-ZHU.pdf`（单页英文）
-- 可编辑：`docs/icp/dorewio-ICP-declaration-EN-HONGLIANG-ZHU.docx`
+- 打印/签字：`docs/icp/dorewio-ICP-declaration-EN-dualname.pdf`（单页英文，含 HONGLIANG ZHU / ALTANKHUU JORGUTYN 双名）
+- 可编辑：`docs/icp/dorewio-ICP-declaration-EN-dualname.docx`
 
-> 只使用英文单页版；之前的中英两页版作废，不要提交。
+> 只使用这一份双名英文单页版；之前的中英两页版、单名英文版都作废，不要提交。
 
 ## 步骤
 
@@ -34,6 +34,8 @@ Thank you for your reply. I have uploaded the signed declaration letter for case
 
 The letter includes the account holder's signature and printed legal name, the Team ID (GB38532D8G), and the App ID (6827607435).
 
+The account holder's passport bio page shows ZHU HONGLIANG and the observation page shows ALTANKHUU JORGUTYN; both refer to the same person. I can provide the passport pages if needed.
+
 Please let me know if any additional information is needed.
 
 Best regards,
@@ -43,6 +45,6 @@ juhonl@163.com
 
 ## 提醒
 
-- 必须由 HONGLIANG ZHU 本人签名；Altankhuu 是 App Manager，不能代签
+- 这两个名字必须是同一个人的合法姓名；如果 Apple 要身份证明，附护照主页（ZHU HONGLIANG）+ 备注页（ALTANKHUU JORGUTYN）
 - 签名与 `Printed legal name` 必须是同一个人
-- 如果 Apple 要身份证明：附 HONGLIANG ZHU 的护照主页（拼音姓名）+ 备注页（签名）
+- 不要混入其他团队成员的名字
