@@ -1,12 +1,20 @@
-# Release state — 2026-11-13
+# Release state — 2026-11-22
 
 App Store Connect record: **小提琴自学** · Apple ID `6827607435` · bundle `com.archintera.VibratoCoach` · team `GB38532D8G` · SKU `com.archintera.VibratoCoach` · primary language zh-Hans.
 
+## 1.1 — in development (2026-11-22)
+
+- Branch `release/1.1`; version **1.1**, next build **19** (1.0 shipped build 17; build 18 stayed TestFlight-only).
+- New in 1.1: **PDF 谱架** in 曲目 — import PDFs from Files, copy them into the app sandbox, and read them offline in a PDFKit continuous-scroll viewer with pinch zoom, page navigation and delete. No upload, no account.
+- Included in 1.1: build 18 light/dark contrast fixes (already on `main`, never shipped in 1.0).
+- Code verified: SwiftPM `72/72` tests pass; simulator build succeeds; PDF shelf/viewer screenshots in `.tmp/qa-1.1/` (scratch, not committed).
+- Still external: Pro paywall flip (`ProLaunchMode.gatingEnabled`) waits for the Paid Apps Agreement; mainland China waits for the ICP case `30000016363562`; new App Store screenshots and 1.1 notes are not produced yet.
+
 ## Current status
 
-- App Store version **1.0 — READY_FOR_SALE** (resubmitted 2026-11-15 14:10 UTC with build 17 and the physical-device demo video)
+- App Store version **1.0 — READY_FOR_SALE** (live 2026-11-18 09:37 UTC; build 17)
 - Release type: **automatically release after approval**
-- Build in review: 1.0 (9) — **rejected 2026-11-15 (Guideline 2.1 – Information Needed)**
+- 1.0 (9) was rejected 2026-11-15 (Guideline 2.1 – Information Needed); builds 10–17 fixed it. 1.0 (17) passed and is live.
 - Build 10: light iteration (bundled sample score, first-run onboarding, About/support screen)
 - Build 11: **audio crash fix** — the microphone tap closure was MainActor-isolated and trapped on the realtime audio thread (`EXC_BREAKPOINT` in `AudioPitchEngine.start`); fixed by making the tap `@Sendable` and capturing only non-isolated locals.
 - Build 18 (TestFlight only, not attached to 1.0): light/dark mode fixes — adaptive lesson page/cards, cream-surface ink, beat dots, library gradient; see `docs/DARK_MODE_AUDIT_2026-11-15.md`.
@@ -102,9 +110,9 @@ China mainland is excluded from availability (174 of 175 territories); ICP filin
 2. **Mainland China App 备案 (ICP)** must be completed and the filing number entered in App Store Connect before China distribution.
 3. First IAP must be submitted together with app version 1.0 (review submission must contain both the version and the IAP).
 
-## Next steps
+## Next steps (1.1)
 
-1. Sign the Paid Apps Agreement (and consider the Small Business Program for 15% commission).
-2. Create the review submission with version 1.0 + IAP `6834334407`, submit for review.
-3. After approval: verify the paywall/restore flow with a sandbox account, then release.
-4. Complete App 备案 for mainland China.
+1. Finish 1.1 UI polish and update the App Store screenshots / What’s New text for the PDF shelf.
+2. Sign the Paid Apps Agreement, then flip `ProLaunchMode.gatingEnabled` and include the Pro IAP `6834334407` in the 1.1 submission.
+3. Archive and upload build 19, run a real-device pass, submit 1.1 for review.
+4. Complete the ICP case for mainland China and enable CHN afterwards.

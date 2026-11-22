@@ -46,8 +46,17 @@ Shipping app: dorewio. (App Store record: 小提琴自学, bundle `com.archinter
 - [x] One-page layouts (tuner/rhythm/bow), idle-timer/black-screen fix, score note playback
 - [ ] Record physical-device demo and resubmit 1.0
 
+## M7 — 1.1
+
+- [x] `release/1.1` branch, version 1.1 (build 19)
+- [x] PDF 谱架: import PDF from Files, local copy, PDFKit viewer with page navigation and zoom
+- [x] Build 18 dark-mode contrast fixes already on `main`; 1.1 inherits them
+- [ ] Pro paywall flip after the Paid Apps Agreement is signed
+- [ ] New App Store screenshots and 1.1 release notes
+- [ ] Archive build 19, real-device pass, submit 1.1
+
 ## M6 — Score tools
-- [ ] PDF read-only viewer entry in 曲目 (PDFKit, offline; 1.1)
+- [x] PDF read-only viewer entry in 曲目 (PDFKit, offline; 1.1)
 - [ ] PDF OMR → MusicXML import/export (cloud OMR, opt-in upload, privacy update; 1.2 Beta)
 - [ ] MIDI import (monophonic track selection; 1.2)
 

@@ -20,7 +20,7 @@
 
 ## In scope (1.0)
 
-Offline operation, no account, local practice history, tuner and pitch analysis, bow/rhythm/sight-reading/ear-training/fingerboard practice, single-voice score import and playback, audio import with melody extraction.
+Offline operation, no account, local practice history, tuner and pitch analysis, bow/rhythm/sight-reading/ear-training/fingerboard practice, single-voice score import and playback, audio import with melody extraction, and offline PDF score reading (1.1).
 
 ## Out of scope (1.0)
 

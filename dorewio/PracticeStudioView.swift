@@ -6,8 +6,10 @@ struct PracticeStudioView: View {
     @EnvironmentObject private var history: PracticeHistoryStore
     @StateObject private var session = PracticeStudioSession()
     @StateObject private var scoreSession = ScorePracticeSession()
+    @StateObject private var pdfLibrary = PDFScoreLibrary()
     @State private var showsImporter = false
     @State private var showsScoreImporter = false
+    @State private var showsPDFImporter = false
     @State private var practiceStartedAt: Date?
 
     private static let scoreTypes: [UTType] = {
@@ -31,6 +33,8 @@ struct PracticeStudioView: View {
                 )
 
                 ScoreWorkbench(session: scoreSession, importAction: { showsScoreImporter = true }, sampleAction: { scoreSession.importSampleScore() })
+
+                PDFShelfView(library: pdfLibrary, importAction: { showsPDFImporter = true })
 
                 if session.audioURL == nil {
                     StudioEmptyState(
@@ -66,6 +70,15 @@ struct PracticeStudioView: View {
             case .success(let url): scoreSession.importScore(from: url)
             case .failure(let error): scoreSession.errorMessage = "无法打开文件：\(error.localizedDescription)"
             }
+        }
+        .fileImporter(isPresented: $showsPDFImporter, allowedContentTypes: [.pdf]) { result in
+            switch result {
+            case .success(let url): pdfLibrary.importPDF(from: url)
+            case .failure(let error): pdfLibrary.errorMessage = "无法打开文件：\(error.localizedDescription)"
+            }
+        }
+        .navigationDestination(for: PDFScore.self) { score in
+            PDFScoreViewer(score: score, fileURL: pdfLibrary.fileURL(for: score))
         }
         .alert("提示", isPresented: Binding(
             get: { session.errorMessage != nil },

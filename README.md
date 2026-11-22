@@ -23,6 +23,7 @@ The project began in August 2026 as **VibratoCoach**, a vibrato-practice experim
 - **第一把位 / Fingerboard** — string + finger position quiz.
 - **听辨 / Ear training** — open-string listening drills.
 - **曲目工作室 / Score studio** — import single-voice MusicXML (`.musicxml`, `.xml` or compressed `.mxl`), play it back with first-position fingering, 0.5×–1.0× tempo, measure loop, metronome and count-in; or import audio, slow it down and extract a melody.
+- **PDF 谱架 / PDF shelf (1.1)** — import PDF scores from Files, keep the copies on device and read them offline with page navigation and pinch zoom.
 - **今天 / Daily plan & progress** — with-violin and without-violin 10-minute plans, streaks and per-skill progress.
 
 ## Opening the project
