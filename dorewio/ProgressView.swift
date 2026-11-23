@@ -7,14 +7,21 @@ struct PracticeProgressView: View {
         NavigationStack {
             ScrollView {
                 VStack(alignment: .leading, spacing: 26) {
-                    ProgressSummary()
-                    WeeklyPracticeChart()
-                    SkillProgressSection()
-                    GoalEditor()
-                    RecentPracticeList()
+                    PracticeTwoColumn(minColumnWidth: 420) {
+                        VStack(alignment: .leading, spacing: 26) {
+                            ProgressSummary()
+                            WeeklyPracticeChart()
+                        }
+                    } secondary: {
+                        VStack(alignment: .leading, spacing: 26) {
+                            SkillProgressSection()
+                            GoalEditor()
+                            RecentPracticeList()
+                        }
+                    }
                 }
-                .practiceReadableWidth()
-                .padding()
+                .practiceReadableWidth(1100)
+                .padding(20)
             }
             .background(PracticePalette.canvas)
             .navigationTitle("进度")

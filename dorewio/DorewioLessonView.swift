@@ -147,6 +147,7 @@ struct DorewioLessonView: View {
     @State private var choice: DorewioFingerChoice?
     @State private var attempted = false
     @State private var tone = TonePlayer()
+    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
 
     private var current: DorewioNote { DorewioLessonData.notes[lessonIndex] }
     private var answer: DorewioFingerChoice {
@@ -157,94 +158,160 @@ struct DorewioLessonView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 22) {
-                HStack {
-                    VStack(alignment: .leading, spacing: 4) {
-                        Text("dorewio.")
-                            .font(.system(size: 30, weight: .bold, design: .rounded))
-                        Text("VIOLIN · LESSON 01")
-                            .font(.caption.weight(.medium))
-                            .tracking(1.5)
-                            .foregroundStyle(.secondary)
-                    }
-                    Spacer()
-                    Text("\(lessonIndex + 1) / \(DorewioLessonData.notes.count)")
-                        .font(.subheadline.monospacedDigit())
-                        .foregroundStyle(.secondary)
-                }
+                lessonHeader
 
-                VStack(alignment: .leading, spacing: 10) {
-                    Text("找到这个音符")
-                        .font(.subheadline)
-                        .foregroundStyle(.secondary)
-                    HStack(alignment: .firstTextBaseline, spacing: 14) {
-                        Text(current.id)
-                            .font(.system(size: 64, weight: .semibold, design: .rounded))
-                            .minimumScaleFactor(0.8)
-                        Text(current.solfege)
-                            .font(.title2)
-                            .foregroundStyle(PracticePalette.accent)
-                        Spacer()
-                        Button {
-                            tone.play(frequency: PitchName.frequency(for: current.midi))
-                        } label: {
-                            Image(systemName: "speaker.wave.2.fill")
-                                .frame(width: 46, height: 46)
-                                .background(Color.primary.opacity(0.08), in: Circle())
-                        }
-                        .accessibilityLabel("播放参考音")
-                    }
-                    Text("在下面的指板上，选择琴弦与手指位置。")
-                        .font(.subheadline)
-                        .foregroundStyle(.secondary)
-                }
-                .padding(20)
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .background(PracticePalette.paper, in: RoundedRectangle(cornerRadius: 18))
-
-                DorewioFingerboardView(selected: choice, answer: answer, revealAnswer: correct) { tapped in
-                    choice = tapped
-                    attempted = true
-                }
-
-                VStack(alignment: .leading, spacing: 14) {
-                    if attempted {
-                        Label(correct ? "正确！\(current.instruction)" : "再试一次，看看琴弦和指位。",
-                              systemImage: correct ? "checkmark.circle.fill" : "arrow.counterclockwise")
-                            .foregroundStyle(correct ? Color.green : Color.primary)
-                            .font(.subheadline.weight(.medium))
-                    } else {
-                        Text("提示：0 = 空弦；1–4 = 左手手指。")
-                            .font(.subheadline)
-                            .foregroundStyle(.secondary)
-                    }
-                    if correct {
-                        Button {
-                            lessonIndex = (lessonIndex + 1) % DorewioLessonData.notes.count
-                            choice = nil
-                            attempted = false
-                        } label: {
-                            HStack {
-                                Text("下一个音符")
-                                Spacer()
-                                Image(systemName: "arrow.right")
-                            }
-                            .font(.headline)
-                            .foregroundStyle(.white)
-                            .padding(16)
-                            .background(PracticePalette.accent, in: RoundedRectangle(cornerRadius: 14))
+                PracticeTwoColumn(minColumnWidth: 380) {
+                    VStack(alignment: .leading, spacing: 18) {
+                        noteCard
+                        lessonNoteStrip
+                        if horizontalSizeClass == .regular {
+                            lessonStepsCard
                         }
                     }
+                } secondary: {
+                    VStack(alignment: .leading, spacing: 18) {
+                        DorewioFingerboardView(selected: choice, answer: answer, revealAnswer: correct) { tapped in
+                            choice = tapped
+                            attempted = true
+                        }
+                        feedbackArea
+                        Text("第一把位入门示意：琴头在上，琴身在下。圆点是按弦位置，不是琴格；不同手型与升降音会改变指位。")
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                    }
                 }
-                Text("第一把位入门示意：琴头在上，琴身在下。圆点是按弦位置，不是琴格；不同手型与升降音会改变指位。")
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
             }
-            .practiceReadableWidth(860)
+            .practiceReadableWidth(1100)
             .padding(20)
         }
         .tint(PracticePalette.accent)
         .background(PracticePalette.canvas)
         .navigationTitle("第一课")
         .navigationBarTitleDisplayMode(.inline)
+    }
+
+    // MARK: - 子视图
+
+    private var lessonHeader: some View {
+        HStack {
+            VStack(alignment: .leading, spacing: 4) {
+                Text("dorewio.")
+                    .font(.system(size: 30, weight: .bold, design: .rounded))
+                Text("VIOLIN · LESSON 01")
+                    .font(.caption.weight(.medium))
+                    .tracking(1.5)
+                    .foregroundStyle(.secondary)
+            }
+            Spacer()
+            Text("\(lessonIndex + 1) / \(DorewioLessonData.notes.count)")
+                .font(.subheadline.monospacedDigit())
+                .foregroundStyle(.secondary)
+        }
+    }
+
+    private var noteCard: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            Text("找到这个音符")
+                .font(.subheadline)
+                .foregroundStyle(.secondary)
+            HStack(alignment: .firstTextBaseline, spacing: 14) {
+                Text(current.id)
+                    .font(.system(size: 64, weight: .semibold, design: .rounded))
+                    .minimumScaleFactor(0.8)
+                Text(current.solfege)
+                    .font(.title2)
+                    .foregroundStyle(PracticePalette.accent)
+                Spacer()
+                Button {
+                    tone.play(frequency: PitchName.frequency(for: current.midi))
+                } label: {
+                    Image(systemName: "speaker.wave.2.fill")
+                        .frame(width: 46, height: 46)
+                        .background(Color.primary.opacity(0.08), in: Circle())
+                }
+                .accessibilityLabel("播放参考音")
+            }
+            Text("在下面的指板上，选择琴弦与手指位置。")
+                .font(.subheadline)
+                .foregroundStyle(.secondary)
+        }
+        .padding(20)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(PracticePalette.paper, in: RoundedRectangle(cornerRadius: 18))
+    }
+
+    private var lessonNoteStrip: some View {
+        ScrollView(.horizontal, showsIndicators: false) {
+            HStack(spacing: 8) {
+                ForEach(Array(DorewioLessonData.notes.enumerated()), id: \.element.id) { index, note in
+                    Button {
+                        lessonIndex = index
+                        choice = nil
+                        attempted = false
+                    } label: {
+                        Text(note.id)
+                            .font(.caption.weight(.semibold))
+                            .foregroundStyle(index == lessonIndex ? .white : .secondary)
+                            .padding(.horizontal, 12)
+                            .padding(.vertical, 8)
+                            .background(
+                                index == lessonIndex ? PracticePalette.accent : Color.primary.opacity(0.06),
+                                in: Capsule()
+                            )
+                    }
+                    .buttonStyle(.plain)
+                    .accessibilityLabel("第 \(index + 1) 个音 \(note.id)")
+                    .accessibilityAddTraits(index == lessonIndex ? .isSelected : [])
+                }
+            }
+            .padding(.vertical, 2)
+        }
+        .accessibilityLabel("本课音符")
+    }
+
+    private var lessonStepsCard: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            Text("找位三步")
+                .font(.headline)
+            Label("先看音名，判断在哪根弦", systemImage: "1.circle")
+            Label("再找左手手指位置", systemImage: "2.circle")
+            Label("点一下圆点，听参考音核对", systemImage: "3.circle")
+        }
+        .font(.subheadline)
+        .foregroundStyle(.secondary)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .practiceSurface(padding: 18)
+    }
+
+    private var feedbackArea: some View {
+        VStack(alignment: .leading, spacing: 14) {
+            if attempted {
+                Label(correct ? "正确！\(current.instruction)" : "再试一次，看看琴弦和指位。",
+                      systemImage: correct ? "checkmark.circle.fill" : "arrow.counterclockwise")
+                    .foregroundStyle(correct ? Color.green : Color.primary)
+                    .font(.subheadline.weight(.medium))
+            } else {
+                Text("提示：0 = 空弦；1–4 = 左手手指。")
+                    .font(.subheadline)
+                    .foregroundStyle(.secondary)
+            }
+            if correct {
+                Button {
+                    lessonIndex = (lessonIndex + 1) % DorewioLessonData.notes.count
+                    choice = nil
+                    attempted = false
+                } label: {
+                    HStack {
+                        Text("下一个音符")
+                        Spacer()
+                        Image(systemName: "arrow.right")
+                    }
+                    .font(.headline)
+                    .foregroundStyle(.white)
+                    .padding(16)
+                    .background(PracticePalette.accent, in: RoundedRectangle(cornerRadius: 14))
+                }
+            }
+        }
     }
 }

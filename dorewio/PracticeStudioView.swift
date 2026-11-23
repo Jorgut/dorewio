@@ -32,17 +32,22 @@ struct PracticeStudioView: View {
                     detail: "导入乐谱直接跟奏，或用音频放慢、循环再提取旋律"
                 )
 
-                ScoreWorkbench(session: scoreSession, importAction: { showsScoreImporter = true }, sampleAction: { scoreSession.importSampleScore() })
+                PracticeTwoColumn(minColumnWidth: 420) {
+                    ScoreWorkbench(session: scoreSession, importAction: { showsScoreImporter = true }, sampleAction: { scoreSession.importSampleScore() })
+                } secondary: {
+                    VStack(alignment: .leading, spacing: 24) {
+                        PDFShelfView(library: pdfLibrary, importAction: { showsPDFImporter = true })
+                        if session.audioURL == nil {
+                            StudioEmptyState(
+                                isRecording: session.isRecording,
+                                importAction: { showsImporter = true },
+                                recordAction: { Task { await session.toggleRecording() } }
+                            )
+                        }
+                    }
+                }
 
-                PDFShelfView(library: pdfLibrary, importAction: { showsPDFImporter = true })
-
-                if session.audioURL == nil {
-                    StudioEmptyState(
-                        isRecording: session.isRecording,
-                        importAction: { showsImporter = true },
-                        recordAction: { Task { await session.toggleRecording() } }
-                    )
-                } else {
+                if session.audioURL != nil {
                     AudioSourceBar(
                         name: session.audioName,
                         isRecording: session.isRecording,
@@ -54,8 +59,8 @@ struct PracticeStudioView: View {
                     TranscriptionWorkbench(session: session)
                 }
             }
-            .practiceReadableWidth()
-            .padding()
+            .practiceReadableWidth(1100)
+            .padding(20)
         }
         .background(PracticePalette.canvas)
         .navigationTitle("工作室")

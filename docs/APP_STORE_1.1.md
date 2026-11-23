@@ -35,7 +35,9 @@ Draft date: 2026-11-23 · build **1.1 (19)** · branch `release/1.1` · **not up
 | 4 | `docs/screenshots/app-1.1/ipad/04_pdf_shelf.png` | 曲目 · PDF 谱架 |
 | 5 | `docs/screenshots/app-1.1/ipad/05_pdf_reader.png` | PDF 阅读器 |
 
-备用：`06_lesson.png`（第一课）、`07_fingerboard.png`（第一把位），可作为第 6–7 张。
+备用：`06_lesson.png`（第一课两栏）、`07_fingerboard.png`（第一把位）、`08_tuner.png`（调音两栏），可作为第 6–8 张。
+
+布局依据与未完成项见 `docs/DESIGN_QA_IPAD_2026-11-23.md`（当前结论：**revise**，横屏/分屏尚未实测）。
 
 ## 提交前必须处理
 

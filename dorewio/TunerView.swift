@@ -13,19 +13,26 @@ struct TunerView: View {
                 title: "让每一个长音落在中心",
                 detail: "先拉空弦，稳定后再调整弦轴或微调器"
             )
-            TunerDial(reading: session.reading, isListening: session.isListening)
-            StringReference(reading: session.reading)
-            CalibrationPanel(concertA: $session.concertA)
-            TunerStatus(state: session.state, reading: session.reading)
+            PracticeTwoColumn(minColumnWidth: 360) {
+                TunerDial(reading: session.reading, isListening: session.isListening)
+            } secondary: {
+                VStack(alignment: .leading, spacing: 14) {
+                    StringReference(reading: session.reading)
+                    CalibrationPanel(concertA: $session.concertA)
+                    TunerStatus(state: session.state, reading: session.reading)
+                    TuningHelpCard()
+                    Spacer(minLength: 0)
+                }
+            }
             Spacer(minLength: 0)
         }
-        .practiceReadableWidth(820)
+        .practiceReadableWidth(1100)
         .padding(.horizontal, 16)
         .padding(.top, 8)
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
         .safeAreaInset(edge: .bottom) {
             TunerListenButton(session: session)
-                .practiceReadableWidth(820)
+                .practiceActionWidth(560)
                 .padding(.horizontal, 16)
                 .padding(.bottom, 8)
                 .background(PracticePalette.canvas.opacity(0.96))
@@ -228,5 +235,37 @@ private struct TunerListenButton: View {
         }
         .buttonStyle(PressablePrimaryButtonStyle())
         .disabled(session.state == .requestingPermission)
+    }
+}
+
+private struct TuningHelpCard: View {
+    private let strings: [(String, String)] = [
+        ("G3", "196.00 Hz"),
+        ("D4", "293.66 Hz"),
+        ("A4", "440.00 Hz"),
+        ("E5", "659.26 Hz")
+    ]
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            Text("四弦标准音")
+                .font(.headline)
+            ForEach(strings, id: \.0) { name, frequency in
+                HStack {
+                    Text(name).font(.subheadline.weight(.semibold))
+                    Spacer()
+                    Text(frequency)
+                        .font(.subheadline.monospacedDigit())
+                        .foregroundStyle(.secondary)
+                }
+            }
+            Divider()
+            Text("从低音 G 弦开始，用长弓慢慢拉；指针稳定在中间后再换下一根。")
+                .font(.caption)
+                .foregroundStyle(.secondary)
+                .fixedSize(horizontal: false, vertical: true)
+        }
+        .practiceSurface(padding: 14)
+        .accessibilityElement(children: .combine)
     }
 }

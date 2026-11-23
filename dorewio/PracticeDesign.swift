@@ -10,6 +10,12 @@ extension View {
         frame(maxWidth: width, alignment: .leading)
             .frame(maxWidth: .infinity)
     }
+
+    /// 底部主操作在 iPad 上不要拉满整屏，保持拇指可达的按钮宽度。
+    func practiceActionWidth(_ width: CGFloat = 560) -> some View {
+        frame(maxWidth: width)
+            .frame(maxWidth: .infinity)
+    }
 }
 
 enum PracticePalette {
@@ -36,14 +42,17 @@ struct PracticeTwoColumn<Primary: View, Secondary: View>: View {
         self.secondary = secondary()
     }
 
+    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
+
     var body: some View {
-        ViewThatFits(in: .horizontal) {
+        if horizontalSizeClass == .regular {
             HStack(alignment: .top, spacing: 24) {
                 primary
                     .frame(minWidth: minColumnWidth, maxWidth: .infinity, alignment: .topLeading)
                 secondary
                     .frame(minWidth: minColumnWidth, maxWidth: .infinity, alignment: .topLeading)
             }
+        } else {
             VStack(alignment: .leading, spacing: 24) {
                 primary
                 secondary
