@@ -9,6 +9,7 @@ struct PDFScoreViewer: View {
     @State private var document: PDFDocument?
     @State private var loadFailed = false
     @State private var viewBox = PDFViewBox()
+    @State private var currentPage = 1
 
     var body: some View {
         Group {
@@ -32,6 +33,9 @@ struct PDFScoreViewer: View {
         .navigationBarTitleDisplayMode(.inline)
         .safeAreaInset(edge: .bottom) { bottomBar }
         .task { load() }
+        .onReceive(NotificationCenter.default.publisher(for: .PDFViewPageChanged)) { _ in
+            syncCurrentPage()
+        }
     }
 
     private var bottomBar: some View {
@@ -58,10 +62,13 @@ struct PDFScoreViewer: View {
 
             Spacer(minLength: 8)
 
-            Text("共 \(score.pageCount) 页 · 离线查看")
+            Text(document == nil
+                 ? "共 \(score.pageCount) 页 · 离线查看"
+                 : "第 \(currentPage) / \(score.pageCount) 页 · 离线查看")
                 .font(.caption)
                 .foregroundStyle(.secondary)
                 .multilineTextAlignment(.trailing)
+                .accessibilityLabel("第 \(currentPage) 页，共 \(score.pageCount) 页")
         }
         .padding(.horizontal, 12)
         .padding(.vertical, 6)
@@ -78,6 +85,12 @@ struct PDFScoreViewer: View {
         } else {
             loadFailed = true
         }
+    }
+
+    private func syncCurrentPage() {
+        guard let page = viewBox.view?.currentPage?.pageRef?.pageNumber,
+              page != currentPage else { return }
+        currentPage = min(max(page, 1), max(score.pageCount, 1))
     }
 }
 

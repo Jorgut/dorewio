@@ -5,10 +5,11 @@ App Store Connect record: **小提琴自学** · Apple ID `6827607435` · bundle
 ## 1.1 — in development (2026-11-22)
 
 - Branch `release/1.1`; version **1.1**, next build **19** (1.0 shipped build 17; build 18 stayed TestFlight-only).
-- New in 1.1: **PDF 谱架** in 曲目 — import PDFs from Files, copy them into the app sandbox, and read them offline in a PDFKit continuous-scroll viewer with pinch zoom, page navigation and delete. No upload, no account.
+- New in 1.1: **PDF 谱架** in 曲目 — import PDFs from Files, copy them into the app sandbox, and read them offline in a PDFKit continuous-scroll viewer with pinch zoom, live page count, page navigation and delete. No upload, no account.
 - Included in 1.1: build 18 light/dark contrast fixes (already on `main`, never shipped in 1.0).
-- Code verified: SwiftPM `72/72` tests pass; simulator build succeeds; PDF shelf/viewer screenshots in `.tmp/qa-1.1/` (scratch, not committed).
-- Still external: Pro paywall flip (`ProLaunchMode.gatingEnabled`) waits for the Paid Apps Agreement; mainland China waits for the ICP case `30000016363562`; new App Store screenshots and 1.1 notes are not produced yet.
+- Code verified: SwiftPM `72/72` tests pass; simulator build succeeds; draft screenshots in `docs/screenshots/app-1.1/`.
+- Draft 1.1 screenshots and What's New: `docs/APP_STORE_1.1.md` (needs a reshoot with a real score PDF before upload).
+- Still external: Pro paywall flip (`ProLaunchMode.gatingEnabled`) waits for the Paid Apps Agreement; mainland China waits for the ICP case `30000016363562`; final store screenshots and What's New are not uploaded yet.
 
 ## Current status
 
