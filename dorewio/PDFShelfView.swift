@@ -1,4 +1,5 @@
 import SwiftUI
+import PDFKit
 
 /// 「曲目」页的 PDF 谱架：导入 PDF、离线翻谱、管理本机副本。
 struct PDFShelfView: View {
@@ -120,59 +121,16 @@ struct PDFShelfView: View {
     // MARK: - 列表
 
     private var scoreList: some View {
-        VStack(spacing: 0) {
+        LazyVGrid(
+            columns: [GridItem(.adaptive(minimum: 150, maximum: 230), spacing: 12)],
+            alignment: .leading,
+            spacing: 12
+        ) {
             ForEach(library.scores) { score in
-                row(score)
-                if score.id != library.scores.last?.id {
-                    Divider()
-                }
-            }
-        }
-    }
-
-    private func row(_ score: PDFScore) -> some View {
-        HStack(spacing: 10) {
-            NavigationLink(value: score) {
-                HStack(spacing: 12) {
-                    Image(systemName: "doc.text.fill")
-                        .font(.system(size: 18, weight: .medium))
-                        .foregroundStyle(PracticePalette.accent)
-                        .frame(width: 36, height: 44)
-                        .accessibilityHidden(true)
-
-                    VStack(alignment: .leading, spacing: 3) {
-                        Text(score.displayName)
-                            .font(.subheadline.weight(.semibold))
-                            .foregroundStyle(.primary)
-                            .lineLimit(1)
-                        Text("\(score.pageCount) 页 · \(score.importedAt.formatted(date: .abbreviated, time: .omitted))")
-                            .font(.caption)
-                            .foregroundStyle(.secondary)
-                    }
-                    .frame(maxWidth: .infinity, alignment: .leading)
-
-                    Image(systemName: "chevron.right")
-                        .font(.caption.weight(.semibold))
-                        .foregroundStyle(.tertiary)
-                        .accessibilityHidden(true)
-                }
-                .contentShape(.rect)
-            }
-            .buttonStyle(.plain)
-            .accessibilityLabel("\(score.displayName)，\(score.pageCount) 页")
-            .accessibilityHint("打开 PDF 谱面")
-
-            Menu {
-                Button("删除", systemImage: "trash", role: .destructive) {
+                PDFScoreCard(score: score, fileURL: library.fileURL(for: score)) {
                     pendingDeletion = score
                 }
-            } label: {
-                Image(systemName: "ellipsis")
-                    .font(.body.weight(.semibold))
-                    .frame(width: 44, height: 44)
-                    .contentShape(.rect)
             }
-            .accessibilityLabel("\(score.displayName) 的操作")
         }
     }
 
@@ -181,5 +139,73 @@ struct PDFShelfView: View {
             .buttonStyle(.bordered)
             .frame(maxWidth: .infinity)
             .accessibilityHint("从「文件」中选择一份 PDF")
+    }
+}
+
+private struct PDFScoreCard: View {
+    let score: PDFScore
+    let fileURL: URL
+    let onDelete: () -> Void
+
+    @State private var thumbnail: UIImage?
+
+    var body: some View {
+        NavigationLink(value: score) {
+            VStack(alignment: .leading, spacing: 8) {
+                ZStack {
+                    RoundedRectangle(cornerRadius: 8)
+                        .fill(Color.primary.opacity(0.05))
+                    if let thumbnail {
+                        Image(uiImage: thumbnail)
+                            .resizable()
+                            .scaledToFit()
+                            .padding(4)
+                    } else {
+                        Image(systemName: "doc.text")
+                            .font(.title)
+                            .foregroundStyle(PracticePalette.accent)
+                    }
+                }
+                .frame(height: 150)
+                .accessibilityHidden(true)
+
+                Text(score.displayName)
+                    .font(.subheadline.weight(.semibold))
+                    .lineLimit(1)
+                    .foregroundStyle(.primary)
+                Text("\(score.pageCount) 页 · \(score.importedAt.formatted(date: .abbreviated, time: .omitted))")
+                    .font(.caption2)
+                    .foregroundStyle(.secondary)
+            }
+            .padding(10)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .background(PracticePalette.paper, in: RoundedRectangle(cornerRadius: 10))
+            .overlay {
+                RoundedRectangle(cornerRadius: 10)
+                    .stroke(PracticePalette.hairline, lineWidth: 1)
+            }
+            .contentShape(.rect)
+        }
+        .buttonStyle(.plain)
+        .accessibilityLabel("\(score.displayName)，\(score.pageCount) 页")
+        .accessibilityHint("打开 PDF 谱面")
+        .overlay(alignment: .topTrailing) {
+            Menu {
+                Button("删除", systemImage: "trash", role: .destructive, action: onDelete)
+            } label: {
+                Image(systemName: "ellipsis")
+                    .font(.caption.weight(.bold))
+                    .foregroundStyle(.secondary)
+                    .frame(width: 44, height: 44)
+                    .contentShape(.rect)
+            }
+            .accessibilityLabel("\(score.displayName) 的操作")
+        }
+        .task(id: score.id) {
+            guard thumbnail == nil else { return }
+            thumbnail = PDFDocument(url: fileURL)?
+                .page(at: 0)?
+                .thumbnail(of: CGSize(width: 300, height: 400), for: .cropBox)
+        }
     }
 }

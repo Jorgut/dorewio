@@ -35,13 +35,17 @@ Date: 2026-11-23 · Build **1.1 (19)** · iPad Pro 13-inch (M5), iPadOS 26.5 sim
   - 学习 / 训练 stay two-column and widen to 1100 pt.
   - `IPadNavigationStyle` adds the convertible sidebar on iPadOS 18+.
 
+## Competitive reference
+
+See `docs/COMPETITOR_IPAD_RESEARCH_2026-11-23.md`. The main pattern across Trala, tonestro, 来音小提琴 and 一起练琴 is content-first, edge-to-edge practice with multi-column cover libraries — not stretched iPhone cards. Applied here: the PDF shelf is now a cover grid with first-page thumbnails; the dashboard two-column layout remains for Today/Progress.
+
 ## Visual QA (before → after)
 
 | Area | Before | After | Status |
 |---|---|---|---|
 | Today | one centered 780 pt column, full-width onboarding | two balanced columns; onboarding in the left rail | fixed |
 | 学习 / 训练 | two columns but phone-sized content block | two columns at 1100 pt; same stacking on iPhone | fixed |
-| 曲目 | score, PDF and audio stacked full width | score left; PDF + audio right | fixed |
+| 曲目 | score, PDF and audio stacked full width | score left; PDF cover grid + audio right | fixed |
 | 进度 | one column | summary/chart left; skills/goal/recent right | fixed |
 | 第一课 | card, fingerboard, feedback stacked with large empty bottom | note + note strip + steps left; fingerboard right | improved |
 | 调音 | full-width dial, controls and 1100 pt action | dial left; strings/calibration/help right; 560 pt action | improved |
