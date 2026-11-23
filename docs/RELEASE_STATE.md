@@ -7,7 +7,7 @@ App Store Connect record: **小提琴自学** · Apple ID `6827607435` · bundle
 - Branch `release/1.1`; version **1.1**, next build **19** (1.0 shipped build 17; build 18 stayed TestFlight-only).
 - New in 1.1: **PDF 谱架** in 曲目 — import PDFs from Files, copy them into the app sandbox, and read them offline in a PDFKit continuous-scroll viewer with pinch zoom, live page count, page navigation and delete. No upload, no account.
 - Included in 1.1: build 18 light/dark contrast fixes (already on `main`, never shipped in 1.0).
-- **iPad support:** the target is now universal (`TARGETED_DEVICE_FAMILY = "1,2"`) with all iPad orientations; tab and practice content is capped at 780–820 pt and centred, and the lesson/fingerboard are scaled for a 13-inch canvas. Verified on an iPad Pro 13-inch (M5) simulator.
+- **iPad support:** the target is now universal (`TARGETED_DEVICE_FAMILY = "1,2"`) with all iPad orientations; tab and practice content is capped at 780–1100 pt and centred; Learning and Training switch to a two-column layout when space allows, and the lesson/fingerboard are scaled for a 13-inch canvas. Verified on an iPad Pro 13-inch (M5) simulator.
 - Code verified: SwiftPM `72/72` tests pass; simulator build succeeds; draft screenshots in `docs/screenshots/app-1.1/`.
 - Draft 1.1 screenshots and What's New: `docs/APP_STORE_1.1.md` (needs a reshoot with a real score PDF before upload).
 - Still external: Pro paywall flip (`ProLaunchMode.gatingEnabled`) waits for the Paid Apps Agreement; mainland China waits for the ICP case `30000016363562`; final store screenshots and What's New are not uploaded yet.

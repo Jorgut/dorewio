@@ -39,25 +39,28 @@ struct PracticeLibraryView: View {
                         title: "今天练什么",
                         detail: "从调音热身开始，再进入运弓、揉弦或节奏训练"
                     )
-                    PracticeGroup(
-                        title: "开始练琴",
-                        items: [
-                            (.tuner, "调音", "先让四根空弦回到中心", "tuningfork"),
-                            (.metronome, "节拍器", "稳定拍点、重音与速度", "metronome"),
-                            (.rhythm, "节奏", "建立稳定的内部拍点", "metronome")
-                        ],
-                        proRoutes: []
-                    )
-                    PracticeGroup(
-                        title: ProLaunchMode.gatingEnabled ? "技巧训练（Pro）" : "技巧训练",
-                        items: [
-                            (.bow, "运弓", "弓段、弓速与换弓控制", "arrow.up.and.down"),
-                            (.vibrato, "揉弦", "速度、幅度与音高中心", "waveform.path")
-                        ],
-                        proRoutes: ProLaunchMode.gatingEnabled ? [.bow, .vibrato] : []
-                    )
+                    PracticeTwoColumn {
+                        PracticeGroup(
+                            title: "开始练琴",
+                            items: [
+                                (.tuner, "调音", "先让四根空弦回到中心", "tuningfork"),
+                                (.metronome, "节拍器", "稳定拍点、重音与速度", "metronome"),
+                                (.rhythm, "节奏", "建立稳定的内部拍点", "metronome")
+                            ],
+                            proRoutes: []
+                        )
+                    } secondary: {
+                        PracticeGroup(
+                            title: ProLaunchMode.gatingEnabled ? "技巧训练（Pro）" : "技巧训练",
+                            items: [
+                                (.bow, "运弓", "弓段、弓速与换弓控制", "arrow.up.and.down"),
+                                (.vibrato, "揉弦", "速度、幅度与音高中心", "waveform.path")
+                            ],
+                            proRoutes: ProLaunchMode.gatingEnabled ? [.bow, .vibrato] : []
+                        )
+                    }
                 }
-                .practiceReadableWidth()
+                .practiceReadableWidth(1100)
                 .padding()
             }
             .background(PracticePalette.canvas)

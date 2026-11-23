@@ -30,8 +30,8 @@ Draft date: 2026-11-23 · build **1.1 (19)** · branch `release/1.1` · **not up
 | # | 文件 | 画面 |
 |---|---|---|
 | 1 | `docs/screenshots/app-1.1/ipad/01_today.png` | 今天 |
-| 2 | `docs/screenshots/app-1.1/ipad/02_learn.png` | 学习（10 分钟无琴课） |
-| 3 | `docs/screenshots/app-1.1/ipad/03_train.png` | 训练 |
+| 2 | `docs/screenshots/app-1.1/ipad/02_learn.png` | 学习（两栏：课程 + 训练） |
+| 3 | `docs/screenshots/app-1.1/ipad/03_train.png` | 训练（两栏：基础 + 技巧） |
 | 4 | `docs/screenshots/app-1.1/ipad/04_pdf_shelf.png` | 曲目 · PDF 谱架 |
 | 5 | `docs/screenshots/app-1.1/ipad/05_pdf_reader.png` | PDF 阅读器 |
 

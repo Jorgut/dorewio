@@ -20,6 +20,38 @@ enum PracticePalette {
     static let hairline = Color.primary.opacity(0.10)
 }
 
+/// iPad/宽屏两栏：空间够时左右并排，窄屏（iPhone）自动回退成上下堆叠。
+struct PracticeTwoColumn<Primary: View, Secondary: View>: View {
+    private let minColumnWidth: CGFloat
+    private let primary: Primary
+    private let secondary: Secondary
+
+    init(
+        minColumnWidth: CGFloat = 460,
+        @ViewBuilder primary: () -> Primary,
+        @ViewBuilder secondary: () -> Secondary
+    ) {
+        self.minColumnWidth = minColumnWidth
+        self.primary = primary()
+        self.secondary = secondary()
+    }
+
+    var body: some View {
+        ViewThatFits(in: .horizontal) {
+            HStack(alignment: .top, spacing: 24) {
+                primary
+                    .frame(minWidth: minColumnWidth, maxWidth: .infinity, alignment: .topLeading)
+                secondary
+                    .frame(minWidth: minColumnWidth, maxWidth: .infinity, alignment: .topLeading)
+            }
+            VStack(alignment: .leading, spacing: 24) {
+                primary
+                secondary
+            }
+        }
+    }
+}
+
 struct PracticeSectionHeader: View {
     let eyebrow: String
     let title: String
