@@ -2,7 +2,7 @@
 
 **Brand:** dorewio.  
 **Category:** Violin learning  
-**Platform:** iOS native, SwiftUI  
+**Platform:** iOS native, SwiftUI (iPhone + iPad)  
 **Audience:** Complete beginners learning pitch names (A–G), fixed-do solfège, the four violin strings (G3, D4, A4, E5) and first-position left-hand fingering — including learners who practice without their instrument.
 
 ## Primary user journeys

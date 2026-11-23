@@ -57,6 +57,7 @@ struct PracticeLibraryView: View {
                         proRoutes: ProLaunchMode.gatingEnabled ? [.bow, .vibrato] : []
                     )
                 }
+                .practiceReadableWidth()
                 .padding()
             }
             .background(PracticePalette.canvas)

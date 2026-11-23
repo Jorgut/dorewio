@@ -1,5 +1,17 @@
 import SwiftUI
 
+enum PracticeLayout {
+    /// 阅读型页面的最大内容宽度；iPad 上居中，避免卡片和文字被拉得过宽。
+    static let readableWidth: CGFloat = 780
+}
+
+extension View {
+    func practiceReadableWidth(_ width: CGFloat = PracticeLayout.readableWidth) -> some View {
+        frame(maxWidth: width, alignment: .leading)
+            .frame(maxWidth: .infinity)
+    }
+}
+
 enum PracticePalette {
     static let accent = Color(red: 0.78, green: 0.16, blue: 0.12)
     static let success = Color(red: 0.08, green: 0.48, blue: 0.39)

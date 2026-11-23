@@ -177,8 +177,9 @@ struct FingerboardPracticeView: View {
                             onSelectPosition: selectPosition,
                             onShift: shiftPosition
                         )
-                        .frame(width: max(230, proxy.size.width - 114))
+                        .frame(width: min(max(230, proxy.size.width - 114), 680))
                     }
+                    .frame(maxWidth: .infinity, alignment: .center)
                 }
                 .frame(height: 520)
 
@@ -186,6 +187,7 @@ struct FingerboardPracticeView: View {
                     feedback(selected)
                 }
             }
+            .practiceReadableWidth(900)
             .padding()
             .frame(maxWidth: .infinity, alignment: .leading)
         }

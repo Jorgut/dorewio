@@ -54,6 +54,7 @@ struct PracticeStudioView: View {
                     TranscriptionWorkbench(session: session)
                 }
             }
+            .practiceReadableWidth()
             .padding()
         }
         .background(PracticePalette.canvas)

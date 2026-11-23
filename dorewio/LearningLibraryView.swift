@@ -15,6 +15,7 @@ struct LearningLibraryView: View {
                     LearningModuleGroup()
                     LearningTipCard()
                 }
+                .practiceReadableWidth()
                 .padding()
             }
             .background(PracticePalette.canvas)

@@ -19,11 +19,13 @@ struct TunerView: View {
             TunerStatus(state: session.state, reading: session.reading)
             Spacer(minLength: 0)
         }
+        .practiceReadableWidth(820)
         .padding(.horizontal, 16)
         .padding(.top, 8)
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
         .safeAreaInset(edge: .bottom) {
             TunerListenButton(session: session)
+                .practiceReadableWidth(820)
                 .padding(.horizontal, 16)
                 .padding(.bottom, 8)
                 .background(PracticePalette.canvas.opacity(0.96))

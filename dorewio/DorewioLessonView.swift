@@ -58,7 +58,7 @@ struct DorewioFingerboardView: View {
     var body: some View {
         GeometryReader { geometry in
             let center = geometry.size.width / 2
-            let halfSpacing: CGFloat = min(geometry.size.width * 0.095, 39)
+            let halfSpacing: CGFloat = min(geometry.size.width * 0.095, 70)
             let xs = [center - 3 * halfSpacing, center - halfSpacing,
                       center + halfSpacing, center + 3 * halfSpacing]
             // 指板面板顶部留出空间，让空弦（0）那一排完整落在深色指板内。
@@ -239,6 +239,7 @@ struct DorewioLessonView: View {
                     .font(.caption)
                     .foregroundStyle(.secondary)
             }
+            .practiceReadableWidth(860)
             .padding(20)
         }
         .tint(PracticePalette.accent)

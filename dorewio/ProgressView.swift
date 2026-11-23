@@ -13,6 +13,7 @@ struct PracticeProgressView: View {
                     GoalEditor()
                     RecentPracticeList()
                 }
+                .practiceReadableWidth()
                 .padding()
             }
             .background(PracticePalette.canvas)

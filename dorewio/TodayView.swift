@@ -20,6 +20,7 @@ struct TodayView: View {
                     StudioPrompt()
                     HomeFooter()
                 }
+                .practiceReadableWidth()
                 .padding(.horizontal, 16)
             }
             .contentMargins(.bottom, 96, for: .scrollContent)

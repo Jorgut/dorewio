@@ -62,6 +62,7 @@ struct MetronomeView: View {
                 .practiceSurface(padding: 18)
 
         }
+        .practiceReadableWidth(820)
         .padding(.horizontal, 16)
         .padding(.top, 8)
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)

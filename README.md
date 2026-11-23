@@ -2,7 +2,7 @@
 
 **Learn music. Play with confidence.**
 
-dorewio. is a native iOS-first violin-learning app built with SwiftUI. It is offline-first: no account, no backend, no data collection — practice history, recordings and imported scores stay on the device.
+dorewio. is a native iOS-first violin-learning app for iPhone and iPad, built with SwiftUI. It is offline-first: no account, no backend, no data collection — practice history, recordings and imported scores stay on the device.
 
 This repository is the **shipping app** for the App Store record **「小提琴自学」** (Apple ID `6827607435`, bundle ID `com.archintera.VibratoCoach`). The Xcode project and target are named `dorewio`; the bundle ID must not change.
 
