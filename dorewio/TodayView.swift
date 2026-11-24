@@ -11,16 +11,24 @@ struct TodayView: View {
                 VStack(alignment: .leading, spacing: 26) {
                     BrandBar()
                     TodayHeader()
-                    if !hasSeenOnboarding {
-                        OnboardingCard { hasSeenOnboarding = true }
+                    PracticeTwoColumn(minColumnWidth: 400) {
+                        VStack(alignment: .leading, spacing: 26) {
+                            if !hasSeenOnboarding {
+                                OnboardingCard { hasSeenOnboarding = true }
+                            }
+                            StudyModePicker()
+                            DailyProgressSection()
+                        }
+                    } secondary: {
+                        VStack(alignment: .leading, spacing: 26) {
+                            DailyPlanSection()
+                            StudioPrompt()
+                        }
                     }
-                    StudyModePicker()
-                    DailyProgressSection()
-                    DailyPlanSection()
-                    StudioPrompt()
                     HomeFooter()
                 }
-                .padding(.horizontal, 16)
+                .practiceReadableWidth(1100)
+                .padding(.horizontal, 20)
             }
             .contentMargins(.bottom, 96, for: .scrollContent)
             .background(PracticePalette.canvas)

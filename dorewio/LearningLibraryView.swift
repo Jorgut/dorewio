@@ -10,11 +10,19 @@ struct LearningLibraryView: View {
                         title: "现在没有琴，也能有效进步",
                         detail: "用十分钟建立识谱、指板、节奏和听辨之间的连接"
                     )
-                    DailyCourseCard()
-                    DorewioLessonEntry()
-                    LearningModuleGroup()
-                    LearningTipCard()
+                    PracticeTwoColumn {
+                        VStack(alignment: .leading, spacing: 24) {
+                            DailyCourseCard()
+                            DorewioLessonEntry()
+                        }
+                    } secondary: {
+                        VStack(alignment: .leading, spacing: 24) {
+                            LearningModuleGroup()
+                            LearningTipCard()
+                        }
+                    }
                 }
+                .practiceReadableWidth(1100)
                 .padding()
             }
             .background(PracticePalette.canvas)

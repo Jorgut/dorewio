@@ -83,6 +83,7 @@ struct RhythmPracticeView: View {
                     .frame(maxWidth: .infinity, alignment: .leading)
 
         }
+        .practiceReadableWidth(820)
         .padding(.horizontal, 16)
         .padding(.top, 8)
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
@@ -90,8 +91,8 @@ struct RhythmPracticeView: View {
             Button("重新开始", systemImage: "arrow.counterclockwise", action: reset)
                 .buttonStyle(.bordered)
                 .controlSize(.large)
+                .practiceReadableWidth(820)
                 .padding(.bottom, 8)
-                .frame(maxWidth: .infinity)
                 .background(PracticePalette.canvas.opacity(0.96))
         }
         .background(PracticePalette.canvas)

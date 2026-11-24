@@ -1,11 +1,64 @@
 import SwiftUI
 
+enum PracticeLayout {
+    /// 阅读型页面的最大内容宽度；iPad 上居中，避免卡片和文字被拉得过宽。
+    static let readableWidth: CGFloat = 780
+}
+
+extension View {
+    func practiceReadableWidth(_ width: CGFloat = PracticeLayout.readableWidth) -> some View {
+        frame(maxWidth: width, alignment: .leading)
+            .frame(maxWidth: .infinity)
+    }
+
+    /// 底部主操作在 iPad 上不要拉满整屏，保持拇指可达的按钮宽度。
+    func practiceActionWidth(_ width: CGFloat = 560) -> some View {
+        frame(maxWidth: width)
+            .frame(maxWidth: .infinity)
+    }
+}
+
 enum PracticePalette {
     static let accent = Color(red: 0.78, green: 0.16, blue: 0.12)
     static let success = Color(red: 0.08, green: 0.48, blue: 0.39)
     static let canvas = Color(uiColor: .systemGroupedBackground)
     static let paper = Color(uiColor: .secondarySystemGroupedBackground)
     static let hairline = Color.primary.opacity(0.10)
+}
+
+/// iPad/宽屏两栏：空间够时左右并排，窄屏（iPhone）自动回退成上下堆叠。
+struct PracticeTwoColumn<Primary: View, Secondary: View>: View {
+    private let minColumnWidth: CGFloat
+    private let primary: Primary
+    private let secondary: Secondary
+
+    init(
+        minColumnWidth: CGFloat = 460,
+        @ViewBuilder primary: () -> Primary,
+        @ViewBuilder secondary: () -> Secondary
+    ) {
+        self.minColumnWidth = minColumnWidth
+        self.primary = primary()
+        self.secondary = secondary()
+    }
+
+    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
+
+    var body: some View {
+        if horizontalSizeClass == .regular {
+            HStack(alignment: .top, spacing: 24) {
+                primary
+                    .frame(minWidth: minColumnWidth, maxWidth: .infinity, alignment: .topLeading)
+                secondary
+                    .frame(minWidth: minColumnWidth, maxWidth: .infinity, alignment: .topLeading)
+            }
+        } else {
+            VStack(alignment: .leading, spacing: 24) {
+                primary
+                secondary
+            }
+        }
+    }
 }
 
 struct PracticeSectionHeader: View {

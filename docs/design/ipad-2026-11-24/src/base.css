@@ -1,0 +1,29 @@
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--accent:#C7291F;--canvas:#F2F2F7;--paper:#FFFFFF;--ink:#1C1C1E;--sub:#6C6C70;--hair:rgba(60,60,67,.12);--accent-soft:rgba(199,41,31,.10)}
+html,body{width:1024px;height:1366px;overflow:hidden}
+body{background:var(--canvas);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","PingFang SC","Helvetica Neue",sans-serif;color:var(--ink);-webkit-font-smoothing:antialiased}
+.status{height:54px;display:flex;align-items:center;justify-content:space-between;padding:16px 44px 0;font-size:16px;font-weight:600}
+.status .right{display:flex;gap:8px;align-items:center;color:#1C1C1E}
+.tabbar{position:absolute;top:58px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:6px;background:rgba(255,255,255,.86);backdrop-filter:blur(20px);border:1px solid rgba(60,60,67,.10);border-radius:28px;padding:7px 10px;box-shadow:0 8px 24px rgba(0,0,0,.06)}
+.tab{font-size:17px;padding:8px 18px;border-radius:20px;color:#1C1C1E;white-space:nowrap}
+.tab.active{background:#EDEDF0;font-weight:600}
+.tab.sidebar{font-size:18px;padding:8px 10px;color:#1C1C1E}
+.content{padding:128px 44px 40px}
+.eyebrow{font-size:13px;font-weight:700;color:var(--accent);letter-spacing:.02em}
+h1{font-size:34px;line-height:1.16;letter-spacing:-.02em;margin:6px 0 8px;font-weight:700}
+.sub{font-size:17px;color:var(--sub);line-height:1.45}
+.card{background:var(--paper);border:1px solid var(--hair);border-radius:14px}
+.pad{padding:24px}
+.row{display:flex;align-items:center;gap:14px}
+.spacer{flex:1}
+.icon{width:44px;height:44px;border-radius:9px;background:var(--accent-soft);display:flex;align-items:center;justify-content:center;color:var(--accent);flex:0 0 auto}
+.icon svg{width:22px;height:22px}
+.h2{font-size:20px;font-weight:700;letter-spacing:-.01em}
+.h3{font-size:17px;font-weight:650}
+.muted{color:var(--sub);font-size:15px;line-height:1.4}
+.tiny{font-size:13px;color:var(--sub)}
+.badge{font-size:12px;font-weight:700;color:var(--accent);background:var(--accent-soft);border-radius:999px;padding:3px 9px}
+.btn{display:inline-flex;align-items:center;gap:8px;background:var(--accent);color:#fff;font-size:16px;font-weight:600;border-radius:999px;padding:12px 20px}
+.btn.soft{background:var(--accent-soft);color:var(--accent)}
+.chev{color:#AEAEB2;font-size:20px;font-weight:600}
+.divider{height:1px;background:var(--hair);margin:16px 0}
