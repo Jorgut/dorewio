@@ -4,12 +4,13 @@ App Store Connect record: **小提琴自学** · Apple ID `6827607435` · bundle
 
 ## 1.1 — in development (2026-11-22)
 
-- Branch `release/1.1`; version **1.1**, next build **19** (1.0 shipped build 17; build 18 stayed TestFlight-only).
+- Branch `release/1.1`; version **1.1**, next build **19** (1.0 shipped build 17; build 18 stayed TestFlight-only). An App Store Connect 1.1 record now exists in `PREPARE_FOR_SUBMISSION`; no build is attached yet.
 - New in 1.1: **PDF 谱架** in 曲目 — import PDFs from Files, copy them into the app sandbox, and read them offline in a PDFKit continuous-scroll viewer with pinch zoom, live page count, page navigation and delete. No upload, no account.
 - Included in 1.1: build 18 light/dark contrast fixes (already on `main`, never shipped in 1.0).
 - **iPad support:** the target is now universal (`TARGETED_DEVICE_FAMILY = "1,2"`) with all iPad orientations. Regular width uses two-column dashboards (Today, 曲目, 进度, 第一课, 调音) and the system convertible sidebar (iOS 18+); compact width keeps the iPhone layouts. Content is capped at 780–1100 pt with 20 pt margins and 560 pt primary actions. Design QA verdict: **revise** — portrait verified, landscape/Split View still untested; see `docs/DESIGN_QA_IPAD_2026-11-23.md`.
 - Code verified: SwiftPM `72/72` tests pass; simulator build succeeds; draft screenshots in `docs/screenshots/app-1.1/`.
 - Draft 1.1 screenshots and What's New: `docs/APP_STORE_1.1.md` (needs a reshoot with a real score PDF before upload).
+- 1.1 ASC metadata updated: subtitle `小提琴自学 · 调音 · 识谱 · 节拍器`, keywords `入门,零基础,陪练,音准,五线谱,琴谱,考级,揉弦,运弓,指板,听音`; live 1.0 metadata unchanged (see `docs/ASO_2026-11-24.md`).
 - Still external: Pro paywall flip (`ProLaunchMode.gatingEnabled`) waits for the Paid Apps Agreement; mainland China waits for the ICP case `30000016363562`; final store screenshots and What's New are not uploaded yet.
 
 ## Current status
