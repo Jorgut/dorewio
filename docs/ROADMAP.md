@@ -54,6 +54,7 @@ Shipping app: dorewio. (App Store record: 小提琴自学, bundle `com.archinter
 - [x] Universal app: iPhone + iPad (all iPad orientations)
 - [x] iPad regular-width dashboards (two columns), convertible sidebar, 560 pt actions
 - [~] iPad design QA: portrait verified, landscape / Split View / keyboard still pending (`docs/DESIGN_QA_IPAD_2026-11-23.md`)
+- [x] iPad layout research across sheet-music / practice / dashboard apps (`docs/IPAD_LAYOUT_RESEARCH_2026-11-24.md`)
 - [ ] Pro paywall flip after the Paid Apps Agreement is signed
 - [~] New App Store screenshots and 1.1 release notes (iPhone + iPad drafts in `docs/APP_STORE_1.1.md`; needs reshoot)
 - [ ] Archive build 19, real-device pass, submit 1.1
