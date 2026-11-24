@@ -1,0 +1,46 @@
+<!doctype html><html><head><meta charset="utf-8"><link rel="stylesheet" href="base.css"><style>
+.grid{display:grid;grid-template-columns:1.04fr .96fr;gap:28px;margin-top:30px}
+.course .task{display:flex;align-items:center;gap:12px;padding:9px 0;font-size:16px}
+.task .num{width:24px;height:24px;border-radius:50%;background:var(--accent);color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center}
+.lesson{margin-top:24px;background:linear-gradient(135deg,#fff 0%,rgba(199,41,31,.07) 100%);border:1px solid rgba(199,41,31,.14);border-radius:16px;padding:24px}
+.modules{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:14px}
+.module{background:#fff;border:1px solid var(--hair);border-radius:14px;padding:20px;display:flex;flex-direction:column;gap:10px;min-height:132px}
+.module .t{font-size:17px;font-weight:650}
+.tip{margin-top:18px;display:flex;gap:12px;align-items:flex-start;background:#fff;border:1px solid var(--hair);border-radius:14px;padding:18px}
+</style></head><body>
+<div class="status"><div>09:41</div><div class="right">▮▮▮ ⌁ ▰</div></div>
+<div class="tabbar"><div class="tab sidebar">▤</div><div class="tab">今天</div><div class="tab active">学习</div><div class="tab">训练</div><div class="tab">曲目</div><div class="tab">进度</div></div>
+<div class="content">
+  <div class="eyebrow">无琴学习</div><h1>现在没有琴，也能有效进步</h1>
+  <div class="sub">用十分钟建立识谱、指板、节奏和听辨之间的连接</div>
+  <div class="grid">
+    <div>
+      <div class="card pad course">
+        <div class="row"><div class="h2">今日无琴课</div><div class="spacer"></div><div style="color:var(--accent);font-weight:600;font-size:15px">10 分钟</div></div>
+        <div style="margin-top:10px">
+          <div class="task"><div class="num">1</div><div>基础识谱</div><div class="spacer"></div><div class="muted">2 分钟</div></div>
+          <div class="task"><div class="num">2</div><div>把位练习</div><div class="spacer"></div><div class="muted">3 分钟</div></div>
+          <div class="task"><div class="num">3</div><div>节奏点击</div><div class="spacer"></div><div class="muted">3 分钟</div></div>
+          <div class="task"><div class="num">4</div><div>空弦听辨</div><div class="spacer"></div><div class="muted">2 分钟</div></div>
+        </div>
+      </div>
+      <div class="lesson">
+        <div class="row"><div style="font-size:20px;font-weight:800;letter-spacing:-.02em">dorewio.</div><div class="badge">第一课</div><div class="spacer"></div><div class="chev">›</div></div>
+        <div style="font-size:18px;font-weight:650;margin-top:12px">从零开始：F5（Fa）、E 弦低一指与四条空弦</div>
+        <div class="muted" style="margin-top:8px">看一个音名，在指板上找到琴弦和手指位置，再听参考音核对。</div>
+      </div>
+    </div>
+    <div>
+      <div class="h2">开始训练</div>
+      <div class="modules">
+        <div class="module"><div class="icon" data-icon="note"></div><div class="t">基础识谱</div><div class="muted">看五线谱，快速说出音名</div></div>
+        <div class="module"><div class="icon" data-icon="grid"></div><div class="t">把位练习</div><div class="muted">把音名定位到弦和手指</div></div>
+        <div class="module"><div class="icon" data-icon="tap"></div><div class="t">节奏点击</div><div class="muted">跟随目标速度点击拍点</div></div>
+        <div class="module"><div class="icon" data-icon="ear"></div><div class="t">空弦听辨</div><div class="muted">听出 G、D、A、E 空弦</div></div>
+      </div>
+      <div class="tip"><div class="icon" data-icon="bulb" style="width:38px;height:38px"></div><div><div class="h3">学习建议</div><div class="muted" style="margin-top:4px">先看谱认音，再在指板上定位，最后用耳朵确认。不要只背答案。</div></div></div>
+    </div>
+  </div>
+</div>
+<script src="icons.js"></script>
+</body></html>
